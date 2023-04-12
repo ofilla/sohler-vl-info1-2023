@@ -204,21 +204,12 @@ Ausgabe:
 ```
 
 # Laufzeitanalyse
-In der Realität spielen Hardware sowie Software (z.B. OS, Compiler(-optionen)) eine Rolle.
-Wir wollen aber den abstrakten Algorithmus bewerten.
+In der Realität spielen Hardware sowie Software (z.B. OS, Compiler(-optionen)) eine Rolle. Diese Einflüsse sind allerdings in einer konstanten Größenordnung. DIese konstanten Laufzeiten werden hier ignoriert, da meistens die Landau-Notation zur Beschreibung von Laufzeiten verwendet wird.
 
-Wenn notwendig, kann man bestimmte Optionen in einer detaillierteren Betrachtung einbinden. I.A. ist es aber vermutlich nicht sinnvoll / effektiv.
-
-Deswegen ignorieren wir konstante Laufzeiten, vergleiche Landau-Notation
 Unser Rechenmodell besagt, dass eine Pseudocodeoperartion einen Zeitschritt benötigt. Wir zählen diese Zeitschritte. 
 
 Hierbei will man für eine gegebene _Eingabegröße_ $n$ eine obere Schranke für die Laufzeit finden.
 Üblicherweise benutzt man eine Worst Case Analyse, auch wenn es auch die Average Case Analyse gibt.
-
-## Vorgehensweise
-* betrachte Eingabegröße $n$
-* Ziel: finde obere Schranken für die Laufzeit
-* Standard: Worst Case Analyse
 
 ## Worst Case Analyse
 Worst-Case Laufzeit $T(n) = \max[\text{Laufzeit}]$ über alle Laufzeiten für Eingabegrößen $\le n$.
@@ -227,6 +218,50 @@ Dies ist der Standard, normalerweise ist diese Analyse gemeint, wenn man von "La
 ## Average Case Analyse
 Die Worst-Case Laufzeit $T(n) = \mathrm{avg}[\text{Laufzeit}]$ benötigt eine Definition von "Durschschnittlich", also auch Wahrscheinlichkeitsverteilung von Eingabegrößen.
 Daher wird sie i.A. nicht verwendet.
+
+## Landau-Notation
+Die detaillierte Laufzeitanalyse hat einige Schwachstellen: Konstante Faktoren werden durch Hardware und Software beeinflusst, die außerhalb des Algorithmus liegen. Zudem ist die Notation fehleranfällig und kompliziert.
+
+Die Landau-Notation nutzt eine _asymptotischen Analyse_ für große Eingabemengen $n\rightarrow\infty$. Kontante Faktoren sind damit vernachlässigbar.
+
+Im Folgenden werden einige Annahmen getroffen:
+* Die Funktionen $f$ und $g$ haben den Definitionsbereich $\mathbb N_0$ und sind für große $n$ asymptotisch nicht-negativ sein
+* Die Worst-Case-Laufzeit wird asymptotisch angenährt
+
+Bei rekursiven Funktionen muss man mit dem Abschätzen der $\Omega$- und $\mathcal O$-Notationen aufpassen. Oft ist es sinnvoll, diese Funktionen konkret auszurechten.
+
+### $\mathcal O$-Notation
+Mit der $\mathcal O$-Notation wird die _obere Schranke_ angenähert.
+
+$f(n)\in\mathcal O (g(n))$ bedeutet, $f$ wächst höchstens so stark wie $g$. Dazu m
+$$
+    \mathcal O (g(n)) = \{
+        \text{Funktion} f(n) |
+        \exist c\in\mathbb R_+:\exist n_0\in\mathbb N:
+        \forall\mathbb N \ni n\ge n_0: 0 \le f(n) \le c\cdot g(n)
+    \}
+$$
+
+### Hierarchien:
+Satz über Hierarchien:
+1. $\forall 2 \le b \in\mathbb R:\mathcal O(\log n) \subseteq\mathcal O(\log^2 n) \subseteq\mathcal O(\log^b n)$
+2. $\forall 2 \le b \in\mathbb R:\forall 0<\varepsilon\in\mathbb R: \mathcal O(\log^bn) \subseteq\mathcal O(n^\varepsilon)$
+3. $\forall 2 \le b \in\mathbb R:\forall 1> \varepsilon\in\mathbb R:\mathcal O(n^\varepsilon) \subseteq\mathcal O(n) \subseteq\mathcal O(n^2) \subseteq\mathcal O(n^b)$
+
+Problem: $\varepsilon>1$?
+
+### $\Omega$-Notation
+Die $\Omega$-Notation liefert eine _untere Schranke_ für die Laufzeit.
+
+$f(n)\in\Omega (g(n))$ bedeutet, $f$ wächst mindestens so stark wie $g$.
+$$
+    \Omega (g(n)) = \{
+        \text{Funktion} f(n) |
+        \exist c\in\mathbb R_+:\exist n_0\in\mathbb N:
+        \forall\mathbb N \ni n\ge n_0: 0 \le c\cdot g(n) \le f(n)
+    \}
+$$
+
 
 # Rechentricks / -regeln
 * Satz von Gauß [[20230405122907]]: $\sum_{i=1}^n i = \frac{n(n+1)}{2}$
