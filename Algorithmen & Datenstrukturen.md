@@ -236,7 +236,7 @@ Mit der $\mathcal O$-Notation wird die _obere Schranke_ angenähert.
 $f(n)\in\mathcal O (g(n))$ bedeutet, $f$ wächst höchstens so stark wie $g$. Dazu m
 $$
     \mathcal O (g(n)) = \{
-        \text{Funktion} f(n) |
+        \text{Funktion } f(n) |
         \exist c\in\mathbb R_+:\exist n_0\in\mathbb N:
         \forall\mathbb N \ni n\ge n_0: 0 \le f(n) \le c\cdot g(n)
     \}
