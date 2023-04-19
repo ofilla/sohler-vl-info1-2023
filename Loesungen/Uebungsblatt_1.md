@@ -2,8 +2,7 @@
 title: Übungsblatt 1
 author:
     - Oliver Filla
-date:
-    - 07.-08.04.2023
+date: 19.04.2023 (Korrektur)
 ---
 Die Abbruchbedingungen für Rekursion oder Schleifen werde ich oft mit "kleiner" oder "größer" angeben. Im Unterschied zu "gleich" ist dies oft resistenter gegen (Eingabe-)Fehler und kann Endlosschleifen bzw. -rekursionen verhindern.
 
@@ -17,10 +16,10 @@ $$
 $$
 ```
 f(a, n):
-    if n < 1 then return 1 \* a^0 = 1 \*
-    return power(a, n) - f(a, n-1) \* a^n - f(a, n-1) \*
+    if n < 1 then return 1 \\ a^0 = 1
+    return power(a, n) - f(a, n-1) \\ a^n - f(a, n-1)
 
-\* a^n \*
+\\ a^n
 power(a, n):
     if n<2 then return a
     return a * power(a, n-1)
@@ -40,25 +39,39 @@ Da wir in unserem Pseudocode bislang keine Fehler melden können, gebe ich statt
 A = new array[n]
 
 max_abs_diff_pos(A, n):
-    \* Fehler bei n<2: mindestens 2 Elemente erwartet. \*
+    \\ Fehler bei n<2: mindestens 2 Elemente erwartet.
 1.  if n < 2 then return NIL
 2.  if n = 2 then return 1
 
-    \* Position des Paares mit maximaler Differenz bis [n-1] \*
+    \\ Position des Paares mit maximaler Differenz bis [n-1]
 3.  prev_max_diff_pos = max_abs_diff_pos(A, n-1)
 
-    \* berechne Differenzen \*
+    \\ berechne Differenzen
 4.  diff = abs_diff(A[n-1], [n])
 5.  max_diff = abs_diff(A[prev_max_diff_pos], A[prev_max_diff_pos-1])
 
-6.  if diff > max_diff then return diff
-7.  else return max_diff
+6.  if diff > max_diff then return n-1
+7.  else return prev_max_diff_pos
 
-\* berechne den Betrag der Differenz aus a und b \*
+\\ berechne den Betrag der Differenz aus a und b
 abs_diff(a, b):
-1. diff = a - b
+1.  diff = a - b
 2.  if diff > 0 then return diff
 3.  else return -1 * diff
+```
+
+Alternative Lösung
+```
+max_abs_diff_pos(A, n):
+    \\ Fehler bei n<2: mindestens 2 Elemente erwartet.
+    if n < 2 then return (0,0)
+    if n = 2 then return (1,2)
+
+    \\ Position des Paares mit maximaler Differenz bis [n-1]
+    (i,j) = max_abs_diff_pos(A, n-1)
+
+    if |A[n-1], A[n]| > |A[i], A[j]| then return (n-1, n)
+    return (i,j)
 ```
 
 ## 2.b
@@ -88,6 +101,21 @@ $$
 
 Damit braucht der Algorithmus $\mathrm{max\_abs\_diff\_pos}$ $n^2 + 15n - 14$ Zeitschritte, läuft also in $\mathcal O (n^2)$. 
 
+Alternative Lösung:
+```
+max_abs_diff_pos(A, n):  \\ T(n)
+    \\ Fehler bei n<2: mindestens 2 Elemente erwartet.
+    if n < 2 then return (0,0)  \\ n=1: 2; sonst 1
+    if n = 2 then return (1,2)  \\ n=2: 2, sonst 1
+
+    \\ Position des Paares mit maximaler Differenz bis [n-1]
+    (i,j) = max_abs_diff_pos(A, n-1)  \\ 1 + 1 + T(n-1)
+
+    if |A[n-1], A[n]| > |A[i], A[j]|  \\ 1
+        then return (n-1, n) else return (i,j) \\ 1
+```
+$(n-2)\cdot 5 + 3$
+
 # 3
 > In den folgenden Teilaufgaben sind eine Problemstellung und ein rekursiver Algorithmus zum Lösen des Problems gegeben. Jedoch haben sich Fehler in die Algorithmen eingeschlichen. Finden und korrigieren Sie die Fehler, sodass die betroffenen Algorithmen ihr Problem richtig lösen. Verändern Sie dabei so wenig wie möglich an dem vorhandenen Pseudocode!
 
@@ -99,13 +127,15 @@ Damit braucht der Algorithmus $\mathrm{max\_abs\_diff\_pos}$ $n^2 + 15n - 14$ Ze
 > 2. return n + Summe(n + 1)
 > ```
 
-* Zeile $1$: Problem: die Abbruchbedingung und der Rückgabewert stimmen nicht überein
+* Zeile $1$:
+    * die Abbruchbedingung und der Rückgabewert stimmen nicht überein
+    * die Variable `i` existiert nicht
 * Zeile $2$: Der Aufruf der Summenfunktion muss den nächstkleineren Wert aufrufen, nicht den nächstgrößeren
 
 Korrigierter Pseudocode:
 ```
 Summe(n)
-1. if i = 1 then return 1
+1. if n = 1 then return 1
 2. return n + Summe(n - 1)
 ```
 
