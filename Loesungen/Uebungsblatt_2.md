@@ -58,17 +58,23 @@ BerechneZahl(int n):
     return d
 ```
 
-* $t_1 = \sum_{i=1}^{n} (i + 1) = n + \sum_{i=1}^{n} i = n + \frac{n(n+1)}{2} = \frac{1}{2}(n^2 + 3n)\approx \frac{n^2}{2}$
-* $t_2 = \sum_{i=1}^{n} i = \sum_{i=1}^{n} i = \frac{n(n+1)}{2} = \frac{1}{2}(n^2 + n)\approx \frac{n^2}{2}$
+$$
+\begin{aligned}
+    t_1 = &\sum_{i=1}^{n} (i + 1) = n + \sum_{i=1}^{n} i = n + \frac{n(n+1)}{2}
+        &&= \frac{1}{2}(n^2 + 3n)\approx \frac{n^2}{2} \\
+    t_2 = &\sum_{i=1}^{n} i = \sum_{i=1}^{n} i = \frac{n(n+1)}{2}
+        &&= \frac{1}{2}(n^2 + n)\approx \frac{n^2}{2}
+\end{aligned}
+$$
 
 Summe:
 $$
-\begin{align*}
+\begin{aligned}
     T(n) = &1\cdot 4 + (n+1)\cdot 2 + n\cdot 4
         + \frac{1}{2}(n^2+3n)\cdot 2 + \frac{1}{2}(n^2+n)\cdot 2  \\
     = &4 + (2n+2) + 4n + (n^2 + 3n) + (n^2+n) \\
     T(n) = &2n^2 + 10n + 6
-\end{align*}
+\end{aligned}
 $$
 Die asymptotische Worst-Case-Laufzeit ist demnach $T(n) \in \mathcal O(n^2)$.
 
@@ -126,7 +132,9 @@ BerechneZahl(int n):
     return sum
 ```
 
-* $t_3 = (n-i) + (n-i+1) + \ldots + 2 + 1 = \sum_{j=1}^{n-i} j = \frac{(n-i)n}{2}$ 
+$$
+    t_3 = (n-i) + (n-i+1) + \ldots + 2 + 1 = \sum_{j=1}^{n-i} j = \frac{(n-i)n}{2}
+$$
 
 ## 2. Landau Notation
 > Welche der folgenden Aussagen sind korrekt?
@@ -134,7 +142,7 @@ BerechneZahl(int n):
 $$
     \mathcal O (g(n)) = \{
         f(n) |
-        \exist c\in\mathbb R_+:\exist n_0\in\mathbb N:
+        \exists c\in\mathbb R_+:\exists n_0\in\mathbb N:
         \forall\mathbb N \ni n\ge n_0: 0 \le f(n) \le c\cdot g(n)
     \}
 $$
