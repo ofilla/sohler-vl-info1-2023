@@ -7,7 +7,6 @@ date: 19.04.2023 (Korrektur)
 Die Abbruchbedingungen für Rekursion oder Schleifen werde ich oft mit "kleiner" oder "größer" angeben. Im Unterschied zu "gleich" ist dies oft resistenter gegen (Eingabe-)Fehler und kann Endlosschleifen bzw. -rekursionen verhindern.
 
 # 1. Rekursion
-
 > Geben Sie in Pseudocode einen rekursiven Algorithmus an, welcher für zwei gegebene Zahlen $n$ und $a$ das Produkt $\sum_{i=0}^n a^i$ berechnet.
 
 Umgeschrieben lautet die Formel folgendermaßen:
@@ -26,11 +25,10 @@ power(a, n):
 ```
 
 # 2. Felder
-
 ## 2.a
 > Gegeben sei ein Feld $A$ mit $n$ Zahlen $a_1, a_2 ,\dots , a_n$. Gesucht ist das Paar zweier benachbarter Elemente im Array mit maximaler Differenz.
 > 
-> Geben Sie in Pseudocode einen rekursiven Algorithmus an, der das Paar $(i, i + 1)$ berechnet, das $|a_i − a_{i+1} |$ maximiert.
+> Geben Sie in Pseudocode einen rekursiven Algorithmus an, der das Paar $(i, i + 1)$ berechnet, das $|a_i - a_{i+1}|$ maximiert.
 
 Diese Prozedur wird den Index des ersten Elementes $i$ zurückgeben. Das komplette Paar steht dann an den Positionen $i$ und $i+1$. Zudem muss die korrekte Länge $n$ des Feldes übergeben werden.
 
@@ -90,13 +88,13 @@ max_abs_diff_pos(A, n):
 
 Daraus folgt:
 $$
-\begin{align*}
+\begin{aligned}
     t_n &= 2n + 14 + t_{n-1} \\
         &= \sum_{i=2}^n 2i + 14 \\
         &= 14(n-1) + 2\cdot\sum_{i=1}^{n-1} i \\
         &= 14n - 14 + 2\cdot\frac{n(n+1)}{2} \\
     t_n &= n^2 + 15n - 14
-\end{align*}
+\end{aligned}
 $$
 
 Damit braucht der Algorithmus $\mathrm{max\_abs\_diff\_pos}$ $n^2 + 15n - 14$ Zeitschritte, läuft also in $\mathcal O (n^2)$. 
@@ -143,7 +141,7 @@ Summe(n)
 > Gegeben seien zwei natürliche Zahlen $n$ und mit $n \ge k$. Der folgende Algorithmus soll rekursiv den Binomialkoeffzienten ${n \choose k} = {n-1 \choose k-1} + {n-1 \choose k}$ berechnen.
 > ```
 > Binom(n, k)
-> 1. return Binom(n − 1, k − 1) + Binom(n − 1, k)
+> 1. return Binom(n - 1, k - 1) + Binom(n - 1, k)
 > ```
 
 * Es fehlt die Abbruchbedingung vor Zeile $1$.
@@ -154,7 +152,7 @@ Korrigierter Pseudocode:
 ```
 Binom(n, k)
 1. if k = 0 or k = n then return 1
-2. return Binom(n − 1, k − 1) + Binom(n − 1, k)
+2. return Binom(n - 1, k - 1) + Binom(n - 1, k)
 ```
 
 # 4. Insertion Sort

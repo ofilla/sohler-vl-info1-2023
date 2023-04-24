@@ -53,30 +53,27 @@ Es gilt $A \Rightarrow B \Leftrightarrow \neg B \Rightarrow \neg A$.
 4. **Gilt nicht**: Die Aussage stimmt nur, wenn das Problem leicht ist _und_ der Algorithmus das Problem löst. Dies ist nicht immer gegeben, siehe Wahrheitstabelle für $A\land B$.
 
 # 2. Beweise über Summen-Notation
-> Es seien $A = [a_1, a_2,\dots, a_n ]$ ein aufsteigend sortiertes Array natürlicher Zahlen $[\dots]$ und $k$, $1 \le k \le ⌊n/2⌋$, ein Index.
+> Es seien $A = [a_1, a_2,\dots, a_n ]$ ein aufsteigend sortiertes Array natürlicher Zahlen $[\dots]$ und $k$, $1 \le k \le \lfloor n/2\rfloor$$, ein Index.
 
- $⌊n/2⌋$: Gauss-Klammer: Abgerundet auf ganze Zahl
 ## 2.a
 > Zeigen Sie: Wenn $\sum_{i=1}^k a_i \ge 10$ gilt, folgt auch $\sum_{i=k+1}^n a_i \ge 10$.
 
 Sei $\sum_{i=1}^k a_i \ge 10$.
 $$
-    \forall 0\le i\le k: a_i \le a_{i+k} \Rightarrow \sum_{i=1}^k a_i \le \sum_{i=1}^{2k} a_{i+k} \\
-$$
-$$
-    \Leftrightarrow \sum_{i=1}^k a_i \le \sum_{i=k}^{2k} a_j
-$$
-$$
-  \forall i: a_i\ge 0 \Rightarrow  \sum_{i=k+1}^{2k} a_i \le \sum_{i=k}^n a_i \Rightarrow \mathrm{q.e.d.}
+\begin{aligned}
+    \forall 0 \le i\le k: a_i \le a_{i+k} \Rightarrow \sum_{i=1}^k a_i &\le \sum_{i=1}^{2k} a_{i+k} \\
+    \Leftrightarrow \sum_{i=1}^k a_i &\le \sum_{i=k}^{2k} a_j \\
+    \forall i: a_i \ge 0 \Rightarrow \sum_{i=k+1}^{2k} a_i &\le \sum_{i=k}^n a_i \Rightarrow
+\end{aligned}
 $$
 
 ## 2.b
 > Zusätzlich seien alle $a_i\in\mathbb N$ unterschiedlich $[\dots]$. Zeigen Sie, dass dann gilt:  $\sum_{i=k+1}^n a_i \ge k^2$.
 Sei $0\notin\mathbb N$.
 $$
-    \forall i\lt j: a_i \lt a_j \land a_1\in\mathbb N\Rightarrow a_k \gt k \land a_{k+1} \ge k
+    \forall i < j: a_i < a_j \land a_1\in\mathbb N\Rightarrow a_k > k \land a_{k+1} \ge k
 $$
-Da $n\ge 2k$ hat $\sum_{i=k+1}^n a_i$ mindestens $k$ Summanden. $\forall i\gt k: a_i \ge k$. Die Summe aus $k$ Summanden mit einer Größe von mindestens $k$ ist größer als $k^2$, daher gilt $\sum_{i=k+1}^n a_i \ge k^2$.
+Da $n\ge 2k$ hat $\sum_{i=k+1}^n a_i$ mindestens $k$ Summanden. $\forall i> k: a_i \> k$. Die Summe aus $k$ Summanden mit einer Größe von mindestens $k$ ist größer als $k^2$, daher gilt $\sum_{i=k+1}^n a_i \ge k^2$.
 
 ## 2.c
 > _Zur Diskussion_: Welche weiteren logischen Aussagen lassen sich schlussfolgern? Welche verwandten Aussagen folgen nicht?

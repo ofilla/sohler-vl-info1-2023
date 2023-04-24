@@ -51,7 +51,7 @@ Wenn Zeile 4 erreicht wird, gilt $p=\sum_{j=0}^{i+1} \mathrm A[j]$, wobei $i=n+1
 > Potenz(a, b):
 >     if b = 0 then
 >         return 1
->     return a · Potenz(a, b − 1)
+>     return a · Potenz(a, b - 1)
 > ```
 > Beweisen Sie mithilfe von vollständiger Induktion die Korrektheit des Algorithmus. Zeigen Sie dazu einen Induktionsanfang für eine geignete Induktionsvariable, formulieren Sie eine Induktionsannahme und zeigen Sie unter dieser einen Induktionsschritt.
 
@@ -70,7 +70,7 @@ $$
 $$
 
 ## 3. Merge-Operation
-> Betrachten Sie die Funktion $\mathrm{Merge}(A, p, q, r)$ aus der Vorlesung. Diese fügt die sortierten Teilarrays $\mathrm A[p..q]$ und $A[q + 1..r]$, $1 \le p \le q \lt r$, zum sortierten Teilarray $A[p..r]$ zusammen und soll dabei $\mathcal O(n)$ Zeitschritte benötigen, wobei $n = r − p + 1$ ist.
+> Betrachten Sie die Funktion $\mathrm{Merge}(A, p, q, r)$ aus der Vorlesung. Diese fügt die sortierten Teilarrays $\mathrm A[p..q]$ und $A[q + 1..r]$, $1 \le p \le q \lt r$, zum sortierten Teilarray $A[p..r]$ zusammen und soll dabei $\mathcal O(n)$ Zeitschritte benötigen, wobei $n = r - p + 1$ ist.
 
 ### a)
 > Spezifizieren Sie die Merge-Funktion in Pseudocode. Geben Sie außerdem eine intuitive Erklärung zu Ihrem Pseudocode an.

@@ -289,7 +289,7 @@ $f(n)\in\mathcal O (g(n))$ bedeutet, $f$ wächst höchstens so stark wie $g$. Da
 $$
     \mathcal O (g(n)) = \{
         \text{Funktion } f(n) |
-        \exist c\in\mathbb R_+:\exist n_0\in\mathbb N:
+        s c\in\mathbb R_+:\exists n_0\in\mathbb N:
         \forall\mathbb N \ni n\ge n_0: 0 \le f(n) \le c\cdot g(n)
     \}
 $$
@@ -307,7 +307,7 @@ $f(n)\in\Omega (g(n))$ bedeutet, $f$ wächst mindestens so stark wie $g$.
 $$
     \Omega (g(n)) = \{
         \text{Funktion } f(n) |
-        \exist c\in\mathbb R_+:\exist n_0\in\mathbb N:
+        \exists c\in\mathbb R_+:\exists n_0\in\mathbb N:
         \forall n\ge n_0: 0 \le c\cdot g(n) \le f(n)
     \}
 $$
@@ -328,7 +328,7 @@ $f(n)\in o (g(n))$ bedeutet, $f$ wächst weniger stark als $g$.
 $$
     o (g(n)) = \{
         \text{Funktion} f(n) |
-        \forall c\in\mathbb R_+:\exist n_0\in\mathbb N:
+        \forall c\in\mathbb R_+:\exists n_0\in\mathbb N:
         \forall\mathbb N \ni n\ge n_0: 0 \le f(n) \le c\cdot g(n)
     \}
 $$
@@ -377,6 +377,7 @@ Es soll bewiesen werden, dass eine Aussage $A(n)$ für alle $n\in\mathbb N$ gilt
 
 ## Rechentricks / -regeln
 * Satz von Gauß: $\sum_{i=1}^n i = \frac{n(n+1)}{2}$
+* Gauß-Klammer:  $\lfloor n/2\rfloor$: Gauss-Klammer: Abgerundet auf ganze Zahl
 
 ## Literatur
 1. [@AlgorithmsCormen2022]

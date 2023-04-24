@@ -24,9 +24,9 @@ Restliche Aufgaben wegen Zeitdruck nicht gelöst.
 >         for j = 1 to i do
 >             b = b*j
 >
->         for j = 1 to n − i do
+>         for j = 1 to n - i do
 >             c = c * (j + i)
->         d = d − a/(b * c)
+>         d = d - a/(b * c)
 >         b = 1
 >         c = 1
 >     return d
@@ -50,9 +50,9 @@ BerechneZahl(int n):
         for j = 1 to i do  \\ t_1 = 1/2 (n^2+3n)
             b = b*j \\ t_2 = 1/2 (n^2 + n)
 
-        for j = 1 to n − i do \\ t_1 = 1/2 (n^2+3n)
+        for j = 1 to n - i do \\ t_1 = 1/2 (n^2+3n)
             c = c * (j + i)  \\ t_2 = 1/2 (n^2 + n)
-        d = d − a/(b * c) \\ n
+        d = d - a/(b * c) \\ n
         b = 1 \\ n
         c = 1 \\ n
     return d
@@ -99,11 +99,11 @@ BerechneZahl(int n):
             b = b*j
 
         \\ berechne c = (n-i)!
-        for j = 1 to n − i do
+        for j = 1 to n - i do
             \\ (j+i) läuft von i bis n
             c = c * (j + i)
 
-        d = d − a/(b * c)
+        d = d - a/(b * c)
 
         \\ setze Variablen auf 1 zurück
         b = 1
@@ -168,7 +168,7 @@ Dies gilt für $n\ge n_0>1$, q.e.d.
 > $\mathcal O(n^2+2n) = \mathcal O(n^2)$
 
 ### 4.
-> $3n^4 + 2n − 3 \in \mathcal O(n^3)$
+> $3n^4 + 2n - 3 \in \mathcal O(n^3)$
 
 ### 5.
 > $\log_2 n + 12 + n \in \mathcal O(n\log_2n)$
