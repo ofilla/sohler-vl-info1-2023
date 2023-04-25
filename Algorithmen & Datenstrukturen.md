@@ -27,11 +27,41 @@ keywords:
 
 ## Entwicklung von Algorithmen
 ### Methode: Teile und Herrsche
+1. Teile die Eingabe in mehrere gleich große Teile auf.
+2. Löse das Problem rekursiv auf den einzelnen Teilen.
+3. Füge die Teile zu einer Lösung des Gesamtproblems zusammen.
+
+#### Beispiele
+* MergeSort
+* BinäreSuche
+
+#### Unterscheidungen
+Teile-und-Herrsche-Algorithmen unterscheiden sich durch...
+* die Anzahl der Teilprobleme.
+* die Größe der Teilprobleme.
+* den Algorithmus für das Zusammensetzen der Teilprobleme.
+* den Rekursionsabbruch.
+
+#### Laufzeit
+Die Laufzeit kann durch eine Laufzeitanalyse vorhergesagt werden:
+
+* $T(1) \in \mathcal O(1)$
+* $T(n) = a T(\frac{n}{b}) + f(n)$
+    * $a$: Anzahl der Teilprobleme
+    * $b$: Größe der Teilprobleme, bestimmt die Höhe des Rekursionsbaums
+    * $f(n)$: Aufwand für Aufteilen und Zusammenfügen
+
 ### Methode: Dynamische Programmierung
 ### Methode: Gierige Algorithmen
+### Rekursion
+Eine rekursive Methode ruft sich selbst mit veränderten Parametern auf. Hierzu ist zu Beginn der Methode eine Abbruchbedingung notwendig, die den einfachsten Fall des Problems löst. Ansonsten kommt es zu einer Endlosrekursion.
+
+Zur Entwicklung von neuen Algorithmen ist Rekursion oft hilfreich, wenn man ein Problem auf eine kleinere Stufe desselben Problems runterbrechen kann. Allerdings sind manche rekursive Methoden ineffizient,[^3] daher sollte ein solcher Algorithmus oft verbessert / angepasst werden.
+
+[^3]: Beispielsweise die Berechnung von Fibbonacci-Zahlen ist rekursiv extrem ineffizient, so lange keine Ergebnisse zwischengespeichert werden.
 
 ## wichtige Algorithmen
-### InsertionSort
+### Insertion Sort
 ```
 InsertionSort(A, n) \\ Feld A der Länge n wird übergeben
     for i=2 to n do
@@ -57,12 +87,41 @@ InsertionSort(A, n) \\ Feld A der Länge n wird übergeben
     Füge x an die korrekte Stelle in A ein
 ```
 
-### Rekursion
-Eine rekursive Methode ruft sich selbst mit veränderten Parametern auf. Hierzu ist zu Beginn der Methode eine Abbruchbedingung notwendig, die den einfachsten Fall des Problems löst. Ansonsten kommt es zu einer Endlosrekursion.
 
-Zur Entwicklung von neuen Algorithmen ist Rekursion oft hilfreich, wenn man ein Problem auf eine kleinere Stufe desselben Problems runterbrechen kann. Allerdings sind manche rekursive Methoden ineffizient,[^3] daher sollte ein solcher Algorithmus oft verbessert / angepasst werden.
+### Merge Sort
+$\mathrm{MergeSort}$ sortiert erst beide Hälften eines Feldes seperat, bevor es sie zusammenfügt. Dadurch wird das Feld rekursiv sortiert.
 
-[^3]: Beispielsweise die Berechnung von Fibbonacci-Zahlen ist rekursiv extrem ineffizient, so lange keine Ergebnisse zwischengespeichert werden.
+* Erster Aufruf: $\mathrm{MergeSort}(A,1,n)$ mit einem Feld $A$ der Länge $n$.
+* Worst-Case-Laufzeit: $T(n) \le \begin{cases} 1 \Leftrightarrow n=1\\ 2T(\frac{n}{2}) + n: \text{sonst}\end{cases}\Rightarrow T(n) = (n\log n)$
+
+Satz: Der Algorithmus $\mathrm{MergeSort}(A,p,r)$ sortiert das Feld $A[p..r]$ korrekt.
+Satz: Der Algorithmus $\mathrm{MergeSort}(A,1,n)$ hat eine Laufzeit von $\mathcal O(n \log n)$.
+
+#### deskriptiver Pseudocode
+```
+MergeSort(A,p,r) \\ Sortiert A[p..r]
+    if p<r then \\ Rekursionsabbruch, wenn p=r
+        int q = (p+r)/2 \\ Berechne die Mitte (Gaußklammer)
+        MergeSort(A,p,q) \\ Sortiere linke Teilhälfte
+        MergeSort(A,q+1,r) \\ Sortiere rechte Teilhälfte
+        Merge(A,p,q,r) \\ Füge die Teile zusammen
+```
+
+### Binäre Suche
+$\mathrm{BinarySearch}$ sucht erst in beiden Hälften eines Feldes seperat, die Ergebnisse vergleicht. Dadurch wird das Feld rekursiv durchsucht.
+
+Satz: Die Laufzeit von $\mathrm{BinäreSuche}(A,x,p,r)$ ist $\mathcal O(\log n)$, wobei $n= r-p+1$ die Größe des zu durchsuchenden Bereichs ist.
+Satz: Der Algorithmus $\mathrm{BinäreSuche}(A,x,p,r)$ findet den Index einer Zahl $x$ in einem sortierten Feld $A[p..r]$, sofern $x$ in $A[p..r]$ vorhanden ist.
+
+#### deskriptiver Pseudocode
+```
+BinarySearch(A,x,p,r) \\ Finde Zahl x in sortiertem Feld A[p..r]
+    if p=r then return p \\ sofern vorhanden
+    else \\ Ausgabe: Index der gesuchten Zahl
+    int q = (p+r)/2 \\ Berechne die Mitte (Gaußklammer)
+    if x <= A[q] then return BinarySearch(A,x,p,q)
+    else return BinarySearch(A,x,q+1,r)
+```
 
 ## wichtige Datenstrukturen
 ### Graphen
@@ -356,6 +415,9 @@ Definiert für eine Menge von zulässigen Eingaben die zugehörigen gewünschten
 Wir bezeichnen einen Algorithmus für eine vorgegebene Problembeschreibung als _korrekt_, wenn er für jede zulässige Eingabe die in der Problembeschreibung spezifizierte Ausgabe berechnet.
 
 ###  Methoden
+#### Nachvollziehen der Befehle
+Ohne Schleifen und Rekursion reicht es, den Ablauf der Befehle zu überprüfen.
+
 #### Schleifeninvarianten
 Sei $A(n)$ eine Aussage über den Zustand des Algorithmus vor dem $n$-ten Eintritt in den Schleifenrumpf. Eine Schleifeninvariante ist dann korrekt, wenn sie vor jedem Eintritt in den Schleifenrumpf korrekt ist. $A(1)$ wird auch als Initialisierung bezeichnet.
 
@@ -370,14 +432,19 @@ Lemma: $A(i)$ ist eine korrekte Schleifeninvariante.
 
 [^4]: siehe Pseudocode/for-Schleife
 
-#### Vollständige Induktion
-Es soll bewiesen werden, dass eine Aussage $A(n)$ für alle $n\in\mathbb N$ gilt.
-1. Induktionsvoraussetzung: Beweise für $n=1$
-2. Induktionsschritt: Beweise: Wenn $n$ gilt, dann gilt auch $n+1$
+#### Rekursion
+* Der Rekursionsabbruch entspricht dem Anfang der Vollständigen Induktion.
+* Der Rekursionsaufruf entspricht dem Induktionsschritt.
 
 ## Rechentricks / -regeln
 * Satz von Gauß: $\sum_{i=1}^n i = \frac{n(n+1)}{2}$
 * Gauß-Klammer:  $\lfloor n/2\rfloor$: Gauss-Klammer: Abgerundet auf ganze Zahl
+
+### Vollständige Induktion
+Es soll bewiesen werden, dass eine Aussage $A(n)$ für alle $n\in\mathbb N$ gilt.
+1. Induktionsvoraussetzung: Beweise für $n=1$
+2. Induktionsschritt: Beweise: Wenn $n$ gilt, dann gilt auch $n+1$
+
 
 ## Literatur
 1. [@AlgorithmsCormen2022]
