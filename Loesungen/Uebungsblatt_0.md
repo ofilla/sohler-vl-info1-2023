@@ -5,8 +5,9 @@ author:
 date:
     - 12.04.2023
 ---
-# 1. Logik
-## Aussagenlogik
+# Übungsblatt 0
+## 1. Logik
+### Aussagenlogik
 > Aussagenlogik befasst sich mit elementaren Aussagen, die durch Variablen repräsentiert und mit Warheitswerten (falsch oder wahr) belegt werden. Diese Aussagen können unterschiedlich verknüpft werden, um Zusammenhänge zwischen den Aussagen zu repräsentieren.
 >
 > **Aussagen**: z. B.
@@ -21,7 +22,7 @@ date:
 >
 > * binär: z.B. Konjuktion $\land$, Disjunktion $\lor$, Implikation $\Rightarrow$, Äquivalenz $\Leftrightarrow$
 
-## 1.a
+### 1.a
 > Auf einem Tisch liegen vier Karten mit je einem Buchstaben auf einer Seite und einer
 Zahl auf der anderen.
 >
@@ -34,7 +35,7 @@ Zahl auf der anderen.
 
 Es gilt $A \Rightarrow B \Leftrightarrow \neg B \Rightarrow \neg A$.
 
-## 1.b
+### 1.b
 > Seien _das Problem ist leicht_ und der _Algorithmus löst das Problem_ zwei Aussagen.
 >
 > Es gelte: **Wenn das Problem ist leicht gilt, dann gilt der Algorithmus löst das Problem.**
@@ -52,10 +53,10 @@ Es gilt $A \Rightarrow B \Leftrightarrow \neg B \Rightarrow \neg A$.
 3. **Gilt**: Entweder das Problem ist leicht, dann stimmt die zweite Bedingung, oder sie ist nicht leicht und die erste Bedingung gilt.
 4. **Gilt nicht**: Die Aussage stimmt nur, wenn das Problem leicht ist _und_ der Algorithmus das Problem löst. Dies ist nicht immer gegeben, siehe Wahrheitstabelle für $A\land B$.
 
-# 2. Beweise über Summen-Notation
+## 2. Beweise über Summen-Notation
 > Es seien $A = [a_1, a_2,\dots, a_n ]$ ein aufsteigend sortiertes Array natürlicher Zahlen $[\dots]$ und $k$, $1 \le k \le \lfloor n/2\rfloor$$, ein Index.
 
-## 2.a
+### 2.a
 > Zeigen Sie: Wenn $\sum_{i=1}^k a_i \ge 10$ gilt, folgt auch $\sum_{i=k+1}^n a_i \ge 10$.
 
 Sei $\sum_{i=1}^k a_i \ge 10$.
@@ -67,19 +68,18 @@ $$
 \end{aligned}
 $$
 
-## 2.b
+### 2.b
 > Zusätzlich seien alle $a_i\in\mathbb N$ unterschiedlich $[\dots]$. Zeigen Sie, dass dann gilt:  $\sum_{i=k+1}^n a_i \ge k^2$.
 Sei $0\notin\mathbb N$.
 $$
     \forall i < j: a_i < a_j \land a_1\in\mathbb N\Rightarrow a_k > k \land a_{k+1} \ge k
 $$
 Da $n\ge 2k$ hat $\sum_{i=k+1}^n a_i$ mindestens $k$ Summanden. $\forall i> k: a_i \> k$. Die Summe aus $k$ Summanden mit einer Größe von mindestens $k$ ist größer als $k^2$, daher gilt $\sum_{i=k+1}^n a_i \ge k^2$.
-
-## 2.c
+### 2.c
 > _Zur Diskussion_: Welche weiteren logischen Aussagen lassen sich schlussfolgern? Welche verwandten Aussagen folgen nicht?
 
-# 3. Pseudocode
-## 3.a
+## 3. Pseudocode
+### 3.a
 > Gegeben ein Feld A der Länge $n$. Schreiben Sie einen Algorithmus in Pseudocode, der die Summe aller Elemente aus $A$ ausgibt.
 
 ```
@@ -88,7 +88,7 @@ summe(A, n):
     return A[n] + summe(A, n-1)
 ```
 
-## 3.b
+### 3.b
 > Gegeben ein Feld $A$ der Länge $n$. Verwenden Sie Ihren Algorithmus aus der vorherigen Teilaufgabe, um den Durchschnitt der Elemente aus $A$ zu berechnen.
 
 ```
@@ -97,7 +97,7 @@ avg(A, n):
     return sum/n
 ```
 
-## 3.c
+### 3.c
 > Gegeben ein Feld $A$ der Länge $n$ mit den Werten $a_1, a_2,\dots, a_n$ und eine Zahl $m \in \mathbb N$. Sei $k$ die größte Zahl, so dass gilt $\sum^k_{i=1} a_i \le m$. Entwickeln Sie einen Algorithmus, der $k$ berechnet.
 
 ```

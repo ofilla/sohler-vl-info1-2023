@@ -4,9 +4,10 @@ author:
     - Oliver Filla
 date: 19.04.2023 (Korrektur)
 ---
+# Übungsblatt 1
 Die Abbruchbedingungen für Rekursion oder Schleifen werde ich oft mit "kleiner" oder "größer" angeben. Im Unterschied zu "gleich" ist dies oft resistenter gegen (Eingabe-)Fehler und kann Endlosschleifen bzw. -rekursionen verhindern.
 
-# 1. Rekursion
+## 1. Rekursion
 > Geben Sie in Pseudocode einen rekursiven Algorithmus an, welcher für zwei gegebene Zahlen $n$ und $a$ das Produkt $\sum_{i=0}^n a^i$ berechnet.
 
 Umgeschrieben lautet die Formel folgendermaßen:
@@ -24,8 +25,8 @@ power(a, n):
     return a * power(a, n-1)
 ```
 
-# 2. Felder
-## 2.a
+## 2. Felder
+### 2.a
 > Gegeben sei ein Feld $A$ mit $n$ Zahlen $a_1, a_2 ,\dots , a_n$. Gesucht ist das Paar zweier benachbarter Elemente im Array mit maximaler Differenz.
 > 
 > Geben Sie in Pseudocode einen rekursiven Algorithmus an, der das Paar $(i, i + 1)$ berechnet, das $|a_i - a_{i+1}|$ maximiert.
@@ -72,7 +73,7 @@ max_abs_diff_pos(A, n):
     return (i,j)
 ```
 
-## 2.b
+### 2.b
 > Geben Sie die Laufzeit ihres Algorithmus aus Teilaufgabe a) an.
 
 * Laufzeit $\mathrm{abs\_diff}$: $3$ Zeitschritte
@@ -114,10 +115,10 @@ max_abs_diff_pos(A, n):  \\ T(n)
 ```
 $(n-2)\cdot 5 + 3$
 
-# 3
+## 3
 > In den folgenden Teilaufgaben sind eine Problemstellung und ein rekursiver Algorithmus zum Lösen des Problems gegeben. Jedoch haben sich Fehler in die Algorithmen eingeschlichen. Finden und korrigieren Sie die Fehler, sodass die betroffenen Algorithmen ihr Problem richtig lösen. Verändern Sie dabei so wenig wie möglich an dem vorhandenen Pseudocode!
 
-## a
+### a
 > Gegeben sei eine natürliche Zahl $n$. Der folgende Algorithmus soll rekursiv die Summe $\sum_{i=1}^n i$ berechnen.
 > ```
 > Summe(n)
@@ -137,7 +138,7 @@ Summe(n)
 2. return n + Summe(n - 1)
 ```
 
-## b
+### b
 > Gegeben seien zwei natürliche Zahlen $n$ und mit $n \ge k$. Der folgende Algorithmus soll rekursiv den Binomialkoeffzienten ${n \choose k} = {n-1 \choose k-1} + {n-1 \choose k}$ berechnen.
 > ```
 > Binom(n, k)
@@ -155,25 +156,10 @@ Binom(n, k)
 2. return Binom(n - 1, k - 1) + Binom(n - 1, k)
 ```
 
-# 4. Insertion Sort
+## 4. Insertion Sort
 > Gegeben sei das folgende Feld A:
 > ![](./img/1.4a.png)
 > Verwenden sie InsertionSort, um das Feld A zu sortieren. Geben Sie dabei den Zustand
 des Feldes nach jeder Iteration der for-Schleife an.
 
-
-* $i = 2$
-![i=2](./img/1.4b0.png)
-* $i=3$
-![i=3](./img/1.4b1.png)
-* $i=4$
-![i=4](./img/1.4b2.png)
-* $i=5$
-![i=5](./img/1.4b3.png)
-* $i=6$
-![i=6](./img/1.4b4.png)
-* $i=7$
-![i=7](./img/1.4b5.png)
-* $i=8$
-![i=8](./img/1.4b6.png)
-![i=9](./img/1.4b7.png)
+![Zustand nach jedem Schleifendurchlauf](./img/1.4b.png)
