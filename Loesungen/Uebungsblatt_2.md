@@ -47,11 +47,11 @@ BerechneZahl(int n):
     for i = 1 to n do  \\ n+1
         a = a*i  \\ n
     for i = 1 to n do  \\ n+1
-        for j = 1 to i do  \\ t_1 = 1/2 (n^2+3n)
-            b = b*j \\ t_2 = 1/2 (n^2 + n)
+        for j = 1 to i do  \\ t_1
+            b = b*j \\ t_2
 
-        for j = 1 to n - i do \\ t_1 = 1/2 (n^2+3n)
-            c = c * (j + i)  \\ t_2 = 1/2 (n^2 + n)
+        for j = 1 to n - i do \\ t_1
+            c = c * (j + i)  \\ t_2
         d = d - a/(b * c) \\ n
         b = 1 \\ n
         c = 1 \\ n
@@ -60,21 +60,17 @@ BerechneZahl(int n):
 
 $$
 \begin{aligned}
-    t_1 = &\sum_{i=1}^{n} (i + 1) = n + \sum_{i=1}^{n} i = n + \frac{n(n+1)}{2}
-        &&= \frac{1}{2}(n^2 + 3n)\approx \frac{n^2}{2} \\
-    t_2 = &\sum_{i=1}^{n} i = \sum_{i=1}^{n} i = \frac{n(n+1)}{2}
-        &&= \frac{1}{2}(n^2 + n)\approx \frac{n^2}{2}
+    t_1 = &\sum_{i=1}^{n} (i + 1) \\
+    t_2 = &\sum_{i=1}^{n} i \\
+    t_3 = &\sum_{i=1}^{n} n-i+1 = t_2 \\
+    t_4 = &\sum_{i=1}^{n} n-i
 \end{aligned}
 $$
+$t_3$ ist quasi $t_2$ in umgekehrter Reihenfolge summiert.
 
 Summe:
 $$
-\begin{aligned}
-    T(n) = &1\cdot 4 + (n+1)\cdot 2 + n\cdot 4
-        + \frac{1}{2}(n^2+3n)\cdot 2 + \frac{1}{2}(n^2+n)\cdot 2  \\
-    = &4 + (2n+2) + 4n + (n^2 + 3n) + (n^2+n) \\
-    T(n) = &2n^2 + 10n + 6
-\end{aligned}
+    T(n) = 2n^2 + 8n + 7
 $$
 Die asymptotische Worst-Case-Laufzeit ist demnach $T(n) \in \mathcal O(n^2)$.
 
@@ -114,61 +110,119 @@ BerechneZahl(int n):
 1. berechne $\mathrm a = n!$
 2. für $i\le n, i\in\mathbb N:$
     1. berechne $\mathrm b = i!$
-    2. berechne $\mathrm c = (n-i)!$
-    3. $\mathrm d = \mathrm d - \frac{\mathrm a}{\mathrm b \cdot \mathrm c} = \mathrm d - \frac{n!}{i! \cdot (n-i)!}$
-4. $\mathrm d = 1 - \frac{n!}{(n-1)!} - \frac{n!}{(n-2)!} - \ldots  - \frac{n!}{(n-i)!}$ = 1 - $\sum_{i=1}^n \prod_{j=n-i+1}^n j$
+    2. berechne $\mathrm c = (n-i+1)!=\frac{n!}{i!}$
+    3. $\mathrm d = \mathrm d - \frac{\mathrm a}{\mathrm b \cdot \mathrm c} = \mathrm d - \frac{n!}{i! \cdot (n-i)!} = \mathrm d - 1$
+4. $\mathrm d = 1 - n$
 
 ### c)
 > Lässt sich das Ergebnis des Algorithmus auch effizienter berechnen? Erklären Sie warum nicht oder geben Sie einen schnelleren Algorithmus an und analysieren Sie dessen asymptotische Worst-Case-Laufzeit.
 
 ```
 BerechneZahl(int n):
-    sum = 1  \\ 1
-    for i = 1 to n do \\ n+1
-        prod = 1  \\ n
-        for j = n-i+1 to n \\ n + t_3
-            prod = prod * j  \\ t_3
-        sum = sum - prod \\ n
-    return sum
+    return 1 - n
 ```
 
 $$
-    t_3 = (n-i) + (n-i+1) + \ldots + 2 + 1 = \sum_{j=1}^{n-i} j = \frac{(n-i)n}{2}
+    T(n) = \mathcal O(1)
 $$
 
 ## 2. Landau Notation
 > Welche der folgenden Aussagen sind korrekt?
 
 $$
-    \mathcal O (g(n)) = \{
+\begin{aligned}
+    \mathcal O (g(n)) =\ &\{
         f(n) |
         \exists c\in\mathbb R_+:\exists n_0\in\mathbb N:
         \forall\mathbb N \ni n\ge n_0: 0 \le f(n) \le c\cdot g(n)
-    \}
+    \} \\
+    \Omega (g(n)) =\ &\{
+        f(n) |
+        \exists c\in\mathbb R_+:\exists n_0\in\mathbb N:
+        \forall n\ge n_0: 0 \le c\cdot g(n) \le f(n)
+    \} \\
+    & f(n) \in \mathcal O(g(n)) \Leftrightarrow \ g(n) \in \Omega(f(n))
+\end{aligned}
 $$
 
 ### 1.
 > $6n^2 + n^3 \in \mathcal O(n^2)$
-**Falsch**. Sei $n=\max[n_0, c]$ und $c\ge n_0$:
+
+**Falsch**. Seien $c, n_0 > 0$.
 $$
-    f(n) = 6n^2+n^3 = 6c^2 + c^3 \le g(n) = c\cdot c^2 = c^3 \\
-    \Rightarrow 6c^2 \le 0
+    6n^2 + n^3 > cn^3 \\
+    \Leftrightarrow n^3 > n^2(c-6) \\
+    \Leftrightarrow n > c-6
 $$
-Da $c>0$ kann $c^2<0$ nicht stimmen. Beweis durch Widerspruch.
+Sei $n=\max[n_0, c-5]$. Damit gibt es immer ein $n$, dass obige Gleichung erfüllt. Dies widerspricht der Forderung von $\mathcal O(n^2)$.
 
 ### 2.
-> $2\log_2 n \in \mathcal O(n)$
-**Richtig**. Sei $c=2$ und $n_0>1$:
+> $2\log_2 n \in \mathcal \Omega(n)$
+
+**Falsch**.
+
 $$
-    2\log_2n \le 2n \Rightarrow \log_2n \le n
+\begin{aligned}
+    2\log_2 n \in\ &\mathcal \Omega(n) \\
+    \Leftrightarrow n \in \ &\mathcal O(2\log_2(n)) \\
+    \Rightarrow n \ge\ &4c\log_2(n) \overset{*}{>} 2c\log_2(n) \\
+\end{aligned} \\
+    n=\max[n_0, 2^{10c}] \Rightarrow n \ge 4c\log_2(n)
+        \begin{cases}
+            n=2^{10c} &\overset{**}{\Rightarrow} 2^{10c} \ge 40 c^2 \\
+            n=n_0 &\Leftrightarrow \frac{\log_2(n)}{2} > c
+                &\overset{**}{\Rightarrow} n_0 \ge \frac{4(\log_2(n))^2}{10}
+        \end{cases}
 $$
-Dies gilt für $n\ge n_0>1$, q.e.d.
+
+Die Ungleichung $*$ gilt für $n\ge 2$. Die Ungleichungen $**$ stehen im Widerspruch zu der getätigten Aussage. Damit ist der Widerspruchsbeweis abgeschlossen.
 
 ### 3.
 > $\mathcal O(n^2+2n) = \mathcal O(n^2)$
 
+**Richtig**.
+
+#### $\Leftarrow$
+Wenn $f(n) \in \mathcal O(n^2+2n) \Leftarrow f(n) \in \mathcal O(n^2)$.
+Beweis:
+$$
+    f(n) \in \mathcal O(n^2) \Rightarrow
+        \exists c,n_0: \forall n\ge n_0: 0\le f(n) \le cn^2 \\
+        \text{Sei } c^\prime=c, n_0^\prime=n_0
+            \Rightarrow \forall n\ge n_0: 0\le f(n) \le c^\prime(n^2 + 2n) \\
+        \Rightarrow \exists c^\prime, n_0^\prime:
+            \forall n\ge n_0: 0\le f(n) \le c^\prime(n^2 + 2n) \\
+        \Leftrightarrow f(n) \in \mathcal O(n^2+2n)
+$$
+
+#### $\Rightarrow$
+Wenn $f(n) \in \mathcal O(n^2+2n) \Leftarrow f(n) \in \mathcal O(n^2)$.
+Beweis:
+$$
+    f(n) \in \mathcal O(n^2+2n) \Rightarrow
+        \exists c,n_0: \forall n\ge n_0: 0\le f(n) \le c(n^2+2n) \\
+    \text{Seien} c^\prime=2c \land n_0 = 3 \Rightarrow \forall n\ge n_0:
+        \frac{2c}{c^\prime-c} \overset{*}{\le} n \\
+    \Rightarrow \exists c=2c, n_0: \forall n\ge n_0: f(n) \le c^\prime n^2\\
+    \Leftrightarrow f(n) \in \mathcal(n^2)
+$$
+
+Nebenrechnung:
+$$
+    cn^2 + 2cn \le c^\prime n^2
+        \Leftrightarrow cn + 2c \le c^\prime n
+        \Leftrightarrow 2c \le (c^\prime-c)n \\
+        \Leftrightarrow \frac{2c}{c^\prime-c} \overset{*}{\le} n
+$$
+
 ### 4.
-> $3n^4 + 2n - 3 \in \mathcal O(n^3)$
+> $3n^4 + 2n - 3 \in \Omega(n^3)$
+
+**Richtig**.
+Seien $c=n_0=1$, so gilt für alle $n\ge n_0$ $0\le cn^3 \le 3n^4 + 2n-3 \Leftrightarrow 3n^4 + 2n - 3\in\Omega(n^3)$.
 
 ### 5.
 > $\log_2 n + 12 + n \in \mathcal O(n\log_2n)$
+
+**Richtig**.
+Seien $c=15$ und $n_0=2$. Dann gilt für alle $n\ge n_0$ $\log_2(n)+12+n\le cn\log_2n$. Dies ist äquivalent zu der Aussage $\log_2 n + 12 + n \in \mathcal O(n\log_2n)$.
