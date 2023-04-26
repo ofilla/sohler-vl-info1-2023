@@ -10,7 +10,6 @@ keywords:
   - Datenstruktur
 ---
 # Algorithmen & Datenstrukturen
-
 ## Definitionen
 * **Informatik** ist die Disziplin der automatischen Verarbeitung von Information.[^1]
 * Ein **Algorithmus** ist eine wohldefinierte Handlungsvorschrift, die einen Wert oder eine Menge von Werten als Eingabe erhält und als Ausgabe einen Wert oder eine Menge von Werten liefert.[^2]
@@ -18,7 +17,7 @@ keywords:
 [^1]: https://gi.de/fileadmin/GI/Hauptseite/Themen/was-ist-informatik-kurz.pdf
 [^2]: [@AlgorithmsCormen2022]
 
-## Lernziele
+### Lernziele
 * Methoden zur Entwicklung von Algorithmen
 * Bewertung der Qualität von Algorithmen
     * Korrektheit
@@ -60,6 +59,15 @@ Zur Entwicklung von neuen Algorithmen ist Rekursion oft hilfreich, wenn man ein 
 
 [^3]: Beispielsweise die Berechnung von Fibbonacci-Zahlen ist rekursiv extrem ineffizient, so lange keine Ergebnisse zwischengespeichert werden.
 
+#### Laufzeit
+Die Laufzeit kann durch eine Laufzeitanalyse vorhergesagt werden:
+
+* $T(1) \in \mathcal O(1)$
+* $T(n) = a T(\frac{n}{b}) + f(n)$
+    * $a$: Anzahl der Teilprobleme
+    * $b$: Größe der Teilprobleme, bestimmt die Höhe des Rekursionsbaums
+    * $f(n)$: Aufwand für Aufteilen und Zusammenfügen
+
 ## wichtige Algorithmen
 ### Insertion Sort
 ```
@@ -92,10 +100,10 @@ InsertionSort(A, n) \\ Feld A der Länge n wird übergeben
 $\mathrm{MergeSort}$ sortiert erst beide Hälften eines Feldes seperat, bevor es sie zusammenfügt. Dadurch wird das Feld rekursiv sortiert.
 
 * Erster Aufruf: $\mathrm{MergeSort}(A,1,n)$ mit einem Feld $A$ der Länge $n$.
-* Worst-Case-Laufzeit: $T(n) \le \begin{cases} 1 \Leftrightarrow n=1\\ 2T(\frac{n}{2}) + n: \text{sonst}\end{cases}\Rightarrow T(n) = (n\log n)$
+* Worst-Case-Laufzeit: $T(n) \le \begin{cases} 1 \Leftrightarrow n=1\\ 2T(\frac{n}{2}) + n: \text{sonst}\end{cases}\Rightarrow T(n) = \mathcal O(n\log_2 n)$
 
 Satz: Der Algorithmus $\mathrm{MergeSort}(A,p,r)$ sortiert das Feld $A[p..r]$ korrekt.
-Satz: Der Algorithmus $\mathrm{MergeSort}(A,1,n)$ hat eine Laufzeit von $\mathcal O(n \log n)$.
+Satz: Der Algorithmus $\mathrm{MergeSort}(A,1,n)$ hat eine Laufzeit von $\mathcal O(n \log_2 n)$.
 
 #### deskriptiver Pseudocode
 ```
@@ -110,7 +118,7 @@ MergeSort(A,p,r) \\ Sortiert A[p..r]
 ### Binäre Suche
 $\mathrm{BinarySearch}$ sucht erst in beiden Hälften eines Feldes seperat, die Ergebnisse vergleicht. Dadurch wird das Feld rekursiv durchsucht.
 
-Satz: Die Laufzeit von $\mathrm{BinäreSuche}(A,x,p,r)$ ist $\mathcal O(\log n)$, wobei $n= r-p+1$ die Größe des zu durchsuchenden Bereichs ist.
+Satz: Die Laufzeit von $\mathrm{BinäreSuche}(A,x,p,r)$ ist $\mathcal O(\log_2 n)$, wobei $n= r-p+1$ die Größe des zu durchsuchenden Bereichs ist.
 Satz: Der Algorithmus $\mathrm{BinäreSuche}(A,x,p,r)$ findet den Index einer Zahl $x$ in einem sortierten Feld $A[p..r]$, sofern $x$ in $A[p..r]$ vorhanden ist.
 
 #### deskriptiver Pseudocode
@@ -336,6 +344,9 @@ Im Folgenden werden einige Annahmen getroffen:
 
 Bei rekursiven Funktionen muss man mit dem Abschätzen der $\Omega$- und $\mathcal O$-Notationen aufpassen. Oft ist es sinnvoll, diese Funktionen konkret auszurechten.
 
+### Beweise
+Für Beweise, z.B. mittels Vollständiger Induktion, darf man die Landau-Notationen nicht verwenden. Bei dieser muss es konkrete Konstanten $c$ geben, die für alle $n\ge n_0$ gelten. Nutzt man während eines Beweises eine Landau-Notation, kann man verschleiern, dass $c$ immer wieder geändert wird.
+
 ### Schranken
 * Die Schranken $\mathcal O(g(n))$ und $\Omega(g(n))$ geben an, wie stark die analysierte Funktion bei großen $n$ höchstens bzw. mindestens wächst wie $g(n)$.
 * Die Schranke $\Theta(g(n))$ gibt dagegen an, dass die Funktion bei großen $n$  in exakt der angegebenen Größenordnung wächst wie $g(n)$.
@@ -348,7 +359,7 @@ $f(n)\in\mathcal O (g(n))$ bedeutet, $f$ wächst höchstens so stark wie $g$. Da
 $$
     \mathcal O (g(n)) = \{
         \text{Funktion } f(n) |
-        s c\in\mathbb R_+:\exists n_0\in\mathbb N:
+        \exists c\in\mathbb R_+:\exists n_0\in\mathbb N:
         \forall\mathbb N \ni n\ge n_0: 0 \le f(n) \le c\cdot g(n)
     \}
 $$
@@ -361,8 +372,8 @@ Satz über Hierarchien:
 
 ### $\Omega$-Notation
 Die $\Omega$-Notation liefert eine _untere Schranke_ für die Laufzeit.
-
 $f(n)\in\Omega (g(n))$ bedeutet, $f$ wächst mindestens so stark wie $g$.
+
 $$
     \Omega (g(n)) = \{
         \text{Funktion } f(n) |
@@ -370,20 +381,23 @@ $$
         \forall n\ge n_0: 0 \le c\cdot g(n) \le f(n)
     \}
 $$
+
 ### Zusammenhang zwischen $\mathcal O(n)$ und $\Omega(n)$
+
 $$
     f(n) \in \mathcal O(g(n)) \Leftrightarrow g(n) \in \Omega(f(n))
 $$
 
-
 ### $\Theta$-Notation
 $f(n)\in\Theta(n)$ bedeutet, dass $f$ für große $n$ ($n\rightarrow\infty$) genauso stark wächst wie $g$.
+
 $$
     f(n) \in \Theta(g(n)) \Leftrightarrow f(n) \in \mathcal O(g(n)) \land f(n) \in \Omega(g(n))
 $$
 
 ### $o$-Notation
 $f(n)\in o (g(n))$ bedeutet, $f$ wächst weniger stark als $g$.
+
 $$
     o (g(n)) = \{
         \text{Funktion} f(n) |
@@ -394,6 +408,7 @@ $$
 
 ### $\omega$-Notation
 $f(n)\in \omega(g(n))$ bedeutet, $f$ wächst stärker als $g$.
+
 $$
     f(n) \in o(g(n)) \Leftrightarrow g(n) \in o(g(n))
 $$
@@ -443,8 +458,13 @@ Lemma: $A(i)$ ist eine korrekte Schleifeninvariante.
 ### Vollständige Induktion
 Es soll bewiesen werden, dass eine Aussage $A(n)$ für alle $n\in\mathbb N$ gilt.
 1. Induktionsvoraussetzung: Beweise für $n=1$
-2. Induktionsschritt: Beweise: Wenn $n$ gilt, dann gilt auch $n+1$
+2. Induktionsschritt: Beweise: Wenn $n$ gilt, dann gilt auch $n+1$ ("$n\Rightarrow n+1$")
+    * $n$ gilt ist die Induktionsannahme
+    * auch $n-1\Rightarrow n$ ist eine gültige Induktionsannahme
+    * für manche Beweise braucht man auch $n-1 \Rightarrow n+1$
 
+#### Landau-Notation
+Für Beweise mittels Vollständiger Induktion darf man die Landau-Notationen nicht verwenden. Bei dieser muss es konkrete Konstanten $c$ geben, die für alle $n\ge n_0$ gelten. Nutzt man während eines Beweises eine Landau-Notation, kann man verschleiern, dass $c$ immer wieder geändert wird.
 
 ## Literatur
 1. [@AlgorithmsCormen2022]
