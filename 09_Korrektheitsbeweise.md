@@ -21,7 +21,7 @@ Ohne Schleifen und Rekursion reicht es, den Ablauf der Befehle zu überprüfen.
 ### Schleifeninvarianten
 Sei $A(n)$ eine Aussage über den Zustand des Algorithmus vor dem $n$-ten Eintritt in den Schleifenrumpf. Eine Schleifeninvariante ist dann korrekt, wenn sie vor jedem Eintritt in den Schleifenrumpf korrekt ist. $A(1)$ wird auch als Initialisierung bezeichnet.
 
-Der Beweis für die Korrektheit erfolgt über Vollständige Induktion.
+Der Beweis für die Korrektheit erfolgt über Vollständige Induktion. Hierbei ist wesentlich, auf den (Pseudo-)Code einzugehen, d.h. was in welcher Zeile gemacht wird.
 
 Für _for_-Schleifen werden hierbei folgende Annahmen getroffen:[^4]
 * Die Laufvariable $i$ wird am Ende des Schleifenrumpfs erhöht.
