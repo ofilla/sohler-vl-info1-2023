@@ -67,6 +67,9 @@ Die Laufzeit kann durch eine Laufzeitanalyse vorhergesagt werden:
     * $a$: Anzahl der Teilprobleme
     * $b$: Größe der Teilprobleme, bestimmt die Höhe des Rekursionsbaums
     * $f(n)$: Aufwand für Aufteilen und Zusammenfügen
+* Die Laufzeit beträgt normalerweise $T(n)\in\mathcal O(f(n)\cdot\log_b(n))$
+    * $\log_b(n)$ ist die Höhe des Rekursionsbaums
+    * meistens ist $b=2$, also gilt meist $T(n)\in\mathcal O(f(n)\cdot\log_2(n))$
 
 ## wichtige Algorithmen
 ### Insertion Sort
@@ -95,7 +98,6 @@ InsertionSort(A, n) \\ Feld A der Länge n wird übergeben
     Füge x an die korrekte Stelle in A ein
 ```
 
-
 ### Merge Sort
 $\mathrm{MergeSort}$ sortiert erst beide Hälften eines Feldes seperat, bevor es sie zusammenfügt. Dadurch wird das Feld rekursiv sortiert.
 
@@ -115,7 +117,7 @@ MergeSort(A,p,r) \\ Sortiert A[p..r]
         Merge(A,p,q,r) \\ Füge die Teile zusammen
 ```
 
-### Binäre Suche
+### BinarySearch
 $\mathrm{BinarySearch}$ sucht erst in beiden Hälften eines Feldes seperat, die Ergebnisse vergleicht. Dadurch wird das Feld rekursiv durchsucht.
 
 Satz: Die Laufzeit von $\mathrm{BinäreSuche}(A,x,p,r)$ ist $\mathcal O(\log_2 n)$, wobei $n= r-p+1$ die Größe des zu durchsuchenden Bereichs ist.
@@ -136,7 +138,6 @@ BinarySearch(A,x,p,r) \\ Finde Zahl x in sortiertem Feld A[p..r]
 Bestehen aus _Knoten_ und _Kanten_. Kanten können _gerichtet_ sein.
 
 Beispielsweise das "Pageranking" von Google war ein _Graphalgorithmus_, der Google die Vorherrschaft auf dem Suchmaschinenmarkt einbrachte: Das Ranking einer Website wurde aus der Anzahl von Verweisen auf ebendiese Website ermittelt.
-
 
 ## Speicher und Datentypen
 ### Speichermodell
@@ -189,7 +190,7 @@ number[li] = 5
 next[li] = NIL
 ```
 
-## Speicherbedarf
+### Speicherbedarf
 * _Elementare Datentypen_: 1 Zelle
 * Felder / Verbunddaten: Summe aller Elemente
 * Speicherbedarf Algorithmus
