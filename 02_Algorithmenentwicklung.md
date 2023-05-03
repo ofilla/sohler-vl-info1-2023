@@ -34,14 +34,15 @@ Zur Entwicklung von neuen Algorithmen ist Rekursion oft hilfreich, wenn man ein 
 [^3]: Beispielsweise die Berechnung von Fibbonacci-Zahlen ist rekursiv extrem ineffizient, so lange keine Ergebnisse zwischengespeichert werden.
 
 ### Laufzeit
-Die Laufzeit kann durch eine Laufzeitanalyse vorhergesagt werden:
+Die Laufzeit kann durch eine Laufzeitanalyse vorhergesagt werden.
 
 * $T(1) \in \mathcal O(1)$
 * $T(n) = a T(\frac{n}{b}) + f(n)$
     * $a$: Anzahl der Teilprobleme
-    * $b$: Größe der Teilprobleme, bestimmt die Höhe des Rekursionsbaums
+    * $n/b$: Größe der Teilprobleme, bestimmt die Höhe des Rekursionsbaums
     * $f(n)$: Aufwand für Aufteilen und Zusammenfügen
 * Die Laufzeit beträgt normalerweise $T(n)\in\mathcal O(f(n)\cdot\log_b(n))$
     * $\log_b(n)$ ist die Höhe des Rekursionsbaums
     * meistens ist $b=2$, also gilt meist $T(n)\in\mathcal O(f(n)\cdot\log_2(n))$
+    * Auf der letzten Rekursionsstufe gibt es $n$ Teilprobleme der Größe $1$. Es gilt $b^h=n$, wobei $h=\log_b{n}$ die Rekursionshöhe beschreibt.
 

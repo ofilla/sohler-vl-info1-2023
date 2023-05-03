@@ -139,15 +139,37 @@ Die Rekursionstiefe ist $\log_4(n)$. Je Rekursionsebene gibt es $4$ Rechenschrit
 ### b)
 > $T(n) = \begin{cases}1 & n=1 \\2\cdot T(\frac{n}{2}) + n^2& \text{sonst}\end{cases}$
 
-Die Rekursionstiefe ist $\log_2(n)$. Im Ersten Rekursionsaufruf gibt es $n^2$ Rechenschritte zzgl. der Funktionsaufrufe. Danach gibt es $2\cdot(\frac{j}{2})^2 = \frac{j^2}{2}$ Rechenschritte (für jedes $j>1$). Diese gibt es $\log_2(n)-1$ mal, dazu kommen zwei Funktionsaufrufe.
+Raten der Laufzeit:
+$$
+    T(n) = T(n/8) + (n/4)^2 + (n/2)^2 + (n/1)^2 = \sum_{i=0}^{\log_2(n)} \frac{n^2}{4^n} \in \mathcal O(n^2)
+$$
+Behauptung: $T(n)\in\mathcal O(n^2)$
+
+### Beweis
+Sei $c>2$ konstant. Wir beweisen für Zweierpotenzen $n$.
+
+#### Induktionsvoraussetzung
+$$
+    T(1) = 1 \le c\cdot 1^2 \Rightarrow T(1) \in \mathcal O(n^2)
+$$
+
+#### Induktionsannahme
+Gelte $T(n) = c\cdot n^2$.
+
+#### Induktionsschritt
+Zu zeigen ist $T(2n) \le c\cdot (2n)^2 = 4cn^2$.
 $$
 \begin{aligned}
-    T(n) &= 3 + (n^2+2) + \frac{1}{2}(n^2+1)\cdot(\log_2(n)-1) \\
-        &= \frac{n^2}{2}\cdot(2+\log_2(n)-1) + 5 \\
-    T(n) &= \frac{n^2}{2}\cdot(1+\log_2(n)) + 5 \\
-    \Rightarrow T(n) &\in\mathcal O(n^2\log_2(n))
+    T(2n) &= T(n) + (2n)^2 \\
+        &= cn^2 + 4n^2 \\
+        &= (c+4)n^2 \le 4cn^2 \\
+    \Leftrightarrow c+4 &\le 4c \\
+    \Leftrightarrow 4 &\le 3c \\
+    \Leftrightarrow \frac{4}{3} &\le c \\
 \end{aligned}
 $$
+
+Für $c=2$ ist dies gelöst.
 
 ### c)
 > $T(n) = \begin{cases}1 & n=1 \\3\cdot T(\frac{n}{2}) + n& \text{sonst}\end{cases}$
