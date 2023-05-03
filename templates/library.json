@@ -1,0 +1,224 @@
+[
+    {
+        "id": "Ahrens2017",
+        "type": "book",
+        "author": [
+            {
+                "family": "Ahrens",
+                "given": "Sönke"
+            }
+        ],
+        "title": "How to Take Smart Notes: One Simple Technique to Boost Writing, Learning and Thinking - for Students, Academics and Nonfiction Book Writers",
+        "title-short": "How to Take Smart Notes",
+        "edition": "1",
+        "issued": {
+            "date-parts": [
+                [ 2017 ]
+            ]
+        },
+        "isbn": "978-1-5428-6650-7"
+    },
+    {
+        "id": "Sethna2021",
+        "type": "book",
+        "author": [
+            {
+                "family": "Sethna",
+                "given": "James P."
+            }
+        ],
+        "title": "Statistical Mechanics: Entropy, Order Parameters, and Complexity",
+        "issued": {
+            "date-parts": [
+                [ 2021 ]
+            ]
+        },
+        "doi": "10.1093/oso/9780198865247.003.0001"
+    },
+    {
+        "id": "FliessbachTP42018",
+        "type": "book",
+        "author": [
+            {
+                "family": "Fließbach",
+                "given": "Torsten"
+            }
+        ],
+        "title": "Statistische Physik: Lehrbuch zur Theoretischen Physik IV",
+        "edition": "6",
+        "issued": {
+            "date-parts": [
+                [ 2018 ]
+            ]
+        },
+        "isbn": "978-3-662-58033-2",
+        "doi": "10.1007/978-3-662-58033-2"
+    },
+    {
+        "id": "NeueErde2008",
+        "type": "book&cards",
+        "title": "Das Lenormand Orakel: Die 36 Wahrsagenkarten von Mademoiselle Lenormand – Mit Erklärung und Legemuster",
+        "title-short": "Das Lenormand Orakel",
+        "publisher": "Neue Erde Verlag",
+        "issued": {
+            "date-parts": [
+                [ 2008 ]
+            ]
+        },
+        "EAN": "9783890602585"
+    },
+    {
+        "id": "Clear2018",
+        "type": "book",
+        "title": "Atomic Habits: An Easy & Proven Way to Build Good Habits & Break Bad Ones",
+        "title-short": "Atomic Habits",
+        "author": [
+            {
+                "family": "Clear",
+                "given": "James"
+            }
+        ],
+        "issued": {
+            "date-parts": [
+                [ 2018 ]
+            ]
+        },
+        "isbn": "987-0-73521-130-8"
+    },
+    {
+        "id": "Duhigg2012",
+        "type": "book",
+        "title": "The Power of Habit: Why We Do What We Do, and How to Change",
+        "title-short": "The Power of Habit",
+        "author": [
+            {
+                "family": "Duhigg",
+                "given": "Charles"
+            }
+        ],
+        "issued": {
+            "date-parts": [
+                [ 2012, 4, 5 ]
+            ]
+        },
+        "isbn": "978-0-43402-036-2"
+    },
+    {
+        "id": "wiki:Pomodoro_Technique",
+        "type": "article",
+        "title": "Pomodoro Technique",
+        "publisher": "Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/Pomodoro_Technique",
+        "issued": {
+            "date-parts": [
+                [ 2023, 2, 8 ]
+            ]
+        }
+    },
+    {
+        "id": "wiki:52/17_rule",
+        "type": "article",
+        "title": "52/17 rule",
+        "publisher": "Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/52/17_rule",
+        "issued": {
+            "date-parts": [
+                [ 2023, 2, 8 ]
+            ]
+        }
+    },
+    {
+        "id": "AlgorithmsCormen2022",
+        "type": "book",
+        "title": "Introduction to Algorithms",
+        "edition": "4",
+        "author": [
+            {
+                "family": "Cormen",
+                "given": "Thomas"
+            },
+            {
+                "family": "Leiserson",
+                "given": "Charles"
+            },
+            {
+                "family": "Rivest",
+                "given": "Ronald"
+            },
+            {
+                "family": "Stein",
+                "given": "Clifford"
+            }
+        ],
+        "publisher": "The MIT Press",
+        "url": "https://mitpress.mit.edu/9780262046305/introduction-to-algorithms",
+        "issued": {
+            "date-parts": [
+                [ 2022, 4, 5 ]
+            ]
+        },
+       "isbn": "978-0-2620-4630-5"
+    },
+    {
+        "id": "Gross2012Festkörper",
+        "type": "book",
+        "title": "Festkörperphysik",
+        "edition": "4",
+        "author": [
+            {
+                "family": "Gross",
+                "given": "Rudolph"
+            },
+            {
+                "family": "Marx",
+                "given": "Achim"
+            }
+        ],
+        "doi": "10.1524/9783486714869",
+        "publisher": "Oldenbourg Wissenschaftsverlag",
+        "issued": {
+            "date-parts": [
+                [ 2012 ]
+            ]
+        },
+       "isbn": "978-3-486-71294-0"
+    },
+    {
+        "id": "Hunklinger2011Festkörper",
+        "type": "book",
+        "title": "Festkörperphysik",
+        "edition": "3",
+        "author": [
+            {
+                "family": "Hunklinger",
+                "given": "Siegfried"
+            }
+        ],
+        "publisher": "Oldenbourg Verlag München",
+        "issued": {
+            "date-parts": [
+                [ 2011 ]
+            ]
+        },
+       "isbn": "978-3-486-70547-8"
+    },
+    {
+        "id": "Sakurai2020",
+        "type": "book",
+        "title": "Modern Quantum Mechanics",
+        "edition": "3",
+        "author": [
+            {
+                "family": "Sakurai",
+                "given": "Jun John"
+            }
+        ],
+        "publisher": "Cambridge University Press",
+        "issued": {
+            "date-parts": [
+                [ 2020 ]
+            ]
+        },
+       "isbn": "978-1-108-47322-4"
+    }
+]

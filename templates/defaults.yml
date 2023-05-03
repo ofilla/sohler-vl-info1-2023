@@ -1,0 +1,52 @@
+reader: markdown
+writer: pdf
+self-contained: true
+variables:
+    documentclass: article
+    papersize: a4
+metadata-files: []
+include-before-body: []
+include-after-body: []
+include-in-header:
+    - templates/header.tex
+bibliography:
+    - templates/library.json
+filters:
+    - type: citeproc
+    - /home/filla/.config/Zettlr/lua-filter/links.lua
+    - /home/filla/.config/Zettlr/lua-filter/tags.lua
+top-level-division: default
+pdf-engine: pdflatex
+dpi: 72
+toc: true
+toc-depth: 5
+number-sections: false
+number-offset:
+    - 0
+    - 0
+    - 0
+    - 0
+    - 0
+    - 0
+shift-heading-level-by: 1
+section-divs: true
+identifier-prefix: ""
+title-prefix: ""
+eol: lf
+strip-comments: false
+indented-code-classes: []
+ascii: false
+default-image-extension: .jpg
+highlight-style: pygments
+tab-stop: 4
+preserve-tabs: false
+fail-if-warnings: false
+metadata:
+    zettlr:
+        strip_tags: false
+        strip_links: full
+        link_start: "[["
+        link_end: "]]"
+input-files:
+    - Algorithmen & Datenstrukturen.md
+output-file: Algorithmen & Datenstrukturen.pdf
