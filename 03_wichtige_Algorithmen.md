@@ -60,3 +60,53 @@ BinarySearch(A,x,p,r) \\ Finde Zahl x in sortiertem Feld A[p..r]
     else return BinarySearch(A,x,q+1,r)
 ```
 
+## n-Ziffer-Integer Multiplikation
+Für große Zahlen nehmen wir an, dass jede _Ziffer_ eine Speicherzelle benötigt. Zwei $n$-Ziffer-Zahlen können wir in der Laufzeit $\Theta(n)$ berechnen. Ein $n$-Ziffer können wir in Laufzeit $\Theta(n+k)$ mit $10^k$ multiplizieren.
+
+Dazu multiplizieren wir schriftlich, wobei $A,B,C,D$ $n$-Ziffern sind: $AB\cdot CD = 100AC + 10(AD + BC) + BD$. Dies sind $4$ Multiplikationen von $n$-Ziffern. Dies hat allerdings eine Laufzeit von $T(n)=4T(\frac{n}{2})+cn$, daher gilt $T(n)\in \Theta(n^2)$.
+
+Effizienter wird es, wenn wir die Identität $(A+B)(C+D)=AC+BC+AD+BD$ verwenden. Damit können wir die Summe $BC+AD$ durch $(A+B)(C+D)-AC-BD$ ausdrücken, die Werte $AC$ und $BD$ müssen wir ohnehin berechnen. Dadurch kann man sich eine Multiplikation sparen und man erhält die Laufzeit von $T(n)=3T(\frac{n}{2})+cn$, daher gilt $T(n)\in \Theta(n)$.
+
+## Algorithmus von Strassen
+Falls wir das Produkt von zwei $n\times n$-Matrizen berechnen wollen, können wir diese in je $4$ Teilmatrizen der Größe $\frac{n}{2}\times\frac{n}{2}$ aufteilen. Dann multiplizieren wir $8$ $\frac{n}{2}\times\frac{n}{2}$-Matrizen und addieren $4$ $\frac{n}{2}\times\frac{n}{2}$-Matrizen.
+
+
+$$
+    \begin{pmatrix}A&B\\C&D\end{pmatrix}
+        \cdot \begin{pmatrix}E&F\\ G&H\end{pmatrix}
+        =
+            \begin{pmatrix}
+                AE + BG & AF + BH \\
+                CE + DG & CF + DH \\
+            \end{pmatrix}
+$$
+
+Die Laufzeit ist dann $T(n)\in \mathcal O(n^{\log_2 8})\subseteq\mathcal O(n^3)$:
+
+$$
+    T(n) =
+        \begin{cases}
+            c & n=1 \\
+            8T(\frac{n}{2}) + cn^2 & n>1
+        \end{cases}
+$$
+
+
+Wir können folgende Rechentricks nutzen:
+
+* $P_1 = A (F-H)$
+* $P_2= (A+B)H$
+* $P_3 = (C+D)E$
+* $P_4 = D(G-E)$
+* $P_5 = (A+D)(E+H)$
+* $P_6 =(B-D)(G+H)$
+* $P_7 = (A-C)(E+F)$
+
+Damit können wir eine Matrixmultiplikation sparen:
+* $AE + BG = P_4 + P_5 + P_6 – P_2$
+* $AF + BH = P_1 + P_2$
+* $AF + BH = P_1 + P_2$
+* $AF + BH = P_1 + P_5 – P_3 – P_7$
+
+Auf diese Weise können wir zwei $n\times n$-Matrizen in der $\mathcal O(n^{\log_2 7})\approx\mathcal O(n^{1.81})$ berechnen.
+

@@ -64,6 +64,9 @@ Annahmen:
 * Zur Initialisierung wird die Laufvariable $i$ auf den Startwert gesetzt.
     * Deswegen wird das Schleifenkonstrukt einmal mehr als der Schleifenrumpf aufgerufen.
     * Die Laufzeitbestimmung zählt hierbei nur die Aufrufe des Schleifenkonstrukts.
+* Laufzeitanalyse: $1 + (n+1) + n + 1 = 2n + 3$
+
+Das bedeutet, dass die Laufvariable beim Eintritt in den Schleifenrumpf schon den Wert für den folgenden Schleifendurchlauf hat. Dies ist für die Betrachtung von Schleifeninvarianten relevant.
 
 ```
 j=0  \* 1 \*
@@ -72,9 +75,14 @@ for i=1 to n do  \* Schleifenkonstrukt n+1 \*
     j = j + i  \* n \*
 output << j  \* 1 \*
 ```
-* Laufzeitanalyse: $1 + (n+1) + n + 1 = 2n + 3$
 
-Das bedeutet, dass die Laufvariable beim Eintritt in den Schleifenrumpf schon den Wert für den folgenden Schleifendurchlauf hat. Dies ist für die Betrachtung von Schleifeninvarianten relevant.
+```
+j=0  \* 1 \*
+for i=n downto 1 do  \* Schleifenkonstrukt n+1 \*
+    \* Schleifenrumpf \*
+    j = j + i  \* n \*
+output << j  \* 1 \*
+```
 
 ### while
 Der Schleifenrumpf kann $0$-mal durchlaufen werden.

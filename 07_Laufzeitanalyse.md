@@ -14,3 +14,33 @@ Dies ist der Standard, normalerweise ist diese Analyse gemeint, wenn man von "La
 Die Worst-Case Laufzeit $T(n) = \mathrm{avg}[\text{Laufzeit}]$ benötigt eine Definition von "Durschschnittlich", also auch Wahrscheinlichkeitsverteilung von Eingabegrößen.
 Daher wird sie i.A. nicht verwendet.
 
+
+## Master-Theorem
+Seien $a\ge 1$ und $b\ge 1$ ganzzahlige Konstanten und $f: \mathbb N\rightarrow \mathbb N$. Gelte weiterhin für die Laufzeit $T(n)$:
+$$
+    T(n) \le
+        \begin{cases}
+            n=1: f(n) \\
+            n>1: a\cdot T(\frac{n}{b}) + f(n)
+        \end{cases}
+$$
+Dann gilt:
+$$
+\begin{aligned}
+    1. &&
+        f(n) =a f\left(\frac{n}{b}\right)
+        &&\Rightarrow&&
+        T(n) &\in\mathcal O(f(n)\cdot\log_2(n)) \\
+    2. &&
+        \exists \gamma>1:
+        f(n) \ge \gamma a f\left(\frac{n}{b}\right)
+        &&\Rightarrow&&
+        T(n) &\in\mathcal O(f(n)) \\
+    3. &&
+        \exists \gamma\in(0,1):
+        f(n) \le \gamma a f\left(\frac{n}{b}\right)
+        &&\Rightarrow&&
+        T(n) &\in\mathcal O(a^{\log_b(n)}) \\
+\end{aligned}
+$$
+
