@@ -6,7 +6,6 @@ date:
     - 03.05.2023
 ---
 # Übungsblatt 4
-
 ## 1. Binäre Suche
 > Betrachten Sie das folgende Feld von Zahlen:
 > $A = [6, 3, 36, 99, 2, 39, 12, 45, 23, 17, 24]$
@@ -62,15 +61,38 @@ Anpassungsidee:
 04.         if A[l]=x
 05.         then return l
 06.         else return NIL
+
 07.     m = gauss((l+r)/2) \\ Berechne die Mitte (Gaußklammer)
 08.     if A[m] > A[m+1] \\ Übertragungsfehler bei m
 09.         if A[m] = x then return NIL \\ gefunden, sollte aber nicht da sein
 10.         if x <= A[m+1]
 12.         then return Search(A,x,l,m+1)
 13.         else return Search(A,x,m+2,r)
+
 14.     if x <= A[m]
 15.     then return Search(A,x,l,m+1)
 16.     else return Search(A,x,m+1,r)
+```
+
+Offizielle Lösung. Betrachte, ob das Element verfälscht wurde, d.h. der Fehler kann einen Wert vergrößern oder verkleinern.
+```
+Search(A,x,l,r)
+    n = r-l+1 \\ Anzahl der hier betrachteten Elemente
+    if n<=3
+    then \\ konstante Worst-Case-Laufzeit
+        \\ prüfe, ob x enthalten ist
+        for i=l to r do
+            if A[i] = x then return i
+        return NIL \\ Fehler
+    \\ ab hier gilt n>=4
+
+    m = gauss((r+l)/2) \\ gaussklammer
+    if A[m-1] > A[m] then m = m+1 \\ Wert wurde verkleinert
+    if A[m] > A[m+1] then m = m-1 \\ Wert wurde vergrößert
+
+    if A[m] <= x
+    then return Search(A,x,m+1,r)
+    else return Search(A,x,l,m)
 ```
 
 ### b) Laufzeit
@@ -123,32 +145,68 @@ Gebe $\mathrm{Search}(A, x, l, r)$ den richtigen Wert für das linken oder recht
 ### a)
 > $T(n) = \begin{cases}1 & n=1 \\1\cdot T(\frac{n}{4}) + 4& \text{sonst}\end{cases}$
 
+Laufzeit:
 $$
-    T(n) = \begin{cases}
-        n=1 & 1\\
-        n>1 & 1\cdot T(\frac{n}{4}) + 4
-            = \begin{cases}
-                n\le 4 & 1\\
-                n>4 & 1\cdot T(\frac{n}{16}) + 4 = \dots
-            \end{cases}
-        \end{cases}
+\begin{aligned}
+    T(n)
+        &= T\left(\frac{n}{2}\right) + 4 \\
+        &= T\left(\frac{n}{4}\right) + 8 \\
+        &= T\left(\frac{n}{8}\right) + 13 \\
+        &= \dots \\
+      \text{Rekursionstiefe } t \Rightarrow
+          T(n) &= T\left(\frac{n}{2^t}\right) + 4t \\
+      t = \log_4(n) \Rightarrow
+          T(n) &= T\left(\frac{n}{2^{\log_4(n)}}\right) + 4\log_4(n) \\
+      \Rightarrow T(n) &= 1 + 4\log_4(n) \\
+\end{aligned}
 $$
 
-Die Rekursionstiefe ist $\log_4(n)$. Je Rekursionsebene gibt es $4$ Rechenschritte zuzüglich des Rekursionsaufrufes, daher gibt es $4(\log_4(n)+1)$ Rechenschritte durch die Rekursion. Daher ist $T(n)=1+4(\log_4(n)+1)=5+4\log_4(n)$, also $T(n)\in\mathcal O(\log_4(n))$.
+#### Induktionsannahme
+Für $n=1$ gilt $T(n=1) = 1 + 4\log_4(1) = 1 = T(1)$.
+
+#### Induktionsvoraussetzung
+Sei $n$ eine Viererpotenz und gelte $T(n) = 1+4\log_4(n)$.
+
+#### Induktionsschritt
+Zeige, dass $T(4n)$ gilt.
+$$
+\begin{aligned}
+    T(4n)
+        &= \left[1+4\log_4\left(\frac{4n}{4}\right)\right] + 4 \\
+        &= 5 + 4(\log_4(n) - \log_4(4)) \\
+        &= 5 + 4\log_4(n) - 4 \\
+        &= 1 + 4\log_4(n) \\
+        & \mathrm{q.e.d.}
+\end{aligned}
+$$
+
+Damit gilt $T(n) \in\mathcal O(log_4(n))$.
 
 ### b)
 > $T(n) = \begin{cases}1 & n=1 \\2\cdot T(\frac{n}{2}) + n^2& \text{sonst}\end{cases}$
 
-Raten der Laufzeit:
+Laufzeit:
 $$
-    T(n) = T(n/8) + (n/4)^2 + (n/2)^2 + (n/1)^2 = \sum_{i=0}^{\log_2(n)} \frac{n^2}{4^n} \in \mathcal O(n^2)
+\begin{aligned}
+    T(n)
+        &= \sum_{i=0}^{t-1} 2^i T\left(\frac{n}{2^i}\right) + tn^2 \\
+        &= 2^t\cdot T\left(\frac{n}{2^t}\right)
+            + \sum_{i=0}^{t-1} 2^i \left(\frac{n}{2^i}\right)^2 \\
+        &= 2^t\cdot T\left(\frac{n}{2^t}\right)
+            + n^2\sum_{i=0}^{t-1} \frac{1}{2^i} \\
+     t = \log_2(n) \Rightarrow T(n)
+         &= 2^{\log_2(n)} T(1) + n^2\sum_{i=0}^{\log_2(n)-1} \frac{1}{2^i} \\
+         &= 1 + n^2(2-\frac{2}{n}) \\
+         &= n + 2n^2-2n \\
+     T(n) &= 2n^2 - n
+\end{aligned}
 $$
+
 Behauptung: $T(n)\in\mathcal O(n^2)$
 
-### Beweis
+#### Induktionsvoraussetzung
 Sei $c>2$ konstant. Wir beweisen für Zweierpotenzen $n$.
 
-#### Induktionsvoraussetzung
 $$
     T(1) = 1 \le c\cdot 1^2 \Rightarrow T(1) \in \mathcal O(n^2)
 $$
@@ -173,6 +231,15 @@ Für $c=2$ ist dies gelöst.
 
 ### c)
 > $T(n) = \begin{cases}1 & n=1 \\3\cdot T(\frac{n}{2}) + n& \text{sonst}\end{cases}$
+
+$$
+    T(n) = 3^3 T\left(\frac{n}{3^3}\right) + 3n \\
+    = 3^{\log_3(n)} \cdot T\left(\frac{n}{3^{\log_3(n)}}\right) + n\log_3(n) \\
+    = n + n\log_3(n)
+$$
+
+Behauptung: $T(n)\in\mathcal O(n\log_3(n))$.
+Beweis mittels vollständiger Induktion, analog zu a) und b).
 
 ### Appendix: Rekursionstiefe
 Sei $T(n) = aT(\frac{n}{b}) + f(n)$. Dann gilt: Die Rekursionstiefe ist $\log_b(n)$. Beweis:
