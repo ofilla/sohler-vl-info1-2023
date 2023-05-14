@@ -251,7 +251,7 @@ SubsetSum(A, U, n)
         for u=0 to U do
             Ind[u,i] = false
             if Ind[u,i-1] = true then Ind[u,i] = true
-            if u≥A[i] und Ind[u-A[i], i-1] = true then Ind[u,i] = true
+            if u>=A[i] und Ind[u-A[i], i-1] = true then Ind[u,i] = true
     return Ind[U,n]
 ```
 
@@ -259,4 +259,73 @@ $\mathrm{SubsetSum}(A, U, n)$ hat eine Laufzeit von $T(n)=\mathcal O(nU)$.
 
 #### Korrektheitsbeweis
 Der Korrektheitsbeweis nutzt die Schleifeninvariante $\mathrm{Ind}[u,i]=\mathrm{true}$ genau dann, wenn es eine Teilmenge der ersten $i$ Zahlen aus $A$ gibt, die sich zu $u$ aufsummieren.
+
+## Rucksackproblem
+Es gibt einen Rucksack mit begrenzter Kapazität, in den Objekte mit verschiedenen Größen und verschiedenen Werten gepackt werden sollen. Ziel ist es, den Rucksack mit dem größtmöglichen Wert zu befüllen.
+
+Dazu hat man eine Menge $M=\{1,\dots,n\}$ an Objekten, die jeweils eine Größe und einen Wert haben. Dies kann man auch durch getrennte Felder für die Werte $w_i$, die Größen $g_i$ und die Rucksackgröße $G$ darstellen. Der Einfachheit halber gelte $w_i, g_i, G\in\mathbb N$.
+
+Dann suchen wir eine Teilmenge $S\subseteq M$, für die $w(S) = \sum_{x\in S} w(x)$ maximiert wird und $g(S) = \sum_{x\in S} w(x) \le G$ gilt. Sei weiterhin $M^\prime=\{1,\dots, i\}\subset M$ eine Teilmenge von $M$ mit $i<n$.
+
+### Zulässige Lösungen
+Eine Lösung $S\in M^\prime$ heißt _zulässig_ für einen Rucksack der Größe $j$, wenn $g(S)\le j$.
+
+* Ist $S\subseteq \{1,\dots, i-1\}$ eine zulässige Lösung für einen Rucksack der Größe $j-g[i]$ mit dem Wert $w(S)$, dann ist $S \cup \{i\}$ eine zulässige Lösung für einen Rucksack der Größe $j$ mit dem Wert $w(S \cup \{i\})$.
+* Ist $S\subseteq \{1,\dots, i-1\}$ eine zulässige Lösung für einen Rucksack der Größe $j$, dann ist $S$ auch eine zulässige Lösung für die ersten $i$ Objekte und einen Rucksack der Größe $j$.
+* $S=\{\}$ ist eine zulässige Lösung für _jeden_ Rucksack der Größe $j\ge 0$.
+
+### Optimale Lösungen
+Eine zulässige Lösung $S\in M^\prime$ heißt _optimal_ für einen Rucksack der Größe $j$, wenn sie $w(S)$ unter allen Lösungen maximiert.
+
+Sei $O\subseteq M^\prime$ eine optimale Lösung für das Rucksackproblem mit Objekten aus $M^\prime$ und Rucksackgröße $j$. Es bezeichne $\mathrm{Opt}(i,j)$ den Wert dieser optimalen Lösung. Dann gilt:
+
+1. Ist das Objekt $i\in O$, so ist $O\backslash \{i\}$ eine optimale Lösung für das Rucksackproblem mit Objekten aus $\{1,\dots,i-1\}$ und Rucksackgröße $j-g[i]$$. Insbesondere gilt $\mathrm{Opt}(i,j)=w[i] + \mathrm{Opt}(i-1, j-g[i])$.
+2. Ist Objekt $i\notin O$ enthalten, so ist $O$ eine optimale Lösung für das Rucksackproblem mit Objekten aus $\{1,\dots,i-1\}$ und Rucksackgröße $j$. Insbesondere gilt $\mathrm{Opt}(i,j) = \mathrm{Opt}(i-1, j)$.
+
+Weiterhin gilt:
+
+1. $\forall j\ge g[1]: \mathrm{Opt}(1,j)= w[1]$
+2. $\forall j<g[1]: \mathrm{Opt}(1,j)=0$
+3. $\forall i>1, g[i]\le j: \mathrm{Opt}(i,j) = \max\{\mathrm{Opt}(i-1,j), w[i] + \mathrm{Opt}(i-1,j-g[i])\}$
+4. $\forall i>1,g[i]>j: \mathrm{Opt}(i,j) = \mathrm{Opt}(i-1,j)$
+
+### Wert optimaler Teillösungen
+Sei $O\in M^\prime$ eine optimale Lösung für das Rucksackproblem der Größe $j$. Sei $\mathrm{Opt}(i,j)$ der Wert einer solchen Lösung. Dann muss $\mathrm{Opt}(n, G)$ ermittelt werden, um das Rucksackproblem zu lösen
+
+Seien $i=1$, die Eingabemenge $\{1,\dots,i\}=\{1\}$ die Rucksackgröße $j$ gegeben.
+* Gilt $j\ge g[1]$, dann ist $O=\{1\}$ eine optimale Lösung mit Wert $\mathrm{Opt}(1,j) = w[1]$.
+* Ist $j<g[1]$, dann ist $O=\{\}$ eine optimale Lösung mit Wert $\mathrm{Opt}(1,j) = 0$.
+
+### Pseudocode
+```
+Rucksack(n,g,w,G)
+    Opt = new array[1,..,n][0,..,G]
+    for j = 0 to G do \\ Rekursionsabbruch
+        if j<g[1] then Opt[1,j] = 0
+        else Opt[1,j] = w[1]
+
+    for i = 2 to n do
+        for j = 0 to G do
+            if g[i]<=j then Opt[i,j] = max{Opt[i-1,j], w[i] + Opt[i-1,j-g[i]]}
+            else Opt[i,j] = Opt[i-1,j]
+    return Opt[n,G]
+```
+
+Die Laufzeit ist $T(n)\in \mathcal O(nG)$. Sei $R$ der Wert einer optimalen Lösung für Objekte aus $\{1,\dots,i\}$. Falls nun $g[i]\le j$ und $\mathrm{Opt}(i-1,j-g[i]) +w[i]= R$, so ist das Objekt $i$ in mindestens einer optimalen Lösung enthalten.
+
+
+* Falls das $i$-te Objekt in einer optimalen Lösung für Objekte $1$ bis $i$ und Rucksackgröße $j$ ist, so gib es aus und fahre rekursiv mit Objekt $i-1$ und Rucksackgröße $j-g[i]$ fort.
+* Ansonsten fahre mit Objekt $i-1$ und Rucksackgröße $j$ fort.
+
+```
+RucksackLösung(Opt,g,w,i,j)
+    if i=0 return {}
+    if g[i]>j then return RucksackLösung(Opt,g,w,i-1,j)
+
+    if Opt[i,j]=w[i] + Opt[i-1,j-g[i]]
+    then return {i} + RucksackLösung(Opt,g,w,i-1,j-g[i]) \\ +: Bilde Vereinigungsmenge
+    else return RucksackLösung(Opt,g,w,i-1,j)
+```
+
+<!-- VL 11, p. 31, missing video explanation -->
 

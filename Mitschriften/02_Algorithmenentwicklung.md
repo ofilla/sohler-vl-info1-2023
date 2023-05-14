@@ -44,6 +44,13 @@ Hinweise:
 ### Beispiele
 * Fibbonacci-Zahlen
 * SearchMax (keine Laufzeitverkürzung)
+* Rucksackproblem
+
+### Dynamische Programmierung für Optimierungsprobleme
+1. Bestimme die rekursive Struktur einer _optimalen Lösung_. Führe dadurch das Problem auf optimale Teillösungen zurück.
+2. Entwerfe eine rekursive Methode zur Bestimmung des _Wertes_ einer optimalen Lösung.
+3. Transformiere diese Methode in eine iterative Methode zur Bestimmung des Wertes einer optimalen Lösung.
+4. Bestimmen aus dem Wert einer optimalen Lösung und in der iterativen Methode berechneten Zusatzinformationen eine optimale Lösung.
 
 ## Methode: Gierige Algorithmen
 ## Rekursion
@@ -65,4 +72,10 @@ Die Laufzeit kann durch eine Laufzeitanalyse vorhergesagt werden.
     * $\log_b(n)$ ist die Höhe des Rekursionsbaums
     * meistens ist $b=2$, also gilt meist $T(n)\in\mathcal O(f(n)\cdot\log_2(n))$
     * Auf der letzten Rekursionsstufe gibt es $n$ Teilprobleme der Größe $1$. Es gilt $b^h=n$, wobei $h=\log_b{n}$ die Rekursionshöhe beschreibt.
+
+## Optimierung
+### Kostenfunktion
+Für eine Eingabe $I$ sei $S(I)$ die Menge der möglichen Lösungen. Für $L\in S(I)$ sei $\mathrm{cost}(L)$ eine _Kostenfunktion_. Gesucht ist nun die Lösung $L$ mit minimalen Kosten $\mathrm{cost}(L)$.
+
+Alternativ zu dieser Methode kann man auch eine _Wertefunktion_ maximieren.
 
