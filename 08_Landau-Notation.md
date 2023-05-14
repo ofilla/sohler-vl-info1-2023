@@ -35,6 +35,19 @@ Satz über Hierarchien:
 2. $\forall 2 \le b \in\mathbb R:\forall 0<\varepsilon\in\mathbb R: \mathcal O(\log^bn) \subseteq\mathcal O(n^\varepsilon)$
 3. $\forall 2 \le b \in\mathbb R:\forall 1> \varepsilon\in\mathbb R:\mathcal O(n^\varepsilon) \subseteq\mathcal O(n) \subseteq\mathcal O(n^2) \subseteq\mathcal O(n^b)$
 
+### Erweiterte $\mathcal O$-Notation
+$$
+    \mathcal O(g(n,m)) = \{
+        \text{Funktion } f(n) |
+        \exists c\in\mathbb R_+:\exists n_0, m_0\in\mathbb N:
+        \forall\mathbb N \ni n\ge n_0, N \ni m\ge m_0:
+        f(n,m) \le c\cdot g(n,m)
+    \}
+$$
+
+* Diese Definition kann in konstruierten Fällen zu ungewünschten Aussagen führen!
+    * z.B. $g(1,m) = m^2$ und $\forall n>1: g(n,m)=m$
+
 ## $\Omega$-Notation
 Die $\Omega$-Notation liefert eine _untere Schranke_ für die Laufzeit.
 $f(n)\in\Omega (g(n))$ bedeutet, $f$ wächst mindestens so stark wie $g$.

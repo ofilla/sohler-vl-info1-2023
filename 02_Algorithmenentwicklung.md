@@ -7,6 +7,8 @@
 ### Beispiele
 * MergeSort
 * BinäreSuche
+* $n$-Ziffer-Integer Multiplikation
+* Matrixmultiplikation (Algorithmus von Strassen)
 
 ### Unterscheidungen
 Teile-und-Herrsche-Algorithmen unterscheiden sich durch...
@@ -25,6 +27,24 @@ Die Laufzeit kann durch eine Laufzeitanalyse vorhergesagt werden:
     * $f(n)$: Aufwand für Aufteilen und Zusammenfügen
 
 ## Methode: Dynamische Programmierung
+* Beschreibe optimale Lösung einer gegebenen Instanz durch optimale
+Lösungen „kleinerer“ Instanzen.
+* Beschreibe Rekursionsabbruch.
+* Löse die Rekursion "bottom-up" durch schrittweises Ausfüllen einer Tabelle der benötigten Teillösungen.
+
+Dies ist schneller als die rekursive Methode, wenn
+1. die "Rekursionstiefe" klein ist.
+2. die normale Rekursion viele Mehrfachausführungen hat.
+
+Hinweise:
+* Wenn wir es mit Mengen zu tun haben, können wir eine Ordnung der Elemente einführen und die Rekursion durch Zurückführen der optimalen Lösung für $i$ Elemente auf die Lösung für $i-1$ Elemente erhalten.
+* Benötigt wird dabei der Wert der optimalen Lösung für $i-1$ Elemente.
+* Die Lösung selbst kann nachher aus der Tabelle rekonstruiert werden.
+
+### Beispiele
+* Fibbonacci-Zahlen
+* SearchMax (keine Laufzeitverkürzung)
+
 ## Methode: Gierige Algorithmen
 ## Rekursion
 Eine rekursive Methode ruft sich selbst mit veränderten Parametern auf. Hierzu ist zu Beginn der Methode eine Abbruchbedingung notwendig, die den einfachsten Fall des Problems löst. Ansonsten kommt es zu einer Endlosrekursion.

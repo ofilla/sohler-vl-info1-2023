@@ -36,3 +36,12 @@ Lemma: $A(i)$ ist eine korrekte Schleifeninvariante.
 * Der Rekursionsabbruch entspricht dem Anfang der Vollständigen Induktion.
 * Der Rekursionsaufruf entspricht dem Induktionsschritt.
 
+## $P$ vs. $NP$
+Das Problem $P$ _vs._ $NP$ ist eines der wichtigsten Probleme der theoretischen Informatik und gehört zu den $7$ Millennium-Problemen.
+
+Es gibt die Frage, ob die Menge der Probleme, die _schnell_ lösbar sind ($P$), und die Menge der Probleme, bei denen man eine vorgeschlagene Lösung _schnell_ auf Korrektheit überprüfen kann ($NP$), identisch sind.
+
+* $P$ ist die Menge der Probleme, die in _polynomieller Laufzeit_ zu berechnen sind.
+* $NP$ ist die Menge der Probleme, die in _nichtdeterministisch polynomieller Laufzeit_ zu lösen sind.
+* Es gilt $P\subset NP$.
+
