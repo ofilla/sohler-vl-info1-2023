@@ -37,9 +37,10 @@ BinäreSuche(A,12,1,11)
 
 * Rückgabewert: $4$
 * Besuchte Felder:
-    1. Feld $5$, Wert $17$
-    2. Feld $2$, Wert $3$
-    3. Feld $4$, Wert $12$
+    1. Feld $6$, Wert $23$
+    2. Feld $3$, Wert $6$
+    3. Feld $5$, Wert $17$
+    4. Feld $4$, Wert $12$
 
 ## 2. Teile und Herrsche
 > Gegeben sei ein aufsteigend sortiertes Feld A aus n natürlichen Zahlen. Bei der Übertragung des Feldes ist ein Fehler unterlaufen. Die Diagnose des Fehlers besagt, dass es nach der Übertragung maximal einen Wert gibt, welcher verfälscht wurde. Dies bedeutet, dass die betroffene Stelle des Feldes einen größeren Wert als ursprünglich haben kann. Dadurch kann es sein, dass das Feld nach der Übertragung nicht mehr aufsteigend sortiert ist. Also kann binäre Suche auf dem Feld nicht mehr angewandt werden.
@@ -65,12 +66,13 @@ Anpassungsidee:
 07.     m = gauss((l+r)/2) \\ Berechne die Mitte (Gaußklammer)
 08.     if A[m] > A[m+1] \\ Übertragungsfehler bei m
 09.         if A[m] = x then return NIL \\ gefunden, sollte aber nicht da sein
+            \\ x < A[m+1] sinnvoller, dann kann man A[l..m-1] betrachten
 10.         if x <= A[m+1]
 12.         then return Search(A,x,l,m+1)
 13.         else return Search(A,x,m+2,r)
 
 14.     if x <= A[m]
-15.     then return Search(A,x,l,m+1)
+15.     then return Search(A,x,l,m)
 16.     else return Search(A,x,m+1,r)
 ```
 
@@ -120,6 +122,8 @@ $$
 
 ### c) Korrektheit
 > Beweisen Sie die Korrektheit Ihres Algorithmus.
+
+Bessere Idee: Definiere $n=r-l+1$ und beweise für $n$.
 
 ### Induktionsanfang
 Sei $l=r$. Dann wird die Position $l$ zurückgegeben, falls an der Stelle der Wert $x$ im Feld steht; in diesem Fall wurde $x$ gefunden. Ansonsten wird $\mathrm{NIL}$ zurückgegeben, da $x$ nicht gefunden wurde. Damit stimmt das Ergebnis der Methode $\mathrm{Search}(A, x, l, r)$ für $l=r$.
