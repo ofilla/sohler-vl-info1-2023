@@ -25,8 +25,8 @@ date:
 ```
 fastestWay(A, n):
     if n=1 then return A[1]
-    fastest = n \\ cannot be longer
-    for i=n downto 1 do
+    fastest = n \\ longest way possible for A[i]=1
+    for i=1 downto 1 do
         if wayTo(A, i, n)
         then
             way = fastestWay(A, i)

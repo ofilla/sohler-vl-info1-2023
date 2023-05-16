@@ -41,16 +41,12 @@ Hinweise:
 * Benötigt wird dabei der Wert der optimalen Lösung für $i-1$ Elemente.
 * Die Lösung selbst kann nachher aus der Tabelle rekonstruiert werden.
 
+Dynamische Programmierung kann genutzt werden, um Optimierungsprobleme zu lösen.
+
 ### Beispiele
 * Fibbonacci-Zahlen
-* SearchMax (keine Laufzeitverkürzung)
+* SearchMax (keine Laufzeitverkürzung möglich)
 * Rucksackproblem
-
-### Dynamische Programmierung für Optimierungsprobleme
-1. Bestimme die rekursive Struktur einer _optimalen Lösung_. Führe dadurch das Problem auf optimale Teillösungen zurück.
-2. Entwerfe eine rekursive Methode zur Bestimmung des _Wertes_ einer optimalen Lösung.
-3. Transformiere diese Methode in eine iterative Methode zur Bestimmung des Wertes einer optimalen Lösung.
-4. Bestimmen aus dem Wert einer optimalen Lösung und in der iterativen Methode berechneten Zusatzinformationen eine optimale Lösung.
 
 ## Methode: Gierige Algorithmen
 ## Rekursion
