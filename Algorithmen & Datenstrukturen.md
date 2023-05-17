@@ -121,10 +121,7 @@ InsertionSort(A, n) \\ Feld A der Länge n wird übergeben
     A[j+1]=x
 ```
 
-Satz: Die Worst-Case-Laufzeit von InsertionSort ist in $\Omega(n^2)$.
-Das heißt, für hinreichend große $n$ ist die Laufzeit ungefähr $n^2$.
-
-Korollar: Die Worst-Case-Laufzeit von InsertionSort ist $\Theta(n^2)$.
+Die Worst-Case-Laufzeit von InsertionSort ist $\Theta(n^2)$.
 
 ### deskriptiver Pseudocode
 ```
@@ -229,7 +226,7 @@ FibRecursive(n)
     return Fib2(n-1) + Fib2(n-2)
 ```
 
-$\mathrm{FibRecursive}$ hat eine Laufzeit von $T(n)\in\Omega(1.6^n)$, da für jede Rekursionsebene $2$-mal der komplette Rekursionsbaum aufgerufen werden muss. Beispielsweise wird $\mathrm{FibRecursive}(6)$ dreimal $\mathrm{FibRecursive}(3)$ aufrufen.
+$\mathrm{FibRecursive}$ hat eine Laufzeit von $T(n)\in\Omega(2^n)$, da für jede Rekursionsebene $2$-mal der komplette Rekursionsbaum aufgerufen werden muss. Beispielsweise wird $\mathrm{FibRecursive}(6)$ dreimal $\mathrm{FibRecursive}(3)$ aufrufen.
 
 $$
     T(n) =
@@ -303,7 +300,7 @@ $$
     \sum_{x\in L} x = \sum_{y\in R} y
 $$
 
-* Partition ist $NP$-vollständig.
+* Das Partitionsproblem ist $NP$-vollständig.
 * Die Frage, ob man Partition in _polynomieller_ Laufzeit lösen kann, ist äquivalent zur Frage ob $P$ gleich $NP$ ist.
 * Sei $W=\sum_{x\in M} x$, so kann man die zwei Teilmengen $L,R$ genau dann finden, wenn es eine Teilmenge $L$ mit $\sum_{x\in L} x=\frac{W}{2}$ gibt.
 
@@ -573,7 +570,7 @@ Ausgabe:
 ```
 
 # 7. Laufzeitanalyse
-In der Realität spielen Hardware sowie Software (z.B. OS, Compiler(-optionen)) eine Rolle. Diese Einflüsse sind allerdings in einer konstanten Größenordnung. DIese konstanten Laufzeiten werden hier ignoriert, da meistens die Landau-Notation zur Beschreibung von Laufzeiten verwendet wird.
+In der Realität spielen Hardware sowie Software (z.B. OS, Compiler(-optionen)) eine Rolle. Diese Einflüsse sind allerdings in einer konstanten Größenordnung. Diese konstanten Laufzeiten werden hier ignoriert, da meistens die Landau-Notation zur Beschreibung von Laufzeiten verwendet wird.
 
 Unser Rechenmodell besagt, dass eine Pseudocodeoperartion einen Zeitschritt benötigt. Wir zählen diese Zeitschritte. 
 
@@ -581,13 +578,11 @@ Hierbei will man für eine gegebene _Eingabegröße_ $n$ eine obere Schranke fü
 Üblicherweise benutzt man eine Worst Case Analyse, auch wenn es auch die Average Case Analyse gibt.
 
 ## Worst Case Analyse
-Worst-Case Laufzeit $T(n) = \max[\text{Laufzeit}]$ über alle Laufzeiten für Eingabegrößen $\le n$.
+Die Worst-Case Laufzeit $T(n) = \max[\text{Laufzeit}]$ ist die längste Laufzeit für alle möglichen Eingaben der Größe $n$.
 Dies ist der Standard, normalerweise ist diese Analyse gemeint, wenn man von "Laufzeitanalyse" spricht.
 
 ## Average Case Analyse
-Die Worst-Case Laufzeit $T(n) = \mathrm{avg}[\text{Laufzeit}]$ benötigt eine Definition von "Durschschnittlich", also auch Wahrscheinlichkeitsverteilung von Eingabegrößen.
-Daher wird sie i.A. nicht verwendet.
-
+Die Worst-Case Laufzeit $T(n) = \mathrm{avg}[\text{Laufzeit}]$ ist die längste Laufzeit für alle möglichen Eingaben der Größe $n$. Allerdings benötigt diese Betrachtung eine Definition von "Durschschnittlich", also auch eine Wahrscheinlichkeitsverteilung von Eingabegrößen. Daher wird sie i.A. nicht verwendet.
 
 ## Master-Theorem
 Seien $a\ge 1$ und $b\ge 1$ ganzzahlige Konstanten und $f: \mathbb N\rightarrow \mathbb N$. Gelte weiterhin für die Laufzeit $T(n)$:
@@ -598,7 +593,7 @@ $$
             n>1: a\cdot T(\frac{n}{b}) + f(n)
         \end{cases}
 $$
-Dann gilt:
+Es gilt:
 $$
 \begin{aligned}
     1. &&
@@ -617,6 +612,41 @@ $$
         T(n) &\in\mathcal O(a^{\log_b(n)}) \\
 \end{aligned}
 $$
+
+
+### Alternative Formulierung
+Es folgt die übliche Formulierung.[^5]
+Seien $a\ge 1$ und $b\ge 1$ ganzzahlige Konstanten und $f: \mathbb N\rightarrow \mathbb N$. Gelte weiterhin für die Laufzeit $T(n)$:
+$$
+    T(n) \le
+        \begin{cases}
+            n=1: f(n) \\
+            n>1: a\cdot T(\frac{n}{b}) + f(n)
+        \end{cases}
+$$
+
+Seien $\varepsilon >0$, $k<1$, $n_0\in\mathbb N$, dann gilt:
+
+$$
+\begin{aligned}
+    1. &&
+        f(n) = O(n^{\log_b a - \varepsilon})
+        &&\Rightarrow&&
+        T(n) &\in \mathcal O(n^{\log_b a}) \\
+    2. &&
+        f(n) = \Theta(n^{\log_b a})
+        &&\Rightarrow&&
+        T(n) &\in \mathcal O(n^{\log_b a} \log n) \\
+    3.
+       &&
+        f(n) = \Omega(n^{\log_b a + \varepsilon})
+        \land \forall n\ge n_0: a f\left(\frac{n}{b}\right) \le kf(n))
+        &&\Rightarrow&&
+        T(n) &\in \mathcal O(f(n))
+\end{aligned}
+$$
+
+[^5]: [Wikipedia, 2023-05-17](https://en.wikipedia.org/wiki/Master_theorem_(analysis_of_algorithms))
 
 # 8. Landau-Notation
 Die detaillierte Laufzeitanalyse hat einige Schwachstellen: Konstante Faktoren werden durch Hardware und Software beeinflusst, die außerhalb des Algorithmus liegen. Zudem ist die Notation fehleranfällig und kompliziert.
@@ -736,14 +766,14 @@ Sei $A(n)$ eine Aussage über den Zustand des Algorithmus vor dem $n$-ten Eintri
 
 Der Beweis für die Korrektheit erfolgt über Vollständige Induktion. Hierbei ist wesentlich, auf den (Pseudo-)Code einzugehen, d.h. was in welcher Zeile gemacht wird.
 
-Für _for_-Schleifen werden hierbei folgende Annahmen getroffen:[^5]
+Für _for_-Schleifen werden hierbei folgende Annahmen getroffen:[^6]
 * Die Laufvariable $i$ wird am Ende des Schleifenrumpfs erhöht.
 * Zur Initialisierung wird die Laufvariable $i$ auf den Startwert gesetzt.
 * Die Invariante kann von dem Laufparameter $i$ abhängen.
 
 Lemma: $A(i)$ ist eine korrekte Schleifeninvariante.
 
-[^5]: siehe Pseudocode/for-Schleife
+[^6]: siehe Pseudocode/for-Schleife
 
 ### Rekursion
 * Der Rekursionsabbruch entspricht dem Anfang der Vollständigen Induktion.
