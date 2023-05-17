@@ -11,10 +11,7 @@ InsertionSort(A, n) \\ Feld A der Länge n wird übergeben
     A[j+1]=x
 ```
 
-Satz: Die Worst-Case-Laufzeit von InsertionSort ist in $\Omega(n^2)$.
-Das heißt, für hinreichend große $n$ ist die Laufzeit ungefähr $n^2$.
-
-Korollar: Die Worst-Case-Laufzeit von InsertionSort ist $\Theta(n^2)$.
+Die Worst-Case-Laufzeit von InsertionSort ist $\Theta(n^2)$.
 
 ### deskriptiver Pseudocode
 ```
@@ -119,7 +116,7 @@ FibRecursive(n)
     return Fib2(n-1) + Fib2(n-2)
 ```
 
-$\mathrm{FibRecursive}$ hat eine Laufzeit von $T(n)\in\Omega(1.6^n)$, da für jede Rekursionsebene $2$-mal der komplette Rekursionsbaum aufgerufen werden muss. Beispielsweise wird $\mathrm{FibRecursive}(6)$ dreimal $\mathrm{FibRecursive}(3)$ aufrufen.
+$\mathrm{FibRecursive}$ hat eine Laufzeit von $T(n)\in\Omega(2^n)$, da für jede Rekursionsebene $2$-mal der komplette Rekursionsbaum aufgerufen werden muss. Beispielsweise wird $\mathrm{FibRecursive}(6)$ dreimal $\mathrm{FibRecursive}(3)$ aufrufen.
 
 $$
     T(n) =
@@ -193,7 +190,7 @@ $$
     \sum_{x\in L} x = \sum_{y\in R} y
 $$
 
-* Partition ist $NP$-vollständig.
+* Das Partitionsproblem ist $NP$-vollständig.
 * Die Frage, ob man Partition in _polynomieller_ Laufzeit lösen kann, ist äquivalent zur Frage ob $P$ gleich $NP$ ist.
 * Sei $W=\sum_{x\in M} x$, so kann man die zwei Teilmengen $L,R$ genau dann finden, wenn es eine Teilmenge $L$ mit $\sum_{x\in L} x=\frac{W}{2}$ gibt.
 
