@@ -4,13 +4,13 @@ Die detaillierte Laufzeitanalyse hat einige Schwachstellen: Konstante Faktoren w
 Die Landau-Notation nutzt eine _asymptotischen Analyse_ für große Eingabemengen $n\rightarrow\infty$. Kontante Faktoren sind damit vernachlässigbar.
 
 Im Folgenden werden einige Annahmen getroffen:
-* Die Funktionen $f$ und $g$ haben den Definitionsbereich $\mathbb N_0$ und sind für große $n$ asymptotisch nicht-negativ sein
-* Die Worst-Case-Laufzeit wird asymptotisch angenährt
+* Die Funktionen $f$ und $g$ haben den Definitionsbereich $\mathbb N_0$ und sollten für große $n$ asymptotisch nicht-negativ sein, d.h. $\exists n_0: \forall n\ge n_0: f(n)>0 \land g(n) > 0$.
+* Die Worst-Case-Laufzeit wird asymptotisch angenährt.
 
 Bei rekursiven Funktionen muss man mit dem Abschätzen der $\Omega$- und $\mathcal O$-Notationen aufpassen. Oft ist es sinnvoll, diese Funktionen konkret auszurechten.
 
 ## Beweise
-Für Beweise, z.B. mittels Vollständiger Induktion, darf man die Landau-Notationen nicht verwenden. Bei dieser muss es konkrete Konstanten $c$ geben, die für alle $n\ge n_0$ gelten. Nutzt man während eines Beweises eine Landau-Notation, kann man verschleiern, dass $c$ immer wieder geändert wird.
+Für Beweise, z.B. mittels Vollständiger Induktion, sollte man die Landau-Notationen nur vorsichtig verwenden. Bei dieser muss es konkrete Konstanten $c$ geben, die für alle $n\ge n_0$ gelten. Nutzt man während eines Beweises eine Landau-Notation, kann man verschleiern, dass $c$ immer wieder geändert wird.
 
 ## Schranken
 * Die Schranken $\mathcal O(g(n))$ und $\Omega(g(n))$ geben an, wie stark die analysierte Funktion bei großen $n$ höchstens bzw. mindestens wächst wie $g(n)$.
@@ -36,6 +36,8 @@ Satz über Hierarchien:
 3. $\forall 2 \le b \in\mathbb R:\forall 1> \varepsilon\in\mathbb R:\mathcal O(n^\varepsilon) \subseteq\mathcal O(n) \subseteq\mathcal O(n^2) \subseteq\mathcal O(n^b)$
 
 ### Erweiterte $\mathcal O$-Notation
+Man kan die $\mathcal O$-Notation auf Funktionen erweitern, die von mehreren Parametern $n,m\in\mathbb N$ abhängen. In diesem Fall sollen beide Parameter groß $n,m\rightarrow\infty$ werden.
+
 $$
     \mathcal O(g(n,m)) = \{
         \text{Funktion } f(n) |
@@ -60,10 +62,14 @@ $$
     \}
 $$
 
-## Zusammenhang zwischen $\mathcal O(n)$ und $\Omega(n)$
+## Zusammenhänge
 
 $$
-    f(n) \in \mathcal O(g(n)) \Leftrightarrow g(n) \in \Omega(f(n))
+\begin{aligned}
+    f(n) &\in \mathcal O(g(n)) &&\Leftrightarrow&& g(n) \in \Omega(f(n)) \\
+    f(n) &\in o(g(n)) &&\Leftrightarrow&& g(n) \in \omega(g(n)) \\
+    f(n) &\in \Theta(g(n)) &&\Leftrightarrow&& f(n) \in \mathcal O(g(n)) \land f(n) \in \Omega(g(n))
+\end{aligned}
 $$
 
 ## $\Theta$-Notation
@@ -78,7 +84,7 @@ $f(n)\in o (g(n))$ bedeutet, $f$ wächst weniger stark als $g$.
 
 $$
     o (g(n)) = \{
-        \text{Funktion} f(n) |
+        \text{Funktion } f(n) |
         \forall c\in\mathbb R_+:\exists n_0\in\mathbb N:
         \forall\mathbb N \ni n\ge n_0: 0 \le f(n) \le c\cdot g(n)
     \}
@@ -88,6 +94,10 @@ $$
 $f(n)\in \omega(g(n))$ bedeutet, $f$ wächst stärker als $g$.
 
 $$
-    f(n) \in o(g(n)) \Leftrightarrow g(n) \in o(g(n))
+    \omega(g(n)) = \{
+        \text{Funktion } f(n) |
+        \forall c\in\mathbb R_+:\exists n_0\in\mathbb N:
+        \forall\mathbb N \ni n\ge n_0: 0 \le c\cdot g(n) \le f(n)
+    \}
 $$
 
