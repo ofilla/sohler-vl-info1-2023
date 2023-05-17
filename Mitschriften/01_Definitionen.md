@@ -9,8 +9,10 @@ keywords:
   - Algorithmus
   - Datenstruktur
 ---
-# 1. Definitionen
+# Disclaimer
+Dies ist eine _inoffizielle_ Mitschrift aus der Vorlesung zu Algorithmen & Datenstrukturen von Prof. Dr. Christian Sohler. Ich habe Prof. Sohler's Erlaubnis, dies zu publizieren. Dies bedeutet jedoch nicht, dass irgendjemand Korrekturgelesen hätte. Fehler, Ungenauigkeiten etc. sind demnach zu erwarten und mir zuzuschreiben.
 
+# 1. Definitionen
 ## Informatik
 Informatik ist die Disziplin der automatischen Verarbeitung von Information.[^1]
 
