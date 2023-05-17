@@ -593,29 +593,37 @@ $$
             n>1: a\cdot T(\frac{n}{b}) + f(n)
         \end{cases}
 $$
-Es gilt:
+Es gebe ein $\gamma$, sodass gilt:
+
 $$
 \begin{aligned}
     1. &&
-        f(n) =a f\left(\frac{n}{b}\right)
+        \gamma=1:&&
+        f(n) = \gamma af\left(\frac{n}{b}\right)
         &&\Rightarrow&&
-        T(n) &\in\mathcal O(f(n)\cdot\log_2(n)) \\
+        T(n) &\in\mathcal O{\large(}f(n)\cdot\log_b(n){\large)} \\
     2. &&
-        \exists \gamma>1:
-        f(n) \ge \gamma a f\left(\frac{n}{b}\right)
+        \gamma>1:&&
+        f(n) \ge \gamma af\left(\frac{n}{b}\right)
         &&\Rightarrow&&
-        T(n) &\in\mathcal O(f(n)) \\
+        T(n) &\in\mathcal O{\large(}f(n){\large)} \\
     3. &&
-        \exists \gamma\in(0,1):
-        f(n) \le \gamma a f\left(\frac{n}{b}\right)
+        0<\gamma<1:&&
+        f(n) \le \gamma af\left(\frac{n}{b}\right)
         &&\Rightarrow&&
-        T(n) &\in\mathcal O(a^{\log_b(n)}) \\
+        T(n) &\in\mathcal O{\large(}a^{\log_b(n)}{\large)} \\
 \end{aligned}
 $$
 
+### Merkhilfen
+Die folgenen Erklärungen sind nicht zwangsweise mathematisch korrekt, daher sind sie eher als Merkhilfe zu verstehen. $T=\log_b(n)$ ist die Tiefe des Rekursionsbaums. Es gibt $3$ Fälle.
+
+1. Der Aufwand $f(n)$ ist in jeder Rekursionsebene _gleichartig_ (z.B. linear, konstant). Hier fließt in jeder Rekursionsebene $f(n)$ ein, daher dominiert am Ende der Term $T\cdot f(n)$.
+2. Der Aufwand $f(n)$ _wächst_ in jeder Rekursionsebene (abhängig von $n$). Daher dominiert $f(n)$ über alle Rekursionsebenen.
+3. Der Aufwand $f(n)$ _sinkt_ in jeder Rekursionsebene (abhängig von $n$). Hier fließt in jeder Rekursionsebene $a$ als dominanter Faktor ein, daher dominiert insgesamt $a^T$.
 
 ### Alternative Formulierung
-Es folgt die übliche Formulierung.[^5]
+Es gibt noch andere Formulierungen. Die folgende Formulierung ist gängiger.[^5]
 Seien $a\ge 1$ und $b\ge 1$ ganzzahlige Konstanten und $f: \mathbb N\rightarrow \mathbb N$. Gelte weiterhin für die Laufzeit $T(n)$:
 $$
     T(n) \le
@@ -630,23 +638,23 @@ Seien $\varepsilon >0$, $k<1$, $n_0\in\mathbb N$, dann gilt:
 $$
 \begin{aligned}
     1. &&
-        f(n) = O(n^{\log_b a - \varepsilon})
+        f(n) = O(n^{\log_b(a) - \varepsilon})
         &&\Rightarrow&&
-        T(n) &\in \mathcal O(n^{\log_b a}) \\
+        T(n) &\in \Theta(n^{\log_b(a)}) \\
     2. &&
-        f(n) = \Theta(n^{\log_b a})
+        f(n) = \Theta(n^{\log_b(a)}\log_{10}^k(n))
         &&\Rightarrow&&
-        T(n) &\in \mathcal O(n^{\log_b a} \log n) \\
+        T(n) &\in \Theta(n^{\log_b(a)} \log_{10}^{k+1}(n)) \\
     3.
        &&
         f(n) = \Omega(n^{\log_b a + \varepsilon})
         \land \forall n\ge n_0: a f\left(\frac{n}{b}\right) \le kf(n))
         &&\Rightarrow&&
-        T(n) &\in \mathcal O(f(n))
+        T(n) &\in \Theta(f(n))
 \end{aligned}
 $$
 
-[^5]: [Wikipedia, 2023-05-17](https://en.wikipedia.org/wiki/Master_theorem_(analysis_of_algorithms))
+[^5]: _Theorem 4.1_ [@AlgorithmsCormen2022, p. 103]
 
 # 8. Landau-Notation
 Die detaillierte Laufzeitanalyse hat einige Schwachstellen: Konstante Faktoren werden durch Hardware und Software beeinflusst, die außerhalb des Algorithmus liegen. Zudem ist die Notation fehleranfällig und kompliziert.
