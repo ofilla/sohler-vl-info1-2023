@@ -29,11 +29,12 @@ $$
     \}
 $$
 
-### Hierarchien:
-Satz über Hierarchien:
-1. $\forall 2 \le b \in\mathbb R:\mathcal O(\log n) \subseteq\mathcal O(\log^2 n) \subseteq\mathcal O(\log^b n)$
-2. $\forall 2 \le b \in\mathbb R:\forall 0<\varepsilon\in\mathbb R: \mathcal O(\log^bn) \subseteq\mathcal O(n^\varepsilon)$
-3. $\forall 2 \le b \in\mathbb R:\forall 1> \varepsilon\in\mathbb R:\mathcal O(n^\varepsilon) \subseteq\mathcal O(n) \subseteq\mathcal O(n^2) \subseteq\mathcal O(n^b)$
+### Hierarchien
+Seien $b, \varepsilon\in\mathbb R$, sodass $b\ge 2$ und $\varepsilon > 0$.
+
+1. $\mathcal O(\log n) \subseteq\mathcal O(\log^2 n) \subseteq\mathcal O(\log^b n)$
+2. $\mathcal O(\log^bn) \subseteq\mathcal O(n^\varepsilon)$
+3. $\forall \varepsilon<1:\mathcal O(n^\varepsilon) \subseteq\mathcal O(n) \subseteq\mathcal O(n^2) \subseteq\mathcal O(n^b)$
 
 ### Erweiterte $\mathcal O$-Notation
 Man kan die $\mathcal O$-Notation auf Funktionen erweitern, die von mehreren Parametern $n,m\in\mathbb N$ abhängen. In diesem Fall sollen beide Parameter groß $n,m\rightarrow\infty$ werden.
