@@ -1,4 +1,4 @@
-# Optimierungsprobleme
+# 10. Optimierungsprobleme
 Bei einem Optimierungsproblem wird nach einer _optimalen Lösung_ gesucht. Dies kann z.B. die kürzeste (oder schnellste) Strecke von einem $A$ nach $B$ sein, z.B. zur Arbeit.
 
 Ein klassisches Optimierungsproblem ist das Rucksackproblem.
@@ -89,3 +89,4 @@ Hat die optimale Lösung für Objekte aus $M^\prime$ und Rucksackgröße $j$ den
 
 Mit Hilfe der Algorithmen $\mathrm{Rucksack}$ und $\mathrm{RucksackLösung}$ kann man in der Laufzeit $\mathcal O(nG)$ eine optimale Lösung für das Rucksackproblem berechnen, wobei $n$ die Anzahl der Objekte ist und $G$ die Größe des Rucksacks.
 
+## Methode: Gierige Algorithmen

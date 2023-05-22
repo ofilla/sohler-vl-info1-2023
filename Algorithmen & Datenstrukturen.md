@@ -82,6 +82,17 @@ Dynamische Programmierung kann genutzt werden, um Optimierungsprobleme zu lösen
 * Rucksackproblem
 
 ## Methode: Gierige Algorithmen
+Gierige Algorithmen sind dazu gedacht, Optimierungsprobleme zu lösen. Sie lösen das Problem schrittweise, wobei bei jedem Schritt ein lokales Kriterium optimiert wird.
+
+Üblicherweise sind diese Algorithmen einfach zu implementieren. Die Korrektheit sicherzustellen ist dagegen schwieriger. Da immer ein lokales Kriterium optimiert wird, ist nicht sichergestellt, dass das globale Kriterium dabei optimal werden kann. Es kann also sein, dass keine oder eine suboptimale Lösung gefunden wird.
+
+### Beweise
+Zu einem bestimmten Zeitpunkt im Algorithmus muss gezeigt werden, dass der gierige Algorithmus mindestens so gut wie die optimale Lösung ist.
+
+### Beispiele
+
+* Wechselgeldrückgabe
+
 ## Rekursion
 Eine rekursive Methode ruft sich selbst mit veränderten Parametern auf. Hierzu ist zu Beginn der Methode eine Abbruchbedingung notwendig, die den einfachsten Fall des Problems löst. Ansonsten kommt es zu einer Endlosrekursion.
 
@@ -109,7 +120,8 @@ Für eine Eingabe $I$ sei $S(I)$ die Menge der möglichen Lösungen. Für $L\in 
 Alternativ zu dieser Methode kann man auch eine _Wertefunktion_ maximieren.
 
 # 3. wichtige Algorithmen
-## Insertion Sort
+## Rekursionsalgorithmen
+### Insertion Sort
 ```
 InsertionSort(A, n) \\ Feld A der Länge n wird übergeben
     for i=2 to n do
@@ -123,7 +135,7 @@ InsertionSort(A, n) \\ Feld A der Länge n wird übergeben
 
 Die Worst-Case-Laufzeit von InsertionSort ist $\Theta(n^2)$.
 
-### deskriptiver Pseudocode
+#### deskriptiver Pseudocode
 ```
 InsertionSort(A, n) \\ Feld A der Länge n wird übergeben
     if n=1 return \\ n=1 ist sortiert
@@ -132,7 +144,7 @@ InsertionSort(A, n) \\ Feld A der Länge n wird übergeben
     Füge x an die korrekte Stelle in A ein
 ```
 
-## Merge Sort
+### Merge Sort
 $\mathrm{MergeSort}$ sortiert erst beide Hälften eines Feldes seperat, bevor es sie zusammenfügt. Dadurch wird das Feld rekursiv sortiert.
 
 * Erster Aufruf: $\mathrm{MergeSort}(A,1,n)$ mit einem Feld $A$ der Länge $n$.
@@ -141,7 +153,7 @@ $\mathrm{MergeSort}$ sortiert erst beide Hälften eines Feldes seperat, bevor es
 Satz: Der Algorithmus $\mathrm{MergeSort}(A,p,r)$ sortiert das Feld $A[p..r]$ korrekt.
 Satz: Der Algorithmus $\mathrm{MergeSort}(A,1,n)$ hat eine Laufzeit von $\mathcal O(n \log_2 n)$.
 
-### deskriptiver Pseudocode
+#### deskriptiver Pseudocode
 ```
 MergeSort(A,p,r) \\ Sortiert A[p..r]
     if p<r then \\ Rekursionsabbruch, wenn p=r
@@ -151,13 +163,13 @@ MergeSort(A,p,r) \\ Sortiert A[p..r]
         Merge(A,p,q,r) \\ Füge die Teile zusammen
 ```
 
-## BinarySearch
+### BinarySearch
 $\mathrm{BinarySearch}$ sucht erst in beiden Hälften eines Feldes seperat, die Ergebnisse vergleicht. Dadurch wird das Feld rekursiv durchsucht.
 
 Satz: Die Laufzeit von $\mathrm{BinäreSuche}(A,x,p,r)$ ist $\mathcal O(\log_2 n)$, wobei $n= r-p+1$ die Größe des zu durchsuchenden Bereichs ist.
 Satz: Der Algorithmus $\mathrm{BinäreSuche}(A,x,p,r)$ findet den Index einer Zahl $x$ in einem sortierten Feld $A[p..r]$, sofern $x$ in $A[p..r]$ vorhanden ist.
 
-### deskriptiver Pseudocode
+#### deskriptiver Pseudocode
 ```
 BinarySearch(A,x,p,r) \\ Finde Zahl x in sortiertem Feld A[p..r]
     if p=r then return p \\ sofern vorhanden
@@ -167,14 +179,14 @@ BinarySearch(A,x,p,r) \\ Finde Zahl x in sortiertem Feld A[p..r]
     else return BinarySearch(A,x,q+1,r)
 ```
 
-## $n$-Ziffer-Integer Multiplikation
+### $n$-Ziffer-Integer Multiplikation
 Für große Zahlen nehmen wir an, dass jede _Ziffer_ eine Speicherzelle benötigt. Zwei $n$-Ziffer-Zahlen können wir in der Laufzeit $\Theta(n)$ berechnen. Ein $n$-Ziffer können wir in Laufzeit $\Theta(n+k)$ mit $10^k$ multiplizieren.
 
 Dazu multiplizieren wir schriftlich, wobei $A,B,C,D$ $n$-Ziffern sind: $AB\cdot CD = 100AC + 10(AD + BC) + BD$. Dies sind $4$ Multiplikationen von $n$-Ziffern. Dies hat allerdings eine Laufzeit von $T(n)=4T(\frac{n}{2})+cn$, daher gilt $T(n)\in \Theta(n^2)$.
 
 Effizienter wird es, wenn wir die Identität $(A+B)(C+D)=AC+BC+AD+BD$ verwenden. Damit können wir die Summe $BC+AD$ durch $(A+B)(C+D)-AC-BD$ ausdrücken, die Werte $AC$ und $BD$ müssen wir ohnehin berechnen. Dadurch kann man sich eine Multiplikation sparen und man erhält die Laufzeit von $T(n)=3T(\frac{n}{2})+cn$, daher gilt $T(n)\in \Theta(n)$.
 
-## Algorithmus von Strassen (Matrixmultiplikation)
+### Algorithmus von Strassen (Matrixmultiplikation)
 Falls wir das Produkt von zwei $n\times n$-Matrizen berechnen wollen, können wir diese in je $4$ Teilmatrizen der Größe $\frac{n}{2}\times\frac{n}{2}$ aufteilen. Dann multiplizieren wir $8$ $\frac{n}{2}\times\frac{n}{2}$-Matrizen und addieren $4$ $\frac{n}{2}\times\frac{n}{2}$-Matrizen.
 
 
@@ -217,8 +229,9 @@ Damit können wir eine Matrixmultiplikation sparen:
 
 Auf diese Weise können wir zwei $n\times n$-Matrizen in der $\mathcal O(n^{\log_2 7})\approx\mathcal O(n^{1.81})$ berechnen.
 
-## Fibbonacci-Zahlen
-### primitiver rekursiver Algorithmus
+## Dynamische Programmierung
+### Fibbonacci-Zahlen
+#### primitiver rekursiver Algorithmus
 ```
 FibRecursive(n)
     if n=1 then return 1
@@ -237,7 +250,7 @@ $$
         \end{cases}
 $$
 
-### dynamischer Algorithmus
+#### dynamischer Algorithmus
 Ein besserer Algorithmus speichert Zwischenergebnisse, um doppelte Berechnungen zu vermeiden. Dies gehört zur Dynamischen Programmierung.
 
 Für jedes $m>0$ gilt, dass $\mathrm{FibDynamicCalc}(m)$ maximal zweimal aufgerufen wird. Daher ist die Laufzeit von $\mathrm{FibDynamic}(n)$ linear $T(n)\in\mathcal O(n)$.
@@ -270,10 +283,10 @@ Fib1(n)
     return F[n]
 ```
 
-## SearchMax
+### SearchMax
 Suche das Maximum der Werte in einem Feld $A$ der Länge $n$. In diesem Fall bringt die Dynamisch Programmierung keine Laufzeitverkürzung.
 
-### rekursiv
+#### rekursiv
 Rekursiver Algorithmus.
 ```
 SearchMaxRecursive(A, n)
@@ -282,7 +295,7 @@ SearchMaxRecursive(A, n)
     return max{prev_max, A[n]}
 ```
 
-### dynamisch
+#### dynamisch
 Algorithmus nach Dynamischer Programmierung.
 ```
 MaxSucheDP(A,n)
@@ -293,7 +306,7 @@ MaxSucheDP(A,n)
     return Max[n]
 ```
 
-## Partition
+### Partition
 Sei eine Menge natürlicher Zahlen $M\subset \mathbb N$ gegeben. Nun soll festgestellt werden, ob $M$ in zwei Mengen $L,R$ aufgeteilt werden kann, sodass die Summe aller Elemente in den Teilmengen gleich ist.
 
 $$
@@ -304,14 +317,14 @@ $$
 * Die Frage, ob man Partition in _polynomieller_ Laufzeit lösen kann, ist äquivalent zur Frage ob $P$ gleich $NP$ ist.
 * Sei $W=\sum_{x\in M} x$, so kann man die zwei Teilmengen $L,R$ genau dann finden, wenn es eine Teilmenge $L$ mit $\sum_{x\in L} x=\frac{W}{2}$ gibt.
 
-## SubsetSum
+### SubsetSum
 $\mathrm{SubsetSum}$ löst eine verallgemeinerte Fragestellung aus der Partitionsfrage.
 Gibt es für ein gegebenes $U$ eine Teilmenge $L\subseteq M$, für die $U=\sum_{x\in L} x$ gilt?
 
 * Sei $M=\{x_1, \dots, x_n\}$ eine Menge, deren Elemente eine Reihenfolge haben.
 * Definiere Indikatorfunktion $\mathrm{Ind}(U,m)$.
 
-### Entwicklung des Algorithmus
+#### Entwicklung des Algorithmus
 1. Sei $x_n\in L$
     * Es gilt $L=\{x_n\} \cup L\backslash \{x_n\}$.
     * Sei $U^\prime=U-x_n$
@@ -319,7 +332,7 @@ Gibt es für ein gegebenes $U$ eine Teilmenge $L\subseteq M$, für die $U=\sum_{
 2. Sei $x_n\notin L$
     * Gesucht wird eine Menge $L^\prime\subseteq L\backslash \{x_n\}: U=\sum_{x\in L} x$
 
-### Indikatorfunktion
+#### Indikatorfunktion
 $$
     \mathrm{Ind}(U,m) =
         \begin{cases}
@@ -343,7 +356,7 @@ Ind(A, U, m)
     return Ind(A, U, n-1)
 ```
 
-### Pseudocode
+#### Pseudocode
 ```
 SubsetSum(A, U, n)
     \\ initalisiere Indikator
@@ -367,7 +380,8 @@ $\mathrm{SubsetSum}(A, U, n)$ hat eine Laufzeit von $T(n)=\mathcal O(nU)$.
 #### Korrektheitsbeweis
 Der Korrektheitsbeweis nutzt die Schleifeninvariante $\mathrm{Ind}[u,i]=\mathrm{true}$ genau dann, wenn es eine Teilmenge der ersten $i$ Zahlen aus $A$ gibt, die sich zu $u$ aufsummieren.
 
-## Rucksackproblem
+## Optimierungsprobleme
+### Rucksackproblem
 Es gibt einen Rucksack mit begrenzter Kapazität, in den Objekte mit verschiedenen Größen und verschiedenen Werten gepackt werden sollen. Ziel ist es, den Rucksack mit dem größtmöglichen Wert zu befüllen.
 
 Dazu hat man eine Menge $M=\{1,\dots,n\}$ an Objekten, die jeweils eine Größe und einen Wert haben. Dies kann man auch durch getrennte Felder für die Werte $w_i$, die Gewichte $g_i$ und die Rucksackgröße $G$ darstellen.
@@ -375,6 +389,46 @@ Dazu hat man eine Menge $M=\{1,\dots,n\}$ an Objekten, die jeweils eine Größe 
 Dies ist ein Optimierungsproblem.[^4]
 
 [^4]: siehe Kapitel _Optimierungsprobleme_
+
+### Wechselgeldrückgabe
+Ein eingegebener Centbetrag soll mit möglichst wenig Münzen zurückgegeben werden. Dies wird mit einem gierigen Algorithmus gelöst.
+
+Sei $B$ der Centbetrag. Ein gieriger Algorithmus wählt zunächst die größte verfügbare Münze $M$ mit $M\le B$ aus und sucht die optimale Rückgabe für den Restbetrag $B-M$.
+
+#### Korrektheit
+Angenommen, die Menge der Münzen sei $\{50, 10, 5, 1\}$, dann funktioniert der Algorithmus.
+
+Falls die Menge der Münzen aber $\{50, 10, 7, 5, 1\}$ ist, löst der Algorithmus das Problem nicht: Sei $B=14$, so liefert der Algorithmus $(1\times 10, 4\times 1)$ als Ergebnis. Die optimale Lösung wäre aber $(2\times 7)$.
+
+### Interval-Scheduling
+Ziel ist es, eine Ressource möglichst effektiv zu nutzen. Dies bedeutet, dass die Ressource möglichst wenig genutzt wird oder immer möglichst schnell wieder freigegeben wird.
+
+Sei die Eingabe eine Menge von Intervallen. In Pseudocode kann dies durch die Anzahl $n$, sowie Felder mit den Anfangswerten $A$ und den Endwerten $E$ dargestellt werden.
+
+Gesucht sei die Menge $S\subseteq \{1,\dots,n\}$, sodass die Anzahl der Elemente maximiert wird, wenn sich die verschiedenen Intervalle nicht überlappen. $\forall i \in S: \exists i\neq j\in S: E[i]\le A[j] \lor E[j]\le A[i]$.
+
+#### Kompatible Intervalle
+Zwei Intervalle heißen kompatibel, wenn sie sich nicht teilweise überlappen. D.h. mit Feldern der Anfangswerte $A$ und Feldern der Endwerte $E$ gilt $\forall i \in S: \exists i\neq j\in S: E[i]\le A[j] \lor E[j]\le A[i]$.
+
+#### Gieriger Algorithmus
+1. Wähle ein Interval $i_j$ geschickt und füge es in die Ergebnismenge $S$ ein.
+2. Entferne alle Intervalle, die nicht mit $i_j$ kompatibel sind.
+3. Gehe zu $1$.
+
+Die Schwierigkeit liegt in Schritt $1$. Sowohl die Wahl des erstmöglichen Intervals als auch die Wahl des kürzesten Intervals liefert nicht immer das gewünschte Ergebnis. Da die Ressource immer möglichst früh freigegeben werden soll, kann man immer das Interval nehmen, das am frühesten endet.
+
+```
+IntervalScheduling(A,E,n) \\ Voraussetzung: Die Intervalle sind nach Endzeitpunkt sortiert.
+    S = {1}
+    j = 1
+    for i=2 to n do
+        if A[i] \ge E[j] then
+            S = S + {i} \\ Vereinigungsmenge
+            j = i
+    return S
+```
+
+Der Algorithmus $\mathrm{IntervalSchedule}$ berechnet in Laufzeit $\mathcal O(n)$ eine optimale Lösung, wenn die Eingabe nach Endzeit der Intervalle sortiert ist. Die Sortierung kann in $\mathcal O(n \log n)$ Zeit berechnet werden.
 
 # 4. wichtige Datenstrukturen
 ## Graphen
@@ -662,13 +716,13 @@ Die detaillierte Laufzeitanalyse hat einige Schwachstellen: Konstante Faktoren w
 Die Landau-Notation nutzt eine _asymptotischen Analyse_ für große Eingabemengen $n\rightarrow\infty$. Kontante Faktoren sind damit vernachlässigbar.
 
 Im Folgenden werden einige Annahmen getroffen:
-* Die Funktionen $f$ und $g$ haben den Definitionsbereich $\mathbb N_0$ und sind für große $n$ asymptotisch nicht-negativ sein
-* Die Worst-Case-Laufzeit wird asymptotisch angenährt
+* Die Funktionen $f$ und $g$ haben den Definitionsbereich $\mathbb N_0$ und sollten für große $n$ asymptotisch nicht-negativ sein, d.h. $\exists n_0: \forall n\ge n_0: f(n)>0 \land g(n) > 0$.
+* Die Worst-Case-Laufzeit wird asymptotisch angenährt.
 
 Bei rekursiven Funktionen muss man mit dem Abschätzen der $\Omega$- und $\mathcal O$-Notationen aufpassen. Oft ist es sinnvoll, diese Funktionen konkret auszurechten.
 
 ## Beweise
-Für Beweise, z.B. mittels Vollständiger Induktion, darf man die Landau-Notationen nicht verwenden. Bei dieser muss es konkrete Konstanten $c$ geben, die für alle $n\ge n_0$ gelten. Nutzt man während eines Beweises eine Landau-Notation, kann man verschleiern, dass $c$ immer wieder geändert wird.
+Für Beweise, z.B. mittels Vollständiger Induktion, sollte man die Landau-Notationen nur vorsichtig verwenden. Bei dieser muss es konkrete Konstanten $c$ geben, die für alle $n\ge n_0$ gelten. Nutzt man während eines Beweises eine Landau-Notation, kann man verschleiern, dass $c$ immer wieder geändert wird.
 
 ## Schranken
 * Die Schranken $\mathcal O(g(n))$ und $\Omega(g(n))$ geben an, wie stark die analysierte Funktion bei großen $n$ höchstens bzw. mindestens wächst wie $g(n)$.
@@ -687,13 +741,16 @@ $$
     \}
 $$
 
-### Hierarchien:
-Satz über Hierarchien:
-1. $\forall 2 \le b \in\mathbb R:\mathcal O(\log n) \subseteq\mathcal O(\log^2 n) \subseteq\mathcal O(\log^b n)$
-2. $\forall 2 \le b \in\mathbb R:\forall 0<\varepsilon\in\mathbb R: \mathcal O(\log^bn) \subseteq\mathcal O(n^\varepsilon)$
-3. $\forall 2 \le b \in\mathbb R:\forall 1> \varepsilon\in\mathbb R:\mathcal O(n^\varepsilon) \subseteq\mathcal O(n) \subseteq\mathcal O(n^2) \subseteq\mathcal O(n^b)$
+### Hierarchien
+Seien $b, \varepsilon\in\mathbb R$, sodass $b\ge 2$ und $\varepsilon > 0$.
+
+1. $\mathcal O(\log n) \subseteq\mathcal O(\log^2 n) \subseteq\mathcal O(\log^b n)$
+2. $\mathcal O(\log^bn) \subseteq\mathcal O(n^\varepsilon)$
+3. $\forall \varepsilon<1:\mathcal O(n^\varepsilon) \subseteq\mathcal O(n) \subseteq\mathcal O(n^2) \subseteq\mathcal O(n^b)$
 
 ### Erweiterte $\mathcal O$-Notation
+Man kan die $\mathcal O$-Notation auf Funktionen erweitern, die von mehreren Parametern $n,m\in\mathbb N$ abhängen. In diesem Fall sollen beide Parameter groß $n,m\rightarrow\infty$ werden.
+
 $$
     \mathcal O(g(n,m)) = \{
         \text{Funktion } f(n) |
@@ -718,10 +775,14 @@ $$
     \}
 $$
 
-## Zusammenhang zwischen $\mathcal O(n)$ und $\Omega(n)$
+## Zusammenhänge
 
 $$
-    f(n) \in \mathcal O(g(n)) \Leftrightarrow g(n) \in \Omega(f(n))
+\begin{aligned}
+    f(n) &\in \mathcal O(g(n)) &&\Leftrightarrow&& g(n) \in \Omega(f(n)) \\
+    f(n) &\in o(g(n)) &&\Leftrightarrow&& g(n) \in \omega(g(n)) \\
+    f(n) &\in \Theta(g(n)) &&\Leftrightarrow&& f(n) \in \mathcal O(g(n)) \land f(n) \in \Omega(g(n))
+\end{aligned}
 $$
 
 ## $\Theta$-Notation
@@ -736,7 +797,7 @@ $f(n)\in o (g(n))$ bedeutet, $f$ wächst weniger stark als $g$.
 
 $$
     o (g(n)) = \{
-        \text{Funktion} f(n) |
+        \text{Funktion } f(n) |
         \forall c\in\mathbb R_+:\exists n_0\in\mathbb N:
         \forall\mathbb N \ni n\ge n_0: 0 \le f(n) \le c\cdot g(n)
     \}
@@ -746,7 +807,11 @@ $$
 $f(n)\in \omega(g(n))$ bedeutet, $f$ wächst stärker als $g$.
 
 $$
-    f(n) \in o(g(n)) \Leftrightarrow g(n) \in o(g(n))
+    \omega(g(n)) = \{
+        \text{Funktion } f(n) |
+        \forall c\in\mathbb R_+:\exists n_0\in\mathbb N:
+        \forall\mathbb N \ni n\ge n_0: 0 \le c\cdot g(n) \le f(n)
+    \}
 $$
 
 # 9. Korrektheitsbeweise
@@ -796,7 +861,7 @@ Es gibt die Frage, ob die Menge der Probleme, die _schnell_ lösbar sind ($P$), 
 * $NP$ ist die Menge der Probleme, die in _nichtdeterministisch polynomieller Laufzeit_ zu lösen sind.
 * Es gilt $P\subset NP$.
 
-# Optimierungsprobleme
+# 10. Optimierungsprobleme
 Bei einem Optimierungsproblem wird nach einer _optimalen Lösung_ gesucht. Dies kann z.B. die kürzeste (oder schnellste) Strecke von einem $A$ nach $B$ sein, z.B. zur Arbeit.
 
 Ein klassisches Optimierungsproblem ist das Rucksackproblem.
@@ -887,6 +952,7 @@ Hat die optimale Lösung für Objekte aus $M^\prime$ und Rucksackgröße $j$ den
 
 Mit Hilfe der Algorithmen $\mathrm{Rucksack}$ und $\mathrm{RucksackLösung}$ kann man in der Laufzeit $\mathcal O(nG)$ eine optimale Lösung für das Rucksackproblem berechnen, wobei $n$ die Anzahl der Objekte ist und $G$ die Größe des Rucksacks.
 
+## Methode: Gierige Algorithmen
 # Rechentricks / -regeln
 * Satz von Gauß: $\sum_{i=1}^n i = \frac{n(n+1)}{2}$
 * Gauß-Klammer:  $\lfloor n/2\rfloor$: Gauss-Klammer: Abgerundet auf ganze Zahl

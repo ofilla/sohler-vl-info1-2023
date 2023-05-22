@@ -1,5 +1,6 @@
 # 3. wichtige Algorithmen
-## Insertion Sort
+## Rekursionsalgorithmen
+### Insertion Sort
 ```
 InsertionSort(A, n) \\ Feld A der Länge n wird übergeben
     for i=2 to n do
@@ -13,7 +14,7 @@ InsertionSort(A, n) \\ Feld A der Länge n wird übergeben
 
 Die Worst-Case-Laufzeit von InsertionSort ist $\Theta(n^2)$.
 
-### deskriptiver Pseudocode
+#### deskriptiver Pseudocode
 ```
 InsertionSort(A, n) \\ Feld A der Länge n wird übergeben
     if n=1 return \\ n=1 ist sortiert
@@ -22,7 +23,7 @@ InsertionSort(A, n) \\ Feld A der Länge n wird übergeben
     Füge x an die korrekte Stelle in A ein
 ```
 
-## Merge Sort
+### Merge Sort
 $\mathrm{MergeSort}$ sortiert erst beide Hälften eines Feldes seperat, bevor es sie zusammenfügt. Dadurch wird das Feld rekursiv sortiert.
 
 * Erster Aufruf: $\mathrm{MergeSort}(A,1,n)$ mit einem Feld $A$ der Länge $n$.
@@ -31,7 +32,7 @@ $\mathrm{MergeSort}$ sortiert erst beide Hälften eines Feldes seperat, bevor es
 Satz: Der Algorithmus $\mathrm{MergeSort}(A,p,r)$ sortiert das Feld $A[p..r]$ korrekt.
 Satz: Der Algorithmus $\mathrm{MergeSort}(A,1,n)$ hat eine Laufzeit von $\mathcal O(n \log_2 n)$.
 
-### deskriptiver Pseudocode
+#### deskriptiver Pseudocode
 ```
 MergeSort(A,p,r) \\ Sortiert A[p..r]
     if p<r then \\ Rekursionsabbruch, wenn p=r
@@ -41,13 +42,13 @@ MergeSort(A,p,r) \\ Sortiert A[p..r]
         Merge(A,p,q,r) \\ Füge die Teile zusammen
 ```
 
-## BinarySearch
+### BinarySearch
 $\mathrm{BinarySearch}$ sucht erst in beiden Hälften eines Feldes seperat, die Ergebnisse vergleicht. Dadurch wird das Feld rekursiv durchsucht.
 
 Satz: Die Laufzeit von $\mathrm{BinäreSuche}(A,x,p,r)$ ist $\mathcal O(\log_2 n)$, wobei $n= r-p+1$ die Größe des zu durchsuchenden Bereichs ist.
 Satz: Der Algorithmus $\mathrm{BinäreSuche}(A,x,p,r)$ findet den Index einer Zahl $x$ in einem sortierten Feld $A[p..r]$, sofern $x$ in $A[p..r]$ vorhanden ist.
 
-### deskriptiver Pseudocode
+#### deskriptiver Pseudocode
 ```
 BinarySearch(A,x,p,r) \\ Finde Zahl x in sortiertem Feld A[p..r]
     if p=r then return p \\ sofern vorhanden
@@ -57,14 +58,14 @@ BinarySearch(A,x,p,r) \\ Finde Zahl x in sortiertem Feld A[p..r]
     else return BinarySearch(A,x,q+1,r)
 ```
 
-## $n$-Ziffer-Integer Multiplikation
+### $n$-Ziffer-Integer Multiplikation
 Für große Zahlen nehmen wir an, dass jede _Ziffer_ eine Speicherzelle benötigt. Zwei $n$-Ziffer-Zahlen können wir in der Laufzeit $\Theta(n)$ berechnen. Ein $n$-Ziffer können wir in Laufzeit $\Theta(n+k)$ mit $10^k$ multiplizieren.
 
 Dazu multiplizieren wir schriftlich, wobei $A,B,C,D$ $n$-Ziffern sind: $AB\cdot CD = 100AC + 10(AD + BC) + BD$. Dies sind $4$ Multiplikationen von $n$-Ziffern. Dies hat allerdings eine Laufzeit von $T(n)=4T(\frac{n}{2})+cn$, daher gilt $T(n)\in \Theta(n^2)$.
 
 Effizienter wird es, wenn wir die Identität $(A+B)(C+D)=AC+BC+AD+BD$ verwenden. Damit können wir die Summe $BC+AD$ durch $(A+B)(C+D)-AC-BD$ ausdrücken, die Werte $AC$ und $BD$ müssen wir ohnehin berechnen. Dadurch kann man sich eine Multiplikation sparen und man erhält die Laufzeit von $T(n)=3T(\frac{n}{2})+cn$, daher gilt $T(n)\in \Theta(n)$.
 
-## Algorithmus von Strassen (Matrixmultiplikation)
+### Algorithmus von Strassen (Matrixmultiplikation)
 Falls wir das Produkt von zwei $n\times n$-Matrizen berechnen wollen, können wir diese in je $4$ Teilmatrizen der Größe $\frac{n}{2}\times\frac{n}{2}$ aufteilen. Dann multiplizieren wir $8$ $\frac{n}{2}\times\frac{n}{2}$-Matrizen und addieren $4$ $\frac{n}{2}\times\frac{n}{2}$-Matrizen.
 
 
@@ -107,8 +108,9 @@ Damit können wir eine Matrixmultiplikation sparen:
 
 Auf diese Weise können wir zwei $n\times n$-Matrizen in der $\mathcal O(n^{\log_2 7})\approx\mathcal O(n^{1.81})$ berechnen.
 
-## Fibbonacci-Zahlen
-### primitiver rekursiver Algorithmus
+## Dynamische Programmierung
+### Fibbonacci-Zahlen
+#### primitiver rekursiver Algorithmus
 ```
 FibRecursive(n)
     if n=1 then return 1
@@ -127,7 +129,7 @@ $$
         \end{cases}
 $$
 
-### dynamischer Algorithmus
+#### dynamischer Algorithmus
 Ein besserer Algorithmus speichert Zwischenergebnisse, um doppelte Berechnungen zu vermeiden. Dies gehört zur Dynamischen Programmierung.
 
 Für jedes $m>0$ gilt, dass $\mathrm{FibDynamicCalc}(m)$ maximal zweimal aufgerufen wird. Daher ist die Laufzeit von $\mathrm{FibDynamic}(n)$ linear $T(n)\in\mathcal O(n)$.
@@ -160,10 +162,10 @@ Fib1(n)
     return F[n]
 ```
 
-## SearchMax
+### SearchMax
 Suche das Maximum der Werte in einem Feld $A$ der Länge $n$. In diesem Fall bringt die Dynamisch Programmierung keine Laufzeitverkürzung.
 
-### rekursiv
+#### rekursiv
 Rekursiver Algorithmus.
 ```
 SearchMaxRecursive(A, n)
@@ -172,7 +174,7 @@ SearchMaxRecursive(A, n)
     return max{prev_max, A[n]}
 ```
 
-### dynamisch
+#### dynamisch
 Algorithmus nach Dynamischer Programmierung.
 ```
 MaxSucheDP(A,n)
@@ -183,7 +185,7 @@ MaxSucheDP(A,n)
     return Max[n]
 ```
 
-## Partition
+### Partition
 Sei eine Menge natürlicher Zahlen $M\subset \mathbb N$ gegeben. Nun soll festgestellt werden, ob $M$ in zwei Mengen $L,R$ aufgeteilt werden kann, sodass die Summe aller Elemente in den Teilmengen gleich ist.
 
 $$
@@ -194,14 +196,14 @@ $$
 * Die Frage, ob man Partition in _polynomieller_ Laufzeit lösen kann, ist äquivalent zur Frage ob $P$ gleich $NP$ ist.
 * Sei $W=\sum_{x\in M} x$, so kann man die zwei Teilmengen $L,R$ genau dann finden, wenn es eine Teilmenge $L$ mit $\sum_{x\in L} x=\frac{W}{2}$ gibt.
 
-## SubsetSum
+### SubsetSum
 $\mathrm{SubsetSum}$ löst eine verallgemeinerte Fragestellung aus der Partitionsfrage.
 Gibt es für ein gegebenes $U$ eine Teilmenge $L\subseteq M$, für die $U=\sum_{x\in L} x$ gilt?
 
 * Sei $M=\{x_1, \dots, x_n\}$ eine Menge, deren Elemente eine Reihenfolge haben.
 * Definiere Indikatorfunktion $\mathrm{Ind}(U,m)$.
 
-### Entwicklung des Algorithmus
+#### Entwicklung des Algorithmus
 1. Sei $x_n\in L$
     * Es gilt $L=\{x_n\} \cup L\backslash \{x_n\}$.
     * Sei $U^\prime=U-x_n$
@@ -209,7 +211,7 @@ Gibt es für ein gegebenes $U$ eine Teilmenge $L\subseteq M$, für die $U=\sum_{
 2. Sei $x_n\notin L$
     * Gesucht wird eine Menge $L^\prime\subseteq L\backslash \{x_n\}: U=\sum_{x\in L} x$
 
-### Indikatorfunktion
+#### Indikatorfunktion
 $$
     \mathrm{Ind}(U,m) =
         \begin{cases}
@@ -233,7 +235,7 @@ Ind(A, U, m)
     return Ind(A, U, n-1)
 ```
 
-### Pseudocode
+#### Pseudocode
 ```
 SubsetSum(A, U, n)
     \\ initalisiere Indikator
@@ -257,7 +259,8 @@ $\mathrm{SubsetSum}(A, U, n)$ hat eine Laufzeit von $T(n)=\mathcal O(nU)$.
 #### Korrektheitsbeweis
 Der Korrektheitsbeweis nutzt die Schleifeninvariante $\mathrm{Ind}[u,i]=\mathrm{true}$ genau dann, wenn es eine Teilmenge der ersten $i$ Zahlen aus $A$ gibt, die sich zu $u$ aufsummieren.
 
-## Rucksackproblem
+## Optimierungsprobleme
+### Rucksackproblem
 Es gibt einen Rucksack mit begrenzter Kapazität, in den Objekte mit verschiedenen Größen und verschiedenen Werten gepackt werden sollen. Ziel ist es, den Rucksack mit dem größtmöglichen Wert zu befüllen.
 
 Dazu hat man eine Menge $M=\{1,\dots,n\}$ an Objekten, die jeweils eine Größe und einen Wert haben. Dies kann man auch durch getrennte Felder für die Werte $w_i$, die Gewichte $g_i$ und die Rucksackgröße $G$ darstellen.
@@ -265,4 +268,44 @@ Dazu hat man eine Menge $M=\{1,\dots,n\}$ an Objekten, die jeweils eine Größe 
 Dies ist ein Optimierungsproblem.[^4]
 
 [^4]: siehe Kapitel _Optimierungsprobleme_
+
+### Wechselgeldrückgabe
+Ein eingegebener Centbetrag soll mit möglichst wenig Münzen zurückgegeben werden. Dies wird mit einem gierigen Algorithmus gelöst.
+
+Sei $B$ der Centbetrag. Ein gieriger Algorithmus wählt zunächst die größte verfügbare Münze $M$ mit $M\le B$ aus und sucht die optimale Rückgabe für den Restbetrag $B-M$.
+
+#### Korrektheit
+Angenommen, die Menge der Münzen sei $\{50, 10, 5, 1\}$, dann funktioniert der Algorithmus.
+
+Falls die Menge der Münzen aber $\{50, 10, 7, 5, 1\}$ ist, löst der Algorithmus das Problem nicht: Sei $B=14$, so liefert der Algorithmus $(1\times 10, 4\times 1)$ als Ergebnis. Die optimale Lösung wäre aber $(2\times 7)$.
+
+### Interval-Scheduling
+Ziel ist es, eine Ressource möglichst effektiv zu nutzen. Dies bedeutet, dass die Ressource möglichst wenig genutzt wird oder immer möglichst schnell wieder freigegeben wird.
+
+Sei die Eingabe eine Menge von Intervallen. In Pseudocode kann dies durch die Anzahl $n$, sowie Felder mit den Anfangswerten $A$ und den Endwerten $E$ dargestellt werden.
+
+Gesucht sei die Menge $S\subseteq \{1,\dots,n\}$, sodass die Anzahl der Elemente maximiert wird, wenn sich die verschiedenen Intervalle nicht überlappen. $\forall i \in S: \exists i\neq j\in S: E[i]\le A[j] \lor E[j]\le A[i]$.
+
+#### Kompatible Intervalle
+Zwei Intervalle heißen kompatibel, wenn sie sich nicht teilweise überlappen. D.h. mit Feldern der Anfangswerte $A$ und Feldern der Endwerte $E$ gilt $\forall i \in S: \exists i\neq j\in S: E[i]\le A[j] \lor E[j]\le A[i]$.
+
+#### Gieriger Algorithmus
+1. Wähle ein Interval $i_j$ geschickt und füge es in die Ergebnismenge $S$ ein.
+2. Entferne alle Intervalle, die nicht mit $i_j$ kompatibel sind.
+3. Gehe zu $1$.
+
+Die Schwierigkeit liegt in Schritt $1$. Sowohl die Wahl des erstmöglichen Intervals als auch die Wahl des kürzesten Intervals liefert nicht immer das gewünschte Ergebnis. Da die Ressource immer möglichst früh freigegeben werden soll, kann man immer das Interval nehmen, das am frühesten endet.
+
+```
+IntervalScheduling(A,E,n) \\ Voraussetzung: Die Intervalle sind nach Endzeitpunkt sortiert.
+    S = {1}
+    j = 1
+    for i=2 to n do
+        if A[i] \ge E[j] then
+            S = S + {i} \\ Vereinigungsmenge
+            j = i
+    return S
+```
+
+Der Algorithmus $\mathrm{IntervalSchedule}$ berechnet in Laufzeit $\mathcal O(n)$ eine optimale Lösung, wenn die Eingabe nach Endzeit der Intervalle sortiert ist. Die Sortierung kann in $\mathcal O(n \log n)$ Zeit berechnet werden.
 
