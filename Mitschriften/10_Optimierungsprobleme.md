@@ -89,4 +89,3 @@ Hat die optimale Lösung für Objekte aus $M^\prime$ und Rucksackgröße $j$ den
 
 Mit Hilfe der Algorithmen $\mathrm{Rucksack}$ und $\mathrm{RucksackLösung}$ kann man in der Laufzeit $\mathcal O(nG)$ eine optimale Lösung für das Rucksackproblem berechnen, wobei $n$ die Anzahl der Objekte ist und $G$ die Größe des Rucksacks.
 
-## Methode: Gierige Algorithmen

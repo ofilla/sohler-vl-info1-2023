@@ -282,6 +282,7 @@ Falls die Menge der Münzen aber $\{50, 10, 7, 5, 1\}$ ist, löst der Algorithmu
 ### Interval-Scheduling
 Ziel ist es, eine Ressource möglichst effektiv zu nutzen. Dies bedeutet, dass die Ressource möglichst wenig genutzt wird oder immer möglichst schnell wieder freigegeben wird.
 
+#### Notation
 Sei die Eingabe eine Menge von Intervallen. In Pseudocode kann dies durch die Anzahl $n$, sowie Felder mit den Anfangswerten $A$ und den Endwerten $E$ dargestellt werden.
 
 Gesucht sei die Menge $S\subseteq \{1,\dots,n\}$, sodass die Anzahl der Elemente maximiert wird, wenn sich die verschiedenen Intervalle nicht überlappen. $\forall i \in S: \exists i\neq j\in S: E[i]\le A[j] \lor E[j]\le A[i]$.
@@ -296,6 +297,8 @@ Zwei Intervalle heißen kompatibel, wenn sie sich nicht teilweise überlappen. D
 
 Die Schwierigkeit liegt in Schritt $1$. Sowohl die Wahl des erstmöglichen Intervals als auch die Wahl des kürzesten Intervals liefert nicht immer das gewünschte Ergebnis. Da die Ressource immer möglichst früh freigegeben werden soll, kann man immer das Interval nehmen, das am frühesten endet.
 
+Der Algorithmus $\mathrm{IntervalSchedule}$ berechnet in Laufzeit $\mathcal O(n)$ eine optimale Lösung, wenn die Eingabe nach Endzeit der Intervalle sortiert ist. Die Sortierung kann in $\mathcal O(n \log n)$ Zeit berechnet werden.
+
 ```
 IntervalScheduling(A,E,n) \\ Voraussetzung: Die Intervalle sind nach Endzeitpunkt sortiert.
     S = {1}
@@ -307,5 +310,38 @@ IntervalScheduling(A,E,n) \\ Voraussetzung: Die Intervalle sind nach Endzeitpunk
     return S
 ```
 
-Der Algorithmus $\mathrm{IntervalSchedule}$ berechnet in Laufzeit $\mathcal O(n)$ eine optimale Lösung, wenn die Eingabe nach Endzeit der Intervalle sortiert ist. Die Sortierung kann in $\mathcal O(n \log n)$ Zeit berechnet werden.
+### Interval-Scheduling mit Deadlines
+Wie beim Interval-Scheduling soll eine Ressource bestmöglich genutzt werden. Im Unterschied zu den dortigen Bedingungen sollen hier aber bestimmte Aufgaben gelöst werden, die die Ressource für eine gewisse Dauer in Anspruch nehmen. Zudem hat jede Aufgabe eine Deadline, zu der sie erfüllt sein soll.
+
+Wird eine Aufgabe $z$ Zeiteinheiten nach der Deadline erfüllt, hat sie eine Verzögerung von $z$. Wird eine Aufgabe innerhalb der Deadline beendet, hat sie eine Verzögerung von $0$.
+
+In diesem Fall wird so optimiert, dass die maximale Verzögerung minimiert wird. Hierzu müssen die Aufgaben in der Reihenfolge ihrer Deadlines bearbeitet werden.
+
+#### Notation
+Sei die Eingabe eine Menge von Intervallen. In Pseudocode kann dies durch die Anzahl $n$, sowie Felder mit den Laufzeiten $t$ und den Deadlines $d$.
+
+Es sollen die Startzeitpunkte der jeweiligen Aufgaben zurückgegeben werden.
+
+#### Pseudocode
+Unter der Annahme, dass die Aufgaben in Reihenfolge ihrer Deadlines nicht-absteigend sortiert sind, löst der folgende Algorithmus das Problem in Laufzeit $T(n)\in\mathcal O(n)$ optimal und ohne Leerlauf.
+
+```
+LatenessScheduling(t,d,n)
+    A = new array [1..n]
+    z=0
+    for i=1 to n do
+        A[i] = z
+        z = z + t[i]
+    return A
+```
+
+#### Leerlauf
+Alle Lösungen ohne Leerlauf, bei denen die Aufgaben nicht-absteigend nach Deadline sortiert sind, haben dieselbe maximale Verzögerung. Es gibt immer eine optimale Lösung ohne Leerlauf, bei der die Aufgaben nicht-absteigend nach Deadline sortiert sind.
+
+#### Inversion
+Eine Reihenfolge von Aufgaben hat eine Inversion $(i,j)$, wenn Aufgabe $i$ vor Aufgabe $j$ in der Reihenfolge auftritt, aber die Deadline $d[i]$ von Aufgabe $i$ größer ist als die Deadline $d[j]$ von Aufgabe $j$.
+
+Eine Reihenfolge ohne Inversionen ist nicht-absteigend sortiert.
+
+Gibt es in einer Reihenfolge von Aufgaben eine Inversion $(i,j)$, dann gibt es auch eine Inversion zweier in der Reihenfolge benachbarter Aufgaben und man kann Aufgabe $i$ und $j$ vertauschen, ohne die Lösung zu verschlechtern.
 

@@ -4,6 +4,8 @@
 2. Löse das Problem rekursiv auf den einzelnen Teilen.
 3. Füge die Teile zu einer Lösung des Gesamtproblems zusammen.
 
+Diese Algorithmen sind oft für teilbare Daten geeignet, beispielsweise für Felder und geometrische Daten.
+
 ### Beispiele
 * MergeSort
 * BinäreSuche
@@ -53,12 +55,19 @@ Gierige Algorithmen sind dazu gedacht, Optimierungsprobleme zu lösen. Sie löse
 
 Üblicherweise sind diese Algorithmen einfach zu implementieren. Die Korrektheit sicherzustellen ist dagegen schwieriger. Da immer ein lokales Kriterium optimiert wird, ist nicht sichergestellt, dass das globale Kriterium dabei optimal werden kann. Es kann also sein, dass keine oder eine suboptimale Lösung gefunden wird.
 
+Manchmal kann eine optimale Lösung gefunden werden, manchmal kann aber nur eine approximative Lösung gefunden werden. Üblicherweise lassen sich diese Algorithmen in polynomieller Laufzeit implementieren.
+
+
+Eine Idee zum Entwickeln kann sein, nur bestimmte Ereignisse zu überprüfen. Beispielsweise bei der Verteilung von (Zeit-)Intervallen sind nur die Zeitpunkte betrachten, zu denen mindestens ein Interval beginnt oder endet.
+
 ### Beweise
 Zu einem bestimmten Zeitpunkt im Algorithmus muss gezeigt werden, dass der gierige Algorithmus mindestens so gut wie die optimale Lösung ist.
 
 ### Beispiele
 
 * Wechselgeldrückgabe
+* IntervalScheduling
+* LatenessScheduling: Interval-Scheduling mit Deadlines
 
 ## Rekursion
 Eine rekursive Methode ruft sich selbst mit veränderten Parametern auf. Hierzu ist zu Beginn der Methode eine Abbruchbedingung notwendig, die den einfachsten Fall des Problems löst. Ansonsten kommt es zu einer Endlosrekursion.
