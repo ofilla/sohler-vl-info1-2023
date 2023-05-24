@@ -17,7 +17,7 @@ date:
 SubsetSum(A, U, n)
     \\ initalisiere Indikator
     Ind = new array [0..U][1..n]
-    for j=1 to n do
+    for j=1 to U do
         Ind[j,1] = false
     Ind[0,1] = true \\ leere Menge
     if A[1] <= U \\ Menge {A[1]}

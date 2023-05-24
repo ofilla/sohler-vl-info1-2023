@@ -240,10 +240,11 @@ Ind(A, U, m)
 SubsetSum(A, U, n)
     \\ initalisiere Indikator
     Ind = new array [0..U][1..n]
-    for j=1 to n do
+    for j=1 to U do
         Ind[j,1] = false
     Ind[0,1] = true \\ leere Menge
-    Ind[A[1],1] = true \\ Menge {A[1]}
+    if A[1] <= U \\ Menge {A[1]}
+    then Ind[A[1],1] = true
 
     \\ suche nach Teilmenge
     for i=2 to n do
