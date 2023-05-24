@@ -20,7 +20,8 @@ SubsetSum(A, U, n)
     for j=1 to n do
         Ind[j,1] = false
     Ind[0,1] = true \\ leere Menge
-    Ind[A[1],1] = true \\ Menge {A[1]}
+    if A[1] <= U \\ Menge {A[1]}
+    then Ind[A[1],1] = true
 
     \\ suche nach Teilmenge
     for i=2 to n do
@@ -31,27 +32,20 @@ SubsetSum(A, U, n)
     return Ind[U,n]
 ```
 
-`Ind[A[1], 1]` existiert nicht! U.a. aus Zeitgründen nicht weiter bearbeitet.
+$0\equiv \mathrm{false}$ und $1\equiv \mathrm{true}$
 
+|   | 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 14 | 15 |
+|---|---|---|---|---|---|---|---|---|---|---|----|----|----|----|----|----|
+| 1 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0  | 0  | 0  | 0  | 0  | 0  |
+| 2 | 1 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0  | 0  | 0  | 0  | 0  | 0  |
+| 3 | 1 | 0 | 0 | 0 | 0 | 1 | 0 | 1 | 0 | 0 | 0  | 0  | 1  | 0  | 0  | 0  |
+| 4 | 1 | 0 | 0 | 0 | 1 | 1 | 0 | 1 | 0 | 1 | 0  | 1  | 1  | 0  | 0  | 0  |
+| 5 | 1 | 0 | 0 | 0 | 1 | 1 | 0 | 1 | 0 | 1 | 0  | 1  | 1  | 0  | 0  | 0  |
+| 6 | 1 | 0 | 0 | 1 | 1 | 1 | 1 | 1 | 0 | 1 | 0  | 1  | 1  | 1  | 1  | 0  |
+| 7 | 1 | 0 | 1 | 0 | 1 | 1 | 1 | 1 | 0 | 1 | 0  | 1  | 1  | 1  | 1  | 1  |
+| 8 | 1 | 0 | 1 | 0 | 1 | 1 | 1 | 1 | 1 | 1 | 1  | 1  | 1  | 1  | 1  | 1  |
+| 9 | 1 | 0 | 1 | 0 | 1 | 1 | 1 | 1 | 1 | 1 | 1  | 1  | 1  | 1  | 1  |    |
 
-|      | i=1   | i=2 | i=3 | i=4 | i=5 | i=6 | i=7 | i=8 |
-|------|-------|-----|-----|-----|-----|-----|-----|-----|
-| j=0  | true  |     |     |     |     |     |     |     |
-| j=1  | false |     |     |     |     |     |     |     |
-| j=2  | false |     |     |     |     |     |     |     |
-| j=3  | false |     |     |     |     |     |     |     |
-| j=4  | false |     |     |     |     |     |     |     |
-| j=5  | false |     |     |     |     |     |     |     |
-| j=6  | false |     |     |     |     |     |     |     |
-| j=7  | false |     |     |     |     |     |     |     |
-| j=8  | false |     |     |     |     |     |     |     |
-| j=9  | false |     |     |     |     |     |     |     |
-| j=10 | false |     |     |     |     |     |     |     |
-| j=11 | false |     |     |     |     |     |     |     |
-| j=12 | false |     |     |     |     |     |     |     |
-| j=13 | false |     |     |     |     |     |     |     |
-| j=14 | false |     |     |     |     |     |     |     |
-| j=15 | false |     |     |     |     |     |     |     |
 
 ## 2.
 > Gegeben sei ein Array $A[1..n]$ mit $1 \le A[i] \le 3$ für alle $1 \le i \le n$. Eine Spielfigur startet auf der ersten Stelle des Arrays und muss die $n$-te Stelle erreichen. Befindet sich die Figur auf der Stelle $i$ für $1 \le i \le n$, so darf sie mit einem Sprung bis zu $A[i]$ Stellen nach vorne ziehen. Im unten gezeigten Beispiel darf die Figur also von der zweiten Stelle aus bis zu $A[2] = 3$ Stellen weiterspringen, also jede der Stellen $3$, $4$ und $5$ mit einem Sprung erreichen. Gesucht ist die minimale Anzahl von Sprüngen, um beginnend auf der ersten Stelle des Arrays die $n$-te Stelle zu erreichen.
@@ -61,6 +55,19 @@ SubsetSum(A, U, n)
 > $A= (2\ \ 3\ \ 1\ \ 2\ \ 3\ \ 1\ \ 2\ \ 1)$
 
 > Sei $M [i]$ die minimal benötigte Anzahl von Sprüngen, um ausgehend von der $i$-ten Stelle die $n$-te Stelle zu erreichen. Geben Sie eine rekursive Formulierung für $M [i]$ an. Erklären Sie die Funktionsweise dieser. Gehen Sie dabei auf jede Fallunterschiedung ein.
+
+Hier wird $\infty$ als Fehlerwert gewählt, damit $\min\{\dots\}$ diesen Pfad nicht auswählen wird.
+
+$$
+M(i) =
+    \begin{cases}
+        0 &: i = n \\
+        \infty &: i>n \\
+        1+M(i+1) &: A[i] = 1 \\
+        1+ \min\{M(i+1), M(i+2)\} &: A[i] = 2 \\
+        1+ \min\{M(i+1), M(i+2), M(i+3)\} &: A[i] = 3 \\
+    \end{cases}
+$$
 
 ```
 fastestWay(A, n):
@@ -99,57 +106,96 @@ S(n, k)
     return S(n-1, k-1) + k * S(n-1, k)
 ```
 
+Gesucht ist die Anzahl aller Partitionen:
+```
+NumberOfAllPartitions(n):
+    sum = 0
+    for k = 0 to n
+        sum = sum + S(n, k)
+    return sum
+```
+
 ### b)
 > Analysieren Sie die asymptotische Worst-Case-Laufzeit Ihres Algorithmus aus Teilaufgabe a).
 
-
 ```
-S(n, k) \\ T(n)
+S(n, k) \\ T(n, k)
     if k=n then return 1 \\ O(1)
     if k>=0 and n>0 then return 0 \\ O(1)
-    return S(n-1, k-1) + k * S(n-1, k) \\ 2T(n-1) + 1
+    return S(n-1, k-1) + k * S(n-1, k) \\ T(n-1, k-1) + T(n-1, k)
 ```
 
+Überlegungen zur Laufzeit:
+
+* Der Rekursionsbaum ist nicht vollständig.
+* Seine maximale Höhe ist $n$.
+* Der vollständige Baum hat $2^n$ Blätter, tatsächlich hat der Baum weniger Blätter
+* Die Laufzeit in jedem Knoten ist konstant.
+* Es gibt mehr Blätter als innere Knoten.
+
+Daraus folgt eine Laufzeit von $T_1(n)\in\mathcal O(n)$.
+
 $T(0)\in\mathcal O(1)$ sei die Laufzeit der letzten Rekursionsstufe. Es gilt $T(n)= 2T(n-1) + \mathcal O(1)$. Daher gilt $T(n) = 2^{n-1}T(0)$, also $T(n)\in\mathcal O(2^{n-1}) \subseteq \mathcal O(2^n)$.
+
+```
+NumberOfAllPartitions(n): \\ T_2(n)
+    sum = 0 \\ O(1)
+    for k = 0 to n \\ O(1)
+        sum = sum + S(n, k) \\ n*O(2^n)
+    return sum
+```
+
+$$
+\begin{aligned}
+    T_1(n, k) &\in \mathcal O(2^n) \\
+    T_2(n) &\in \mathcal O(n2^n)
+\end{aligned}
+$$
 
 ### c)
 > Geben Sie einen Algorithmus in Pseudocode an, der auf dem Prinzip der dynamischen Programmierung beruht, und bei Eingabe einer Zahl $n$ unter Verwendung von $S(n, k)$ die Anzahl aller Partitionen einer Menge mit $n$ Elementen berechnet.
 
 ```
-Stirling(n, k)
+NumberPartitions(n)
+    k = n
+
     S = new array[0..n][0..k]
-    for i=0 to min{n, k} do \\ hier kann n=k gelten
-        S[i,i] = 1 \\ k=n
-    for i=1 to n do \\ für alle n>1
+    for i=0 to n do \\ hier kann n=k gelten
+        S[i, i] = 1 \\ k=n
         S[i, 0] = 0 \\ k=0, n>0
 
-    for i=2 to n do \\ n-Index
-        for j=1 to k do
-            if j <= n then
+    for i=2 to n do
+        for j=2 to i-1 do
             S[i, j] = S[i-1,j-1] + j * S[i-1,j]
 
-    return S[n, k]
+    sum = 0
+    for j=0 to n do
+        sum = sum + S[n, j]
+
+    return sum
 ```
 
 ### d)
 > Analysieren Sie die asymptotische Worst-Case-Laufzeit Ihres Algorithmus aus Teillaufgabe c).
 
 ```
-Stirling(n, k)
-    S = new array[0..n][0..k] \\ O(nk)
-    for i=0 to min{n, k} do \\ min{n, k} + 2
-        S[i,i] = 1 \\ min{n, k} + 1
-    for i=1 to n do \\ n+1
-        S[i, 0] = 0 \\ n
+NumberPartitions(n)
+    k = n \\ O(1)
 
-    for i=2 to n do \\ n-1
-        for j=1 to k do \\ k+1
-            if j <= n then \\ (n-2)*k
-            S[i, j] = S[i-1,j-1] + j * S[i-1,j] \\ (n-2)*k
+    S = new array[0..n][0..n] \\ O(n^2)
+    for i=0 to n do \\ O(n+1)
+        S[i, i] = 1 \\ O(n)
+        S[i, 0] = 0 \\ O(n)
 
-    return S[n, k] \\ 1
+    for i=2 to n do \\ O(n)
+        for j=2 to i-1 do \\ O(n(n+1))
+            S[i, j] = S[i-1,j-1] + j * S[i-1,j] \\ O(n(n+1))
+
+    sum = 0 \\ O(1)
+    for j=0 to n do \\ O(n+2)
+        sum = sum + S[n, j] \\ O(n+1)
+
+    return sum \\ O(1)
 ```
 
-Das Erstellen des Feldes braucht $\mathcal O(nk)$, daher braucht der gesamte Algorithmus $\mathcal O(nk)$.
-
-Dies ist nicht so effizient, wie es sein könnte. Beispielsweise wird der Wert an der Position $S[n, 0]$ nie gebraucht werden, aber dennoch berechnet. Auf die Laufzeit wirkt sich das aber erst aus, wenn man einen effizienteren Speichertyp als ein Feld benutzt, beispielsweise eine dünnbesetzte Matrix (_sparse matrix_) oder einen FIFO-Speicher einer Länge $\approx n-k$. Damit könnte man die Laufzeit weiter verringern.
+Das Erstellen des Feldes braucht $\mathcal O(n^2)$, daher braucht der gesamte Algorithmus $\mathcal O(n^2)$.
