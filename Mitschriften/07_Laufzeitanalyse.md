@@ -14,7 +14,8 @@ Dies ist der Standard, normalerweise ist diese Analyse gemeint, wenn man von "La
 Die Worst-Case Laufzeit $T(n) = \mathrm{avg}[\text{Laufzeit}]$ ist die längste Laufzeit für alle möglichen Eingaben der Größe $n$. Allerdings benötigt diese Betrachtung eine Definition von "Durschschnittlich", also auch eine Wahrscheinlichkeitsverteilung von Eingabegrößen. Daher wird sie i.A. nicht verwendet.
 
 ## Master-Theorem
-Seien $a\ge 1$ und $b\ge 1$ ganzzahlige Konstanten und $f: \mathbb N\rightarrow \mathbb N$. Gelte weiterhin für die Laufzeit $T(n)$:
+Seien $a\ge 1$ und $b\ge 1$ ganzzahlige Konstanten und $f: \mathbb N\rightarrow \mathbb N$ eine Funktion auf natürlichen Zahlen. Sei die Laufzeit [[20230405210837]] $T(n)$ durch folgende rekursive Gleichung beschrieben. [[20230424184614]]
+
 $$
     T(n) \le
         \begin{cases}
@@ -22,6 +23,7 @@ $$
             n>1: a\cdot T(\frac{n}{b}) + f(n)
         \end{cases}
 $$
+
 Es gebe ein $\gamma$, sodass gilt:
 
 $$
