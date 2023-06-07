@@ -1,0 +1,36 @@
+\documentclass[border=0.2cm,convert]{standalone}
+\usepackage{tikz}
+
+% xelatex --shell-escape *.tex
+
+\tikzset{level distance=2em}
+\tikzset{level 1/.style = {sibling distance = 4cm}}
+\tikzset{level 2/.style = {sibling distance = 2cm}}
+\tikzset{every node/.style={draw,circle}}
+\tikzset{blank/.style={draw=none}}
+
+\newcommand{\leaf}[0]{node[style={draw,rectangle}]{NIL}}
+
+\begin{document}
+\begin{tikzpicture}
+\node{12}
+    child {
+        node {9}
+        child {
+            node{17}
+            child {\leaf}
+            child {\leaf}
+        }
+        child{\leaf}
+    }
+    child {
+        node {31}
+        child {\leaf}
+        child {
+            node{24}
+            child {\leaf}
+            child {\leaf}
+        }
+    };
+\end{tikzpicture} 
+\end{document}
