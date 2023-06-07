@@ -134,12 +134,12 @@ Alternativ zu dieser Methode kann man auch eine _Wertefunktion_ maximieren.
 ```
 InsertionSort(A, n) \\ Feld A der Länge n wird übergeben
     for i=2 to n do
-    x = A[i]
-    j = i -1
-    while j>0 and A[j]>x do
-        A[j+1] = A[j]
-        j = j-1
-    A[j+1]=x
+        x = A[i]
+        j = i - 1
+        while j>0 and A[j]>x do
+            A[j+1] = A[j]
+            j = j - 1
+        A[j+1] = x
 ```
 
 Die Worst-Case-Laufzeit von InsertionSort ist $\Theta(n^2)$.
@@ -189,15 +189,16 @@ BinarySearch(A,x,p,r) \\ Finde Zahl x in sortiertem Feld A[p..r]
 ```
 
 ### $n$-Ziffer-Integer Multiplikation
-Für große Zahlen nehmen wir an, dass jede _Ziffer_ eine Speicherzelle benötigt. Zwei $n$-Ziffer-Zahlen können wir in der Laufzeit $\Theta(n)$ berechnen. Ein $n$-Ziffer können wir in Laufzeit $\Theta(n+k)$ mit $10^k$ multiplizieren.
+Für große Zahlen wird angenommen, dass jede Ziffer eine Speicherzelle benötigt. Zwei $n$-Ziffer-Zahlen kann in der Laufzeit $\Theta(n)$ berechnet werden. Eine $n$-Ziffer kann in Laufzeit $\Theta(n+k)$ mit $10^k$ multipliziert werden.
 
-Dazu multiplizieren wir schriftlich, wobei $A,B,C,D$ $n$-Ziffern sind: $AB\cdot CD = 100AC + 10(AD + BC) + BD$. Dies sind $4$ Multiplikationen von $n$-Ziffern. Dies hat allerdings eine Laufzeit von $T(n)=4T(\frac{n}{2})+cn$, daher gilt $T(n)\in \Theta(n^2)$.
+Dazu wird wie bei der schriftlichen Multiplikation vorgegangen, wobei $A,B,C,D$ $n$-Ziffern sind. $AB\cdot CD = 100AC + 10(AD + BC) + BD$. Dies sind $4$ Multiplikationen von $n$-Ziffern. Die Laufzeit ist allerdings $T(n)=4T(\frac{n}{2})+cn \in \Theta(n^2)$.
 
-Effizienter wird es, wenn wir die Identität $(A+B)(C+D)=AC+BC+AD+BD$ verwenden. Damit können wir die Summe $BC+AD$ durch $(A+B)(C+D)-AC-BD$ ausdrücken, die Werte $AC$ und $BD$ müssen wir ohnehin berechnen. Dadurch kann man sich eine Multiplikation sparen und man erhält die Laufzeit von $T(n)=3T(\frac{n}{2})+cn$, daher gilt $T(n)\in \Theta(n)$.
+Effizienter wird die Multiplikation, wenn die Identität $(A+B)(C+D)=AC+BC+AD+BD$ verwendet wird. Damit kann die Summe $BC+AD$ durch $(A+B)(C+D)-AC-BD$ ausgedrückt werden, die Werte $AC$ und $BD$ müssen ohnehin berechnet werden. Dadurch kann man sich eine Multiplikation sparen und man erhält die Laufzeit von $T(n)=3T(\frac{n}{2})+cn \in \Theta(n)$.
 
 ### Algorithmus von Strassen (Matrixmultiplikation)
-Falls wir das Produkt von zwei $n\times n$-Matrizen berechnen wollen, können wir diese in je $4$ Teilmatrizen der Größe $\frac{n}{2}\times\frac{n}{2}$ aufteilen. Dann multiplizieren wir $8$ $\frac{n}{2}\times\frac{n}{2}$-Matrizen und addieren $4$ $\frac{n}{2}\times\frac{n}{2}$-Matrizen.
+Mithilfe des Algorithmus von Strassen kann das Produkt zweier $n\times n$-Matrizen rekursiv in der Worst-Case-Laufzeit [[20230405211233]] $\mathcal O(n^2)$ [[20230531175315]] berechnet werden.
 
+Dazu kann jede $n\times n$-Matrix in $4$ Teilmatrizen der Größe $\frac{n}{2}\times\frac{n}{2}$ aufteilen. Dann werden $8$ $\frac{n}{2}\times\frac{n}{2}$-Matrizen multipliziert und $4$ $\frac{n}{2}\times\frac{n}{2}$-Matrizen addiert.
 
 $$
     \begin{pmatrix}A&B\\C&D\end{pmatrix}
@@ -209,7 +210,7 @@ $$
             \end{pmatrix}
 $$
 
-Die Laufzeit ist dann $T(n)\in \mathcal O(n^{\log_2 8})\subseteq\mathcal O(n^3)$:
+Mit dieser simplen Methode ist die Laufzeit $T(n)\in \mathcal O(n^{\log_2 8})\subseteq\mathcal O(n^3)$.
 
 $$
     T(n) =
@@ -220,7 +221,7 @@ $$
 $$
 
 
-Wir können folgende Rechentricks nutzen:
+Es können einige Relationen verwendet werden, um die Multiplikation einer $\frac{n}{2}\times\frac{n}{2}$-Matrix zu sparen.
 
 * $P_1 = A (F-H)$
 * $P_2= (A+B)H$
@@ -229,14 +230,12 @@ Wir können folgende Rechentricks nutzen:
 * $P_5 = (A+D)(E+H)$
 * $P_6 =(B-D)(G+H)$
 * $P_7 = (A-C)(E+F)$
-
-Damit können wir eine Matrixmultiplikation sparen:
 * $AE + BG = P_4 + P_5 + P_6 – P_2$
 * $AF + BH = P_1 + P_2$
 * $AF + BH = P_1 + P_2$
 * $AF + BH = P_1 + P_5 – P_3 – P_7$
 
-Auf diese Weise können wir zwei $n\times n$-Matrizen in der $\mathcal O(n^{\log_2 7})\approx\mathcal O(n^{1.81})$ berechnen.
+Auf diese Weise kann das Produkt zweier $n\times n$-Matrizen in der Laufzeit $\mathcal O(n^{\log_2 7})\subseteq\mathcal O(n^2)$ berechnet werden.
 
 ## Dynamische Programmierung
 ### Fibbonacci-Zahlen
@@ -370,10 +369,11 @@ Ind(A, U, m)
 SubsetSum(A, U, n)
     \\ initalisiere Indikator
     Ind = new array [0..U][1..n]
-    for j=1 to n do
+    for j=1 to U do
         Ind[j,1] = false
     Ind[0,1] = true \\ leere Menge
-    Ind[A[1],1] = true \\ Menge {A[1]}
+    if A[1] <= U \\ Menge {A[1]}
+    then Ind[A[1],1] = true
 
     \\ suche nach Teilmenge
     for i=2 to n do
@@ -434,7 +434,7 @@ IntervalScheduling(A,E,n) \\ Voraussetzung: Die Intervalle sind nach Endzeitpunk
     S = {1}
     j = 1
     for i=2 to n do
-        if A[i] \ge E[j] then
+        if A[i] >= E[j] then
             S = S + {i} \\ Vereinigungsmenge
             j = i
     return S
@@ -684,7 +684,8 @@ Dies ist der Standard, normalerweise ist diese Analyse gemeint, wenn man von "La
 Die Worst-Case Laufzeit $T(n) = \mathrm{avg}[\text{Laufzeit}]$ ist die längste Laufzeit für alle möglichen Eingaben der Größe $n$. Allerdings benötigt diese Betrachtung eine Definition von "Durschschnittlich", also auch eine Wahrscheinlichkeitsverteilung von Eingabegrößen. Daher wird sie i.A. nicht verwendet.
 
 ## Master-Theorem
-Seien $a\ge 1$ und $b\ge 1$ ganzzahlige Konstanten und $f: \mathbb N\rightarrow \mathbb N$. Gelte weiterhin für die Laufzeit $T(n)$:
+Seien $a\ge 1$ und $b\ge 1$ ganzzahlige Konstanten und $f: \mathbb N\rightarrow \mathbb N$ eine Funktion auf natürlichen Zahlen. Sei die Laufzeit [[20230405210837]] $T(n)$ durch folgende rekursive Gleichung beschrieben. [[20230424184614]]
+
 $$
     T(n) \le
         \begin{cases}
@@ -692,6 +693,7 @@ $$
             n>1: a\cdot T(\frac{n}{b}) + f(n)
         \end{cases}
 $$
+
 Es gebe ein $\gamma$, sodass gilt:
 
 $$
