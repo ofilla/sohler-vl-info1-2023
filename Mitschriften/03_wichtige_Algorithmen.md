@@ -4,12 +4,12 @@
 ```
 InsertionSort(A, n) \\ Feld A der Länge n wird übergeben
     for i=2 to n do
-    x = A[i]
-    j = i -1
-    while j>0 and A[j]>x do
-        A[j+1] = A[j]
-        j = j-1
-    A[j+1]=x
+        x = A[i]
+        j = i - 1
+        while j>0 and A[j]>x do
+            A[j+1] = A[j]
+            j = j - 1
+        A[j+1] = x
 ```
 
 Die Worst-Case-Laufzeit von InsertionSort ist $\Theta(n^2)$.
@@ -304,7 +304,7 @@ IntervalScheduling(A,E,n) \\ Voraussetzung: Die Intervalle sind nach Endzeitpunk
     S = {1}
     j = 1
     for i=2 to n do
-        if A[i] \ge E[j] then
+        if A[i] >= E[j] then
             S = S + {i} \\ Vereinigungsmenge
             j = i
     return S
