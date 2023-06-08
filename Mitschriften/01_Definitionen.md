@@ -23,6 +23,12 @@ Ein Algorithmus ist eine wohldefinierte Handlungsvorschrift, die einen Wert oder
 
 [^2]: [@AlgorithmsCormen2022]
 
+## Datenstruktur
+Eine Datenstruktur ist eine Anordnung von Daten im Speicher eines Rechners, die effizienten Zugriff auf die Daten ermöglicht.
+
+Es gibt verschiedene Anforderungen. Im Allgemeinen sind die Suche eines bestimmten Wertes, das Speichern eines neuen Datensatzes und das Löschen eines bestehenden Datensatzes wichtige Anforderungen. Oft kann nicht jede dieser Anforderungen gleich effizient gewährleistet werden.
+
+Deswegen können Datenstrukturen bezüglich ihres Speicherbedarfs und der Laufzeit von Algorithmen, die auf ihnen ausgeführt werde, bewertet werden.
 
 ## Lernziele
 * Methoden zur Entwicklung von Algorithmen

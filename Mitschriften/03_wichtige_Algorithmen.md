@@ -345,3 +345,15 @@ Eine Reihenfolge ohne Inversionen ist nicht-absteigend sortiert.
 
 Gibt es in einer Reihenfolge von Aufgaben eine Inversion $(i,j)$, dann gibt es auch eine Inversion zweier in der Reihenfolge benachbarter Aufgaben und man kann Aufgabe $i$ und $j$ vertauschen, ohne die Lösung zu verschlechtern.
 
+## Graphalgorithmen
+### Inorder-Tree-Walk
+Sei $x$ ein binärer Suchbaum. Dann gibt $\mathrm{Inorder-Tree-Walk}$ den kompletten Baum in aufsteigender Reihenfolge in Laufzeit $\mathcal O(n)$ aus.
+
+```
+Inorder-Tree-Walk(x)
+    if x=NIL then return \\ kein Baum
+    Inorder-Tree-Walk(left[x])
+    Ausgabe key[x]
+    Inorder-Tree-Walk(right[x])
+```
+

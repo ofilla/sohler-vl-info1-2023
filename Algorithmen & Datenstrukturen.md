@@ -23,6 +23,12 @@ Ein Algorithmus ist eine wohldefinierte Handlungsvorschrift, die einen Wert oder
 
 [^2]: [@AlgorithmsCormen2022]
 
+## Datenstruktur
+Eine Datenstruktur ist eine Anordnung von Daten im Speicher eines Rechners, die effizienten Zugriff auf die Daten ermöglicht.
+
+Es gibt verschiedene Anforderungen. Im Allgemeinen sind die Suche eines bestimmten Wertes, das Speichern eines neuen Datensatzes und das Löschen eines bestehenden Datensatzes wichtige Anforderungen. Oft kann nicht jede dieser Anforderungen gleich effizient gewährleistet werden.
+
+Deswegen können Datenstrukturen bezüglich ihres Speicherbedarfs und der Laufzeit von Algorithmen, die auf ihnen ausgeführt werde, bewertet werden.
 
 ## Lernziele
 * Methoden zur Entwicklung von Algorithmen
@@ -475,11 +481,69 @@ Eine Reihenfolge ohne Inversionen ist nicht-absteigend sortiert.
 
 Gibt es in einer Reihenfolge von Aufgaben eine Inversion $(i,j)$, dann gibt es auch eine Inversion zweier in der Reihenfolge benachbarter Aufgaben und man kann Aufgabe $i$ und $j$ vertauschen, ohne die Lösung zu verschlechtern.
 
+## Graphalgorithmen
+### Inorder-Tree-Walk
+Sei $x$ ein binärer Suchbaum. Dann gibt $\mathrm{Inorder-Tree-Walk}$ den kompletten Baum in aufsteigender Reihenfolge in Laufzeit $\mathcal O(n)$ aus.
+
+```
+Inorder-Tree-Walk(x)
+    if x=NIL then return \\ kein Baum
+    Inorder-Tree-Walk(left[x])
+    Ausgabe key[x]
+    Inorder-Tree-Walk(right[x])
+```
+
 # 4. wichtige Datenstrukturen
+## Einfache Felder
+Felder sind eine Datenstruktur, bei denen ein zusammenhängender Speicherblock für $N$ Elemente reserviert wird.
+
+Man kann zudem in einer Variable $n$ speichern, wie viele Elemente gespeichert wurden, um sich zu merken, an welcher Stelle das nächste Element eingefügt werden darf. Dann sind immer die ersten $n$ Elemente des Feldes verwendet.
+
+Der Speicherbedarf ist $\mathcal O(N)$, ebenso wie die Laufzeit für die Suche eines Elementes $\mathcal O(N)$ beträgt. Das Speichern und Löschen eines Elements laufen dagegen in konstanter Laufzeit $\mathcal O(1)$.
+
+## Sortierte Felder
+Sortierte Felder sind eine Erweiterung von Einfachen Feldern, bei denen die Elemente in sortierter Reihenfolge gespeichert sind.
+
+Wird ein neues Elemente gespeichert, muss dies wie bei $\mathrm{InsertionSort}$ an der richtigen Position geschehen, andere Elemente müssen dazu verschoben werden. Ebenso müssen beim Löschen Elemente verschoben werden, damit nur die ersten $n$ Positionen besetzt sind.
+
+Dadurch ist der Speicherbedarf unverändert $\mathcal O(N)$. Die Suche nach einem Element erfolgt mittels $\mathrm{BinarySearch}$ in Laufzeit $\mathcal O(\log_2N)$, allerdings brauchen Speichern und Löschen dafür die Laufzeit $\mathcal O(N)$.
+
+## Listen
+Im Unterschied zu Feldern sind die Elemente einer Liste nicht in einem zusammenhängenden Speicherblock gespeichert. Deshalb müssen in jedem Listenelement Zeiger auf das nächste oder das folgende Element gespeichert werden.
+
+Ein Listenelement $x$ ist damit ein Verbunddatentyp, bestehend aus dem zu speichernden Schlüssel $\mathrm{key}[x]$ sowie Zeiger auf das vorherige Element $\mathrm{prev}[x]$ und / oder das folgende Element $\mathrm{next}[x]$. Zudem wird der Zeiger auf das erste Element der Liste in $\mathrm{head}[L]$ gespeichert. Wenn es keinen Vorgänger bzw. Nachfolger gibt, wird $\mathrm{NIL}$ in dem entsprechenden Zeiger gespeichert.
+
+### Doppelt Verkettete Listen
+Bei doppelt verketteten Listen werden sowohl Vorgänger als auch Nachfolger eines Elementes $x$ in $x$ gespeichert.
+
+Wie bei einfachen Feldern sind der Speicherbedarf in $\mathcal O(N)$ und die Suche in $\mathcal O(N)$, das Speichern oder Löschen in konstanter Laufzeit $\mathcal O(1)$. Allerdings ist die Suche deutlich länger, da für jedes Element nicht nur ein Index erhöht wird, sondern jedes nachfolgende Element einzeln ermittelt werden muss.
+
 ## Graphen
 Bestehen aus _Knoten_ und _Kanten_. Kanten können _gerichtet_ sein.
 
 Beispielsweise das "Pageranking" von Google war ein _Graphalgorithmus_, der Google die Vorherrschaft auf dem Suchmaschinenmarkt einbrachte: Das Ranking einer Website wurde aus der Anzahl von Verweisen auf ebendiese Website ermittelt.
+
+## Binärbäume
+Ein Binärbaum $T$ ist eine Struktur, die auf einer endlichen Menge definiert ist. Diese Menge nennt man auch die _Knotenmenge_ des Binärbaums. Daher ist die leere Menge ein _leerer Baum_. Graphen sind eine Untergruppe der Graphen.
+
+Ein Binärbaum ist ein Tripel $(v, T_1, T_2)$, wobei $T_1$ und $T_2$ wiederum Binärbäume mit disjunkten Knotenmengen $V_1$ und $V_2$ sind und $v\notin V_1\cup V_2$ Wurzelknoten heißt. Die Knotenmenge des Baums ist dann ${v}\cup V_1 \cup V_2$. $T_1$ heißt linker Unterbaum von $v$ und $T_2$ heißt rechter Unterbaum von $v$. Blattknoten sind die Knoten, deren Unterbäume leer sind. Der Wurzelknoten ist der einzige Knoten, der keine Elternknoten hat.
+
+Ein Knoten $v$ ist ein Verbundobjekt aus dem Schlüssel $\mathrm{key}[v]$ sowie Zeigern auf den Elternknoten $\mathrm{parent}[v]$, den linken Unterbaum $\mathrm{left}[v]$ und den rechten Unterbaum $\mathrm{right}[v]$. Zudem gibt es einen Zeiger $\mathrm{root}[T]$, der auf den Wurzelknoten des Baumes $T$ zeigt.
+
+### Baumhöhe
+Die Höhe eines Binärbaums mit Wurzel $v$ ist die Anzahl Kanten des längsten einfachen Weges von der Wurzel zu einem Blatt.
+
+## Binäre Suchbäume
+In einem binären Suchbaum werden die Schlüssel sortiert in einem Binärbaum gespeichert.
+
+Seien $y$ ein Knoten in einem binären Suchbaum und $x$ der Elternknoten von $y$. Wenn $\mathrm{key}[y]>\mathrm{key}[x]$, dann ist $y$ der rechte Unterbaum, ansonsten ist er der linke Unterbaum.
+
+$$
+\begin{cases}
+    \mathrm{key}[y] \le \mathrm{key}[x] :& y = \mathrm{left}[x] \\
+    \mathrm{key}[y] > \mathrm{key}[x] :& y = \mathrm{right}[x]
+\end{cases}
+$$
 
 # 5. Speicher und Datentypen
 ## Speichermodell
@@ -899,6 +963,12 @@ Lemma: $A(i)$ ist eine korrekte Schleifeninvariante.
 * Der Rekursionsabbruch entspricht dem Anfang der Vollständigen Induktion.
 * Der Rekursionsaufruf entspricht dem Induktionsschritt.
 
+### Binärbäume
+Aussagen über Bäume werden durch vollständige Induktion über die Höhe eines Baumes bewiesen. Dabei beginnt man mit einem leeren Baum, dessen Höhe als $0$ oder $-1$ bezeichnet wird.
+
+Dabei kann man immer annehmen, dass ein Baum der Höhe $i+1$ aus einer Wurzel $v$ und zwei Teilbäumen $A,B$
+besteht, so dass $A$ und $B$ eine Höhe von maximal $i$ haben und wenigstens $A$ oder $B$ die Höhe $i$ hat.
+
 ## $P$ vs. $NP$
 Das Problem $P$ _vs._ $NP$ ist eines der wichtigsten Probleme der theoretischen Informatik und gehört zu den $7$ Millennium-Problemen.
 
@@ -1012,7 +1082,7 @@ Es soll bewiesen werden, dass eine Aussage $A(n)$ für alle $n\in\mathbb N$ gilt
     * für manche Beweise braucht man auch $n-1 \Rightarrow n+1$
 
 ### Landau-Notation
-Für Beweise mittels Vollständiger Induktion darf man die Landau-Notationen nicht verwenden. Bei dieser muss es konkrete Konstanten $c$ geben, die für alle $n\ge n_0$ gelten. Nutzt man während eines Beweises eine Landau-Notation, kann man verschleiern, dass $c$ immer wieder geändert wird.
+Für Beweise mittels Vollständiger Induktion sollte man die Landau-Notationen nicht verwenden. Bei dieser muss es konkrete Konstanten $c$ geben, die für alle $n\ge n_0$ gelten. Nutzt man während eines Beweises eine Landau-Notation, kann man verschleiern, dass $c$ immer wieder geändert wird.
 
 # Literatur
 1. [@AlgorithmsCormen2022]

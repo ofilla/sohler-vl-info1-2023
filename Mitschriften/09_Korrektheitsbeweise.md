@@ -36,6 +36,12 @@ Lemma: $A(i)$ ist eine korrekte Schleifeninvariante.
 * Der Rekursionsabbruch entspricht dem Anfang der Vollständigen Induktion.
 * Der Rekursionsaufruf entspricht dem Induktionsschritt.
 
+### Binärbäume
+Aussagen über Bäume werden durch vollständige Induktion über die Höhe eines Baumes bewiesen. Dabei beginnt man mit einem leeren Baum, dessen Höhe als $0$ oder $-1$ bezeichnet wird.
+
+Dabei kann man immer annehmen, dass ein Baum der Höhe $i+1$ aus einer Wurzel $v$ und zwei Teilbäumen $A,B$
+besteht, so dass $A$ und $B$ eine Höhe von maximal $i$ haben und wenigstens $A$ oder $B$ die Höhe $i$ hat.
+
 ## $P$ vs. $NP$
 Das Problem $P$ _vs._ $NP$ ist eines der wichtigsten Probleme der theoretischen Informatik und gehört zu den $7$ Millennium-Problemen.
 
