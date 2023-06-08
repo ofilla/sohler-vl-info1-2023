@@ -23,7 +23,7 @@ Mit der $\mathcal O$-Notation wird die _obere Schranke_ angenähert.
 $f(n)\in\mathcal O (g(n))$ bedeutet, $f$ wächst höchstens so stark wie $g$. Dazu m
 $$
     \mathcal O (g(n)) = \{
-        \text{Funktion } f(n) |
+        f(n) |
         \exists c\in\mathbb R_+:\exists n_0\in\mathbb N:
         \forall\mathbb N \ni n\ge n_0: 0 \le f(n) \le c\cdot g(n)
     \}
@@ -41,7 +41,7 @@ Man kan die $\mathcal O$-Notation auf Funktionen erweitern, die von mehreren Par
 
 $$
     \mathcal O(g(n,m)) = \{
-        \text{Funktion } f(n) |
+        f(n) |
         \exists c\in\mathbb R_+:\exists n_0, m_0\in\mathbb N:
         \forall\mathbb N \ni n\ge n_0, N \ni m\ge m_0:
         f(n,m) \le c\cdot g(n,m)
@@ -57,7 +57,7 @@ $f(n)\in\Omega (g(n))$ bedeutet, $f$ wächst mindestens so stark wie $g$.
 
 $$
     \Omega (g(n)) = \{
-        \text{Funktion } f(n) |
+        f(n) |
         \exists c\in\mathbb R_+:\exists n_0\in\mathbb N:
         \forall n\ge n_0: 0 \le c\cdot g(n) \le f(n)
     \}
@@ -85,7 +85,7 @@ $f(n)\in o (g(n))$ bedeutet, $f$ wächst weniger stark als $g$.
 
 $$
     o (g(n)) = \{
-        \text{Funktion } f(n) |
+        f(n) |
         \forall c\in\mathbb R_+:\exists n_0\in\mathbb N:
         \forall\mathbb N \ni n\ge n_0: 0 \le f(n) \le c\cdot g(n)
     \}
@@ -96,7 +96,7 @@ $f(n)\in \omega(g(n))$ bedeutet, $f$ wächst stärker als $g$.
 
 $$
     \omega(g(n)) = \{
-        \text{Funktion } f(n) |
+        f(n) |
         \forall c\in\mathbb R_+:\exists n_0\in\mathbb N:
         \forall\mathbb N \ni n\ge n_0: 0 \le c\cdot g(n) \le f(n)
     \}

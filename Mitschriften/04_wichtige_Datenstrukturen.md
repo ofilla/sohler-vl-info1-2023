@@ -66,3 +66,5 @@ Der Verbundtyp eines Knotens $k$ enthält die Elemente Farbe $\mathrm{color}[k]$
 ### Rot-Schwarz-Eigenschaften
 Jeder Knoten ist entweder rot oder schwarz, die Wurzel und alle Blätter sind schwarz, ebenso alle Kinder eines roten Knotens. Zudem haben alle Pfade von einem beliebigen Knoten zu den Blätter dieselbe Anzahl an schwarzen Knoten.
 
+![Rot-Schwarz-Baum](rot-schwarz-baum.png)
+

@@ -111,6 +111,7 @@ output << j  \* 1 \*
 * der Aufruf einer Prozedur kostet einen Zeitschritt
     * die Zuweisung des Ergebnisses kostet einen weiteren Zeitschritt
     * dazu kommt die Zeit für die Prozedur selbst
+
 ```
 beispiel(j)
     j=j-10
@@ -121,7 +122,9 @@ x=7+beispiel(j)  \* 2+ Zeit für Prozedur \*
 output << j  \* 1 \*
 output << x  \* 1 \*
 ```
+
 Ausgabe:
+
 ```
 100
 97

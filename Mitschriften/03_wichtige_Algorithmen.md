@@ -250,7 +250,8 @@ SubsetSum(A, U, n)
         for u=0 to U do
             Ind[u,i] = false
             if Ind[u,i-1] = true then Ind[u,i] = true
-            if u>=A[i] und Ind[u-A[i], i-1] = true then Ind[u,i] = true
+            if u>=A[i] und Ind[u-A[i], i-1] = true
+            then Ind[u,i] = true
     return Ind[U,n]
 ```
 
@@ -300,7 +301,8 @@ Die Schwierigkeit liegt in Schritt $1$. Sowohl die Wahl des erstmöglichen Inter
 Der Algorithmus $\mathrm{IntervalSchedule}$ berechnet in Laufzeit $\mathcal O(n)$ eine optimale Lösung, wenn die Eingabe nach Endzeit der Intervalle sortiert ist. Die Sortierung kann in $\mathcal O(n \log n)$ Zeit berechnet werden.
 
 ```
-IntervalScheduling(A,E,n) \\ Voraussetzung: Die Intervalle sind nach Endzeitpunkt sortiert.
+\\ Voraussetzung: Die Intervalle sind nach Endzeitpunkt sortiert.
+IntervalScheduling(A,E,n)
     S = {1}
     j = 1
     for i=2 to n do
@@ -387,7 +389,9 @@ $\mathrm{FollowerSearch}(x)$ sucht den Nachfolgerknoten in einem binären Suchba
 ```
 FollowerSearch(x)
     if right[x] != NIL \\ es gibt einen rechten Unterbaum
-    then return MinSearch(right[x]) \\ der Knoten mit dem kleinsten Wert ist der Nachfolger
+    then
+        \\ der Knoten mit dem kleinsten Wert ist der Nachfolger
+        return MinSearch(right[x])
 
     y = parent[x]
     while y != NIL and x = right[y] do

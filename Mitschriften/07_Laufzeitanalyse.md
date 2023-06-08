@@ -68,20 +68,16 @@ Seien $\varepsilon >0$, $k<1$, $n_0\in\mathbb N$, dann gilt:
 
 $$
 \begin{aligned}
-    1. &&
-        f(n) = O(n^{\log_b(a) - \varepsilon})
-        &&\Rightarrow&&
-        T(n) &\in \Theta(n^{\log_b(a)}) \\
-    2. &&
-        f(n) = \Theta(n^{\log_b(a)}\log_{10}^k(n))
-        &&\Rightarrow&&
-        T(n) &\in \Theta(n^{\log_b(a)} \log_{10}^{k+1}(n)) \\
-    3.
-       &&
-        f(n) = \Omega(n^{\log_b a + \varepsilon})
-        \land \forall n\ge n_0: a f\left(\frac{n}{b}\right) \le kf(n))
-        &&\Rightarrow&&
-        T(n) &\in \Theta(f(n))
+    f(n) \in O(n^{\log_b(a) - \varepsilon})
+    &&\Rightarrow&&
+    T(n) &\in \Theta(n^{\log_b(a)}) \\
+    f(n) \in \Theta(n^{\log_b(a)}\log_{10}^k(n))
+    &&\Rightarrow&&
+    T(n) &\in \Theta(n^{\log_b(a)} \log_{10}^{k+1}(n)) \\
+    f(n) \in \Omega(n^{\log_b a + \varepsilon})
+    \land \forall n\ge n_0: a f\left(\frac{n}{b}\right) \le kf(n))
+    &&\Rightarrow&&
+    T(n) &\in \Theta(f(n))
 \end{aligned}
 $$
 

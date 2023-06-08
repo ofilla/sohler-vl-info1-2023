@@ -1,0 +1,34 @@
+\documentclass[border=0.2cm,convert]{standalone}
+\usepackage{tikz}
+
+% convert -density 600x600 -quality 90 -resize 800x600 
+
+\tikzset{level distance=2em}
+\tikzset{level 1/.style = {sibling distance = 6cm}}
+\tikzset{level 2/.style = {sibling distance = 4cm}}
+\tikzset{level 3/.style = {sibling distance = 2cm}}
+\tikzset{every node/.style={draw,circle}}
+
+\begin{document}
+\begin{tikzpicture}
+\node{5}
+    child {
+        node {2}
+        child {node{NIL}}
+        child {node{NIL}}
+    }
+    child {
+        node {7}
+        child {
+            node [red] {6}
+            child {node {NIL}}
+            child {node {NIL}}
+        }
+        child {
+            node [red] {9}
+            child {node{NIL}}
+            child {node{NIL}}
+        }
+    };
+\end{tikzpicture}
+\end{document}

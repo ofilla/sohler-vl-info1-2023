@@ -386,7 +386,8 @@ SubsetSum(A, U, n)
         for u=0 to U do
             Ind[u,i] = false
             if Ind[u,i-1] = true then Ind[u,i] = true
-            if u>=A[i] und Ind[u-A[i], i-1] = true then Ind[u,i] = true
+            if u>=A[i] und Ind[u-A[i], i-1] = true
+            then Ind[u,i] = true
     return Ind[U,n]
 ```
 
@@ -436,7 +437,8 @@ Die Schwierigkeit liegt in Schritt $1$. Sowohl die Wahl des erstmöglichen Inter
 Der Algorithmus $\mathrm{IntervalSchedule}$ berechnet in Laufzeit $\mathcal O(n)$ eine optimale Lösung, wenn die Eingabe nach Endzeit der Intervalle sortiert ist. Die Sortierung kann in $\mathcal O(n \log n)$ Zeit berechnet werden.
 
 ```
-IntervalScheduling(A,E,n) \\ Voraussetzung: Die Intervalle sind nach Endzeitpunkt sortiert.
+\\ Voraussetzung: Die Intervalle sind nach Endzeitpunkt sortiert.
+IntervalScheduling(A,E,n)
     S = {1}
     j = 1
     for i=2 to n do
@@ -523,7 +525,9 @@ $\mathrm{FollowerSearch}(x)$ sucht den Nachfolgerknoten in einem binären Suchba
 ```
 FollowerSearch(x)
     if right[x] != NIL \\ es gibt einen rechten Unterbaum
-    then return MinSearch(right[x]) \\ der Knoten mit dem kleinsten Wert ist der Nachfolger
+    then
+        \\ der Knoten mit dem kleinsten Wert ist der Nachfolger
+        return MinSearch(right[x])
 
     y = parent[x]
     while y != NIL and x = right[y] do
@@ -659,6 +663,8 @@ Der Verbundtyp eines Knotens $k$ enthält die Elemente Farbe $\mathrm{color}[k]$
 
 ### Rot-Schwarz-Eigenschaften
 Jeder Knoten ist entweder rot oder schwarz, die Wurzel und alle Blätter sind schwarz, ebenso alle Kinder eines roten Knotens. Zudem haben alle Pfade von einem beliebigen Knoten zu den Blätter dieselbe Anzahl an schwarzen Knoten.
+
+![Rot-Schwarz-Baum](rot-schwarz-baum.png)
 
 # 5. Speicher und Datentypen
 ## Speichermodell
@@ -831,6 +837,7 @@ output << j  \* 1 \*
 * der Aufruf einer Prozedur kostet einen Zeitschritt
     * die Zuweisung des Ergebnisses kostet einen weiteren Zeitschritt
     * dazu kommt die Zeit für die Prozedur selbst
+
 ```
 beispiel(j)
     j=j-10
@@ -841,7 +848,9 @@ x=7+beispiel(j)  \* 2+ Zeit für Prozedur \*
 output << j  \* 1 \*
 output << x  \* 1 \*
 ```
+
 Ausgabe:
+
 ```
 100
 97
@@ -917,20 +926,16 @@ Seien $\varepsilon >0$, $k<1$, $n_0\in\mathbb N$, dann gilt:
 
 $$
 \begin{aligned}
-    1. &&
-        f(n) = O(n^{\log_b(a) - \varepsilon})
-        &&\Rightarrow&&
-        T(n) &\in \Theta(n^{\log_b(a)}) \\
-    2. &&
-        f(n) = \Theta(n^{\log_b(a)}\log_{10}^k(n))
-        &&\Rightarrow&&
-        T(n) &\in \Theta(n^{\log_b(a)} \log_{10}^{k+1}(n)) \\
-    3.
-       &&
-        f(n) = \Omega(n^{\log_b a + \varepsilon})
-        \land \forall n\ge n_0: a f\left(\frac{n}{b}\right) \le kf(n))
-        &&\Rightarrow&&
-        T(n) &\in \Theta(f(n))
+    f(n) \in O(n^{\log_b(a) - \varepsilon})
+    &&\Rightarrow&&
+    T(n) &\in \Theta(n^{\log_b(a)}) \\
+    f(n) \in \Theta(n^{\log_b(a)}\log_{10}^k(n))
+    &&\Rightarrow&&
+    T(n) &\in \Theta(n^{\log_b(a)} \log_{10}^{k+1}(n)) \\
+    f(n) \in \Omega(n^{\log_b a + \varepsilon})
+    \land \forall n\ge n_0: a f\left(\frac{n}{b}\right) \le kf(n))
+    &&\Rightarrow&&
+    T(n) &\in \Theta(f(n))
 \end{aligned}
 $$
 
@@ -961,7 +966,7 @@ Mit der $\mathcal O$-Notation wird die _obere Schranke_ angenähert.
 $f(n)\in\mathcal O (g(n))$ bedeutet, $f$ wächst höchstens so stark wie $g$. Dazu m
 $$
     \mathcal O (g(n)) = \{
-        \text{Funktion } f(n) |
+        f(n) |
         \exists c\in\mathbb R_+:\exists n_0\in\mathbb N:
         \forall\mathbb N \ni n\ge n_0: 0 \le f(n) \le c\cdot g(n)
     \}
@@ -979,7 +984,7 @@ Man kan die $\mathcal O$-Notation auf Funktionen erweitern, die von mehreren Par
 
 $$
     \mathcal O(g(n,m)) = \{
-        \text{Funktion } f(n) |
+        f(n) |
         \exists c\in\mathbb R_+:\exists n_0, m_0\in\mathbb N:
         \forall\mathbb N \ni n\ge n_0, N \ni m\ge m_0:
         f(n,m) \le c\cdot g(n,m)
@@ -995,7 +1000,7 @@ $f(n)\in\Omega (g(n))$ bedeutet, $f$ wächst mindestens so stark wie $g$.
 
 $$
     \Omega (g(n)) = \{
-        \text{Funktion } f(n) |
+        f(n) |
         \exists c\in\mathbb R_+:\exists n_0\in\mathbb N:
         \forall n\ge n_0: 0 \le c\cdot g(n) \le f(n)
     \}
@@ -1023,7 +1028,7 @@ $f(n)\in o (g(n))$ bedeutet, $f$ wächst weniger stark als $g$.
 
 $$
     o (g(n)) = \{
-        \text{Funktion } f(n) |
+        f(n) |
         \forall c\in\mathbb R_+:\exists n_0\in\mathbb N:
         \forall\mathbb N \ni n\ge n_0: 0 \le f(n) \le c\cdot g(n)
     \}
@@ -1034,7 +1039,7 @@ $f(n)\in \omega(g(n))$ bedeutet, $f$ wächst stärker als $g$.
 
 $$
     \omega(g(n)) = \{
-        \text{Funktion } f(n) |
+        f(n) |
         \forall c\in\mathbb R_+:\exists n_0\in\mathbb N:
         \forall\mathbb N \ni n\ge n_0: 0 \le c\cdot g(n) \le f(n)
     \}
@@ -1155,8 +1160,12 @@ Rucksack(n,g,w,G) \\ finde die Werte der optimalen Lösungen
     for i = 2 to n do
         for j = 0 to G do
             if g[i]>j
-            then Opt[i,j] = Opt[i-1,j] \\ Objekt i passt nicht in den Rucksack
-            else Opt[i,j] = max{Opt[i-1,j], w[i] + Opt[i-1,j-g[i]]} \\ finde optimale Lösung
+            then
+                 \\ Objekt i passt nicht in den Rucksack
+                Opt[i,j] = Opt[i-1,j]
+            else
+                \\ finde optimale Lösung
+                Opt[i,j] = max{Opt[i-1,j], w[i] + Opt[i-1,j-g[i]]}
     return Opt[n,G]
 ```
 
@@ -1167,6 +1176,7 @@ Wir gehen davon aus, dass das Feld $\mathrm{Opt}$ auch nach dem Aufruf von $\mat
 
 * Falls das $i$-te Objekt in einer optimalen Lösung für Objekte $1$ bis $i$ und Rucksackgröße $j$ ist, so gib es aus und fahre rekursiv mit Objekt $i-1$ und Rucksackgröße $j-g[i]$ fort.
 * Ansonsten fahre mit Objekt $i-1$ und Rucksackgröße $j$ fort.
+* In der hiesigen Notation ist $\{\dots\}+\{\dots\}$ das Bilden einer Vereinigungsmenge $\{\dots\}\cup \{\dots\}$.
 
 ```
 RucksackLösung(Opt,g,w,i,j)
@@ -1174,7 +1184,7 @@ RucksackLösung(Opt,g,w,i,j)
     if g[i]>j then return RucksackLösung(Opt,g,w,i-1,j)
 
     if Opt[i,j]=w[i] + Opt[i-1,j-g[i]]
-    then return {i} + RucksackLösung(Opt,g,w,i-1,j-g[i]) \\ +: Bilde Vereinigungsmenge
+    then return {i} + RucksackLösung(Opt,g,w,i-1,j-g[i])
     else return RucksackLösung(Opt,g,w,i-1,j)
 ```
 

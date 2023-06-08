@@ -60,8 +60,12 @@ Rucksack(n,g,w,G) \\ finde die Werte der optimalen Lösungen
     for i = 2 to n do
         for j = 0 to G do
             if g[i]>j
-            then Opt[i,j] = Opt[i-1,j] \\ Objekt i passt nicht in den Rucksack
-            else Opt[i,j] = max{Opt[i-1,j], w[i] + Opt[i-1,j-g[i]]} \\ finde optimale Lösung
+            then
+                 \\ Objekt i passt nicht in den Rucksack
+                Opt[i,j] = Opt[i-1,j]
+            else
+                \\ finde optimale Lösung
+                Opt[i,j] = max{Opt[i-1,j], w[i] + Opt[i-1,j-g[i]]}
     return Opt[n,G]
 ```
 
@@ -72,6 +76,7 @@ Wir gehen davon aus, dass das Feld $\mathrm{Opt}$ auch nach dem Aufruf von $\mat
 
 * Falls das $i$-te Objekt in einer optimalen Lösung für Objekte $1$ bis $i$ und Rucksackgröße $j$ ist, so gib es aus und fahre rekursiv mit Objekt $i-1$ und Rucksackgröße $j-g[i]$ fort.
 * Ansonsten fahre mit Objekt $i-1$ und Rucksackgröße $j$ fort.
+* In der hiesigen Notation ist $\{\dots\}+\{\dots\}$ das Bilden einer Vereinigungsmenge $\{\dots\}\cup \{\dots\}$.
 
 ```
 RucksackLösung(Opt,g,w,i,j)
@@ -79,7 +84,7 @@ RucksackLösung(Opt,g,w,i,j)
     if g[i]>j then return RucksackLösung(Opt,g,w,i-1,j)
 
     if Opt[i,j]=w[i] + Opt[i-1,j-g[i]]
-    then return {i} + RucksackLösung(Opt,g,w,i-1,j-g[i]) \\ +: Bilde Vereinigungsmenge
+    then return {i} + RucksackLösung(Opt,g,w,i-1,j-g[i])
     else return RucksackLösung(Opt,g,w,i-1,j)
 ```
 
