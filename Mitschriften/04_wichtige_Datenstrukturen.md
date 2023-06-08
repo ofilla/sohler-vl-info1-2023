@@ -38,6 +38,8 @@ Ein Knoten $v$ ist ein Verbundobjekt aus dem Schlüssel $\mathrm{key}[v]$ sowie 
 ### Baumhöhe
 Die Höhe eines Binärbaums mit Wurzel $v$ ist die Anzahl Kanten des längsten einfachen Weges von der Wurzel zu einem Blatt.
 
+Ein Binärbaum der Höhe $h$ hat maximal $2^{h+1}+1$, aber mindestens $\lfloor\log_2n\rfloor$ Knoten.
+
 ## Binäre Suchbäume
 In einem binären Suchbaum werden die Schlüssel sortiert in einem Binärbaum gespeichert.
 
@@ -49,4 +51,18 @@ $$
     \mathrm{key}[y] > \mathrm{key}[x] :& y = \mathrm{right}[x]
 \end{cases}
 $$
+
+Sei $x$ ein Knoten in einem binären Suchbaum mit zwei Kindern. Dann hat der Nachfolger von $x$ maximal ein Kind, da der Nachfolger den nächstgrößeren Schlüssel hat.
+
+Suchalgorithmen brauchen die Laufzeit $\mathcal O(h)$, wobei $h$ die Höhe des Baumes ist. Das Speichern eines neuen Schlüssels benötigt allerdings auch die Laufzeit $\mathcal O(h)$, da zunächst die richtige Position gesucht werden muss.
+
+Die Wost-Case-Speichergröße eines binären Suchbaums ist $\Omega(n)$. Dieser Fall tritt ein, falls die Eingabewerte sortiert sind.
+
+## Rot-Schwarz-Bäume
+Rot-Schwarz-Bäume sind balancierte binäre Suchbäume, die nach dem Speichern oder Löschen eines Knotens immer so balanciert werden, dass eine Baumhöhe von $\mathcal O(\log_2n)$ garantiert wird. Das Speichern und Löschen kann in einer Laufzeit von $\mathcal O(\log_2n)$ erfolgen, sodass alle Operationen diese Laufzeit teilen.
+
+Der Verbundtyp eines Knotens $k$ enthält die Elemente Farbe $\mathrm{color}[k]$ und Schlüssel $\mathrm{key}[k]$ sowie Zeiger zu dem Elternknoten $\mathrm{parent}[k]$ und den Unterbäumen $\mathrm{left}[k]$ sowie $\mathrm{right}[k]$. Zeiger auf $\mathrm{NIL}$ werden als Zeiger auf Blätter interpretiert, die leere Bäume sind.
+
+### Rot-Schwarz-Eigenschaften
+Jeder Knoten ist entweder rot oder schwarz, die Wurzel und alle Blätter sind schwarz, ebenso alle Kinder eines roten Knotens. Zudem haben alle Pfade von einem beliebigen Knoten zu den Blätter dieselbe Anzahl an schwarzen Knoten.
 

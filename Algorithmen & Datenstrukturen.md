@@ -482,8 +482,9 @@ Eine Reihenfolge ohne Inversionen ist nicht-absteigend sortiert.
 Gibt es in einer Reihenfolge von Aufgaben eine Inversion $(i,j)$, dann gibt es auch eine Inversion zweier in der Reihenfolge benachbarter Aufgaben und man kann Aufgabe $i$ und $j$ vertauschen, ohne die Lösung zu verschlechtern.
 
 ## Graphalgorithmen
-### Inorder-Tree-Walk
-Sei $x$ ein binärer Suchbaum. Dann gibt $\mathrm{Inorder-Tree-Walk}$ den kompletten Baum in aufsteigender Reihenfolge in Laufzeit $\mathcal O(n)$ aus.
+### auf Binären Suchbäumen
+#### Inorder-Tree-Walk
+Sei $x$ ein binärer Suchbaum. Dann gibt $\mathrm{Inorder-Tree-Walk}(x)$ den kompletten Baum in aufsteigender Reihenfolge in Laufzeit $\mathcal O(n)$ aus.
 
 ```
 Inorder-Tree-Walk(x)
@@ -491,6 +492,104 @@ Inorder-Tree-Walk(x)
     Inorder-Tree-Walk(left[x])
     Ausgabe key[x]
     Inorder-Tree-Walk(right[x])
+```
+
+#### BinaryTreeSearch
+Sei $x$ ein binärer Suchbaum der Höhe $h$. Dann gibt $\mathrm{BinaryTreeSearch}(x,k)$ den Knoten mit dem Schlüssel $k$ aus, falls dieser in dem Baum $x$ enthalten ist. Ansonsten gibt die Funktion $\mathrm{NIL}$ zurück, dies benötigt die Worst-Case-Laufzeit $\mathcal O(h)$ aus.
+
+```
+BinaryTreeSearch(x,k)
+    if x=NIL or k=key[x] then return x
+    if k<key[x] then return BinaryTreeSearch(left[x],k)
+    else return BinaryTreeSearch(right[x],k)
+```
+
+#### MinSearch / MaxSearch
+Sei $x$ ein binärer Suchbaum der Höhe $h$, dann können der minimale und der maximale Schlüssel in Worst-Case-Laufzeit $\mathcal O(h)$ gefunden werden.
+
+```
+MinSearch(x)
+    while left[x] != NIL do
+        x = left[x]
+    return x
+```
+
+#### FollowerSearch
+$\mathrm{FollowerSearch}(x)$ sucht den Nachfolgerknoten in einem binären Suchbaum der Höhe $h$ in der Worst-Case-Laufzeit $\mathcal O(h)$. Nachfolger bedeutet, dass $x$ den nächstgrößten Schlüssel besitzt. Analog kann der Vorg
+
+1. Falls es einen rechten Unterbaum gibt, ist der am weitesten links liegende Knoten der Nachfolger.
+2. Ansonsten ist der Nachfolger der erste Elternknoten, dessen Schlüssel größer als der von $x$ ist. Gibt es keinen solchen Knoten, dann hat $x$ den größten Schlüssel.
+
+```
+FollowerSearch(x)
+    if right[x] != NIL \\ es gibt einen rechten Unterbaum
+    then return MinSearch(right[x]) \\ der Knoten mit dem kleinsten Wert ist der Nachfolger
+
+    y = parent[x]
+    while y != NIL and x = right[y] do
+        x = y
+        y = parent[y]
+    return y
+```
+
+#### Save
+Um einen neuen Schlüssel $k$ in einem binären Suchbaum $T$ der Höhe $h$ zu speichern, muss der Blattknoten gefunden werden, an den der neue Knoten angehängt wird. Daraufhin wird ein neuer Knoten als Unterbaum abgespeichert. Da dies konstante Laufzeit erfordert, benötigt der Speichervorgang die Laufzeit $O(h)$, die durch die Suche des Blattknotens mittels $\mathrm{FollowerSearch}(x)$ entsteht.
+
+```
+Save(T,k)
+    \\ create new node
+    z = new node
+    key[z] = k
+    right[z] = NIL
+    left[z] = NIL
+
+    \\ find future parent node
+    y = NIL
+    x = root[T]
+    while x != NIL do
+        y=x
+        if k < key[x]
+        then x = left[x]
+        else x = right[x]
+
+    parent[z] = y
+
+    if y=NIL
+    then root[T] = z
+    else
+        if key[z] < key[y]
+        then left[y] = z
+        else right[y] = z
+```
+
+#### Delete
+Beim Löschen eines Knotens $z$ aus einem binären Suchbaum $T$ der Höhe $h$ muss der Baum wieder korrekt zusammengebaut werden. Dies funktioniert nur in der Worst-Case-Laufzeit $\mathcal O(h)$.
+
+1. Wenn $z$ keine Kinder hat, kann $z$ einfach entfernt werden.
+2. Wenn $z$ ein Kind hat, dann wird $z$ mit seinem Kind ersetzt.
+3. Wenn $z$ zwei Kinder hat, dann muss es mit seinem Nachfolger $y$ ersetzt werden. Dazu muss der Schlüssel $\mathrm{key}[z]$ auf den des Nachfolgers $\mathrm{key}[y]$ gesetzt werden, woraufhin der Nachfolger $y$ entfernt werden kann.
+
+```
+Löschen(T,z)
+    if left[z]=NIL or right[z]=NIL then y=z
+    else y = FollowerSearch(z)
+
+    if left[y]=NIL
+    then x = right[y]
+    else x = left[y]
+
+    if x != NIL
+    then parent[x]=parent[y]
+
+    if parent[y]=NIL
+    then root[T]=x
+    else
+        if y = left[parent[y]]
+        then left[parent[y]]=x
+        else right[parent[y]]=x
+
+    key[z]=key[y]
+    delete y
 ```
 
 # 4. wichtige Datenstrukturen
@@ -533,6 +632,8 @@ Ein Knoten $v$ ist ein Verbundobjekt aus dem Schlüssel $\mathrm{key}[v]$ sowie 
 ### Baumhöhe
 Die Höhe eines Binärbaums mit Wurzel $v$ ist die Anzahl Kanten des längsten einfachen Weges von der Wurzel zu einem Blatt.
 
+Ein Binärbaum der Höhe $h$ hat maximal $2^{h+1}+1$, aber mindestens $\lfloor\log_2n\rfloor$ Knoten.
+
 ## Binäre Suchbäume
 In einem binären Suchbaum werden die Schlüssel sortiert in einem Binärbaum gespeichert.
 
@@ -544,6 +645,20 @@ $$
     \mathrm{key}[y] > \mathrm{key}[x] :& y = \mathrm{right}[x]
 \end{cases}
 $$
+
+Sei $x$ ein Knoten in einem binären Suchbaum mit zwei Kindern. Dann hat der Nachfolger von $x$ maximal ein Kind, da der Nachfolger den nächstgrößeren Schlüssel hat.
+
+Suchalgorithmen brauchen die Laufzeit $\mathcal O(h)$, wobei $h$ die Höhe des Baumes ist. Das Speichern eines neuen Schlüssels benötigt allerdings auch die Laufzeit $\mathcal O(h)$, da zunächst die richtige Position gesucht werden muss.
+
+Die Wost-Case-Speichergröße eines binären Suchbaums ist $\Omega(n)$. Dieser Fall tritt ein, falls die Eingabewerte sortiert sind.
+
+## Rot-Schwarz-Bäume
+Rot-Schwarz-Bäume sind balancierte binäre Suchbäume, die nach dem Speichern oder Löschen eines Knotens immer so balanciert werden, dass eine Baumhöhe von $\mathcal O(\log_2n)$ garantiert wird. Das Speichern und Löschen kann in einer Laufzeit von $\mathcal O(\log_2n)$ erfolgen, sodass alle Operationen diese Laufzeit teilen.
+
+Der Verbundtyp eines Knotens $k$ enthält die Elemente Farbe $\mathrm{color}[k]$ und Schlüssel $\mathrm{key}[k]$ sowie Zeiger zu dem Elternknoten $\mathrm{parent}[k]$ und den Unterbäumen $\mathrm{left}[k]$ sowie $\mathrm{right}[k]$. Zeiger auf $\mathrm{NIL}$ werden als Zeiger auf Blätter interpretiert, die leere Bäume sind.
+
+### Rot-Schwarz-Eigenschaften
+Jeder Knoten ist entweder rot oder schwarz, die Wurzel und alle Blätter sind schwarz, ebenso alle Kinder eines roten Knotens. Zudem haben alle Pfade von einem beliebigen Knoten zu den Blätter dieselbe Anzahl an schwarzen Knoten.
 
 # 5. Speicher und Datentypen
 ## Speichermodell
