@@ -9,25 +9,29 @@
 \tikzset{level 3/.style = {sibling distance = 2cm}}
 \tikzset{every node/.style={draw,circle}}
 
+\newcommand{\blanknode}[0]{node[style={draw,rectangle}]{NIL}}
+
+
 \begin{document}
+
 \begin{tikzpicture}
 \node{5}
     child {
         node {2}
-        child {node{NIL}}
-        child {node{NIL}}
+        child {\blanknode}
+        child {\blanknode}
     }
     child {
         node {7}
         child {
             node [red] {6}
-            child {node {NIL}}
-            child {node {NIL}}
+            child {\blanknode}
+            child {\blanknode}
         }
         child {
             node [red] {9}
-            child {node{NIL}}
-            child {node{NIL}}
+            child {\blanknode}
+            child {\blanknode}
         }
     };
 \end{tikzpicture}

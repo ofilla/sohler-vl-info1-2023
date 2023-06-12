@@ -43,7 +43,7 @@ $$
     \mathcal O(g(n,m)) = \{
         f(n) |
         \exists c\in\mathbb R_+:\exists n_0, m_0\in\mathbb N:
-        \forall\mathbb N \ni n\ge n_0, N \ni m\ge m_0:
+        \forall\mathbb N \ni n\ge n_0, m\ge m_0:
         f(n,m) \le c\cdot g(n,m)
     \}
 $$

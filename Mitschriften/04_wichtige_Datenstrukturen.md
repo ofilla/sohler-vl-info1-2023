@@ -63,8 +63,37 @@ Rot-Schwarz-Bäume sind balancierte binäre Suchbäume, die nach dem Speichern o
 
 Der Verbundtyp eines Knotens $k$ enthält die Elemente Farbe $\mathrm{color}[k]$ und Schlüssel $\mathrm{key}[k]$ sowie Zeiger zu dem Elternknoten $\mathrm{parent}[k]$ und den Unterbäumen $\mathrm{left}[k]$ sowie $\mathrm{right}[k]$. Zeiger auf $\mathrm{NIL}$ werden als Zeiger auf Blätter interpretiert, die leere Bäume sind.
 
-### Rot-Schwarz-Eigenschaften
+![Rot-Schwarz-Baum](rot-schwarz-baum.png)
+
+In Darstellungen wird üblicherweise auf die $\mathrm{NIL}$-Einträge verzichtet.
+
+### Die Rot-Schwarz-Eigenschaft
 Jeder Knoten ist entweder rot oder schwarz, die Wurzel und alle Blätter sind schwarz, ebenso alle Kinder eines roten Knotens. Zudem haben alle Pfade von einem beliebigen Knoten zu den Blätter dieselbe Anzahl an schwarzen Knoten.
 
-![Rot-Schwarz-Baum](rot-schwarz-baum.png)
+Da keine zwei aufeinanderfolgende Knoten in einem Suchpfad rot sein dürfen und alle Pfade zu einem Blatt gleich viele schwarze Knoten haben, hat der Baum eine logarithmische Höhe.
+
+Es gibt nach dem Einfügen oder Löschen eines Knotens zwei Bedingungen, die verletzt sein können. Deshalb muss der Baum neu balanciert werden. Dabei kann die Wurzel rot sein oder es kann ein roter Knoten ein rotes Kind haben.
+
+### Der $\mathrm{NIL}$-Knoten
+Zur Implementierung ist es sinnvoll, einen besonderen Knoten zu definieren. Dieser Knoten heißt $\mathrm{NIL}[T]$ und hat alle Werte auf $\mathrm{NIL}$ gesetzt. Nur $\mathrm{key}[\mathrm{NIL}[T]]$ darf $0$ sein und somit davon abweichen. Dann werden alle Verweise in Bäumen, die $\mathrm{NIL}$ wären, auf den $\mathrm{NIL}$-Knoten gesetzt. Im obigen Beispiel zeigen demnach die Knoten $2$, $6$ und $9$ je zweimal ($\mathrm{left}$ und $\mathrm{right}$) auf $\mathrm{NIL}[T]$. In Darstellungen wird $\mathrm{NIL}[T]$ normalerweise nicht gezeichnet.
+
+### Die Schwarzhöhe
+Die Schwarzhöhe $\mathrm{sh}(v)$ eines Knotens $v$ in einem Rot-Schwarz-Baum ist die Anzahl der schwarzen Knoten ohne Knoten $v$ auf einem Pfad von $v$ zum Knoten $\mathrm{NIL}[T]$. Hierbei wird $\mathrm{NIL}[T]$ mitgezählt, falls $v\neq \mathrm{NIL}[T]$.
+
+Ein Unterbaum mit der Wurzel $v$ eines Rot-Schwarz-Baums hat mindestens $2^{\mathrm{sh}(v) - 1}$ interne Knoten.
+
+### Rotationen
+Rotationen können die Struktur von Suchbäumen verändern und gleichzeitig die Suchbaumeigenschaft aufrecht erhalten. Sie werden dazu genutzt, Suchbäume zu balancieren.
+
+Sei $p$ ein Knoten in einem Rot-Schwarz-Baum mit $\mathrm{left}[p]=l$ und $\mathrm{right}[p]=r$.
+
+Dann verschiebt eine Rechtsrotation die Struktur nach rechts, sodass $l$ die Position von $p$ einnimmt und $p=\mathrm{right}[l]$ wird. Eine Linksrotation verschiebt die Struktur nach links, sodass $r$ die Position von $p$ einnimmt und $p=\mathrm{left}[r]$ wird.
+
+Anders formuliert wirkt eine Rechtsrotation rechts herum im Uhrzeigersinn, und eine Linksrotation links herum gegen den Uhrzeigersinn.
+
+### Tiefe eines Knotens
+Die Tiefe eines Knotens $v$ ist die Länge eines Weges von der Wurzel zu $v$.
+
+### Onkelknoten
+Der Onkelknoten eines Knotens $v$ mit einer Tiefe von mindestens $2$ ist das Kind von $\mathrm{parent}[\mathrm{parent}[v]]$, das nicht $\mathrm{parent}[v]$ ist.
 

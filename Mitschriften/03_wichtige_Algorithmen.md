@@ -19,7 +19,7 @@ Die Worst-Case-Laufzeit von InsertionSort ist $\Theta(n^2)$.
 InsertionSort(A, n) \\ Feld A der Länge n wird übergeben
     if n=1 return \\ n=1 ist sortiert
     x = A[n] \\ speichere das letzte Element
-    InsertionSort(A,n-1) \\ sortiere das Feld bis auf die letzte Stelle
+    InsertionSort(A,n-1) \\ sortiere das Feld bis n-1
     Füge x an die korrekte Stelle in A ein
 ```
 
@@ -348,9 +348,9 @@ Eine Reihenfolge ohne Inversionen ist nicht-absteigend sortiert.
 Gibt es in einer Reihenfolge von Aufgaben eine Inversion $(i,j)$, dann gibt es auch eine Inversion zweier in der Reihenfolge benachbarter Aufgaben und man kann Aufgabe $i$ und $j$ vertauschen, ohne die Lösung zu verschlechtern.
 
 ## Graphalgorithmen
-### auf Binären Suchbäumen
+### Binäre Suchbäume
 #### Inorder-Tree-Walk
-Sei $x$ ein binärer Suchbaum. Dann gibt $\mathrm{Inorder-Tree-Walk}(x)$ den kompletten Baum in aufsteigender Reihenfolge in Laufzeit $\mathcal O(n)$ aus.
+Sei $x$ ein binärer Suchbaum. Dann gibt diese Prozedur den kompletten Baum in aufsteigender Reihenfolge in Laufzeit $\mathcal O(n)$ aus.
 
 ```
 Inorder-Tree-Walk(x)
@@ -458,5 +458,122 @@ Löschen(T,z)
 
     key[z]=key[y]
     delete y
+```
+
+### Rot-Schwarz-Bäume
+#### Linksrotation
+Sei $p$ ein Knoten in einem Rot-Schwarz-Baum mit $\mathrm{left}[p]=l$ und $\mathrm{right}[p]=r$. Eine Linksrotation verschiebt die Struktur nach links, sodass $r$ die Position von $p$ einnimmt und $p=\mathrm{left}[r]$ wird. Die Rotation läuft gegen den Uhrzeigersinn.
+
+```
+Linksrotation(T,x)
+    y = right[x]
+    right[x] = left[y]
+
+    if left[y]!=NIL then parent[left[y]] = x
+
+    parent[y] = parent[x]
+
+    if parent[x]=NIL
+    then root[T] = y
+    else
+        if x=left[parent[x]]
+        then left[parent[x]] = y
+        else right[parent[x]] = y
+
+    left[y] = x
+    parent[x] = y
+```
+
+#### RS-Einfügen
+Beim Einfügen in einen Rot-Schwarz-Baum muss zunächst ein neuer Knoten eingefügt werden. Daraufhin muss die Baumstruktur repariert werden, sodass die Rot-Schwarz-Eigenschaft wieder erfüllt sind. So lange diese Reparatur maximal die Laufzeit $\mathcal O(\log_2n)$ benötigt, läuft der gesamte Algorithmus in der Laufzeit $T(n)\in\mathcal O(\log_2n)$.
+
+```
+RSEinfügen(T,k)
+    \\ Initialisiere neuen Knoten
+    z = new node
+    key[z] = k
+    left[z] = NIL[T]
+    right[z] = NIL[T]
+    color[z] = rot
+
+    \\ Suche Position zum Einfügen
+    y = NIL[T]
+    x = Root[T]
+    while x!=NIL[T] do
+        y = x
+        if k<key[x]
+        then x = left[x]
+        else x = right[x]
+
+    \\ Füge Knoten z ein
+    parent[z] = y
+    if y=NIL[T]
+    then root[T] = z
+    else
+        if k<key[y]
+        then left[y] = z
+        else right[y] = z
+
+    RS-Einfügen-Fix(T,z) \\ Repariere Baumstruktur
+```
+
+#### RS-Einfügen-Fix
+Die Struktur des Rot-Schwarz-Baumes $T$ wird nach dem Einfügen eines neuen Knotens $z$ in der Laufzeit $\mathcal O(\log_2n)$ wieder repariert. Nachdem diese Prozedur am Ende der Prozedur $\mathrm{RSEinfügen}(T,z)$ ausgeführt wurde, erfüllt $T$ wieder die Rot-Schwarz-Eigenschaft.
+
+Hierbei wandert die Rot-Markierung des neuen Knotens schrittweise eine Ebene Richtung Wurzel. Wenn diese Markierung an der Wurzel angekommen ist, muss diese noch schwarz gefärbt werden, damit die Rot-Schwarz-Eigenschaft erfüllt ist.
+
+
+Beim Reparieren soll man folgende Schleifeninvariante gelten.
+
+1. Knoten $z$ ist rot.
+2. Wenn $\mathrm{parent}[z]$ die Wurzel ist, dann ist $\mathrm{parent}[z]$ schwarz.
+3. Es gibt maximal eine Verletzung der Rot-Schwarz-Eigenschaften:
+    1. Ist die Wurzel rot, dann ist $z$ die Wurzel.
+    2. Hat ein roter Knoten rote Kinder, dann ist $\mathrm{parent}[z]$ rot.
+4. Die Anzahl der schwarzen Knoten auf allen Pfaden von der Wurzel zu jedem Blatt ist gleich.
+
+##### Fallunterscheidung
+1. Falls $z$ die Wurzel ist, muss $z$ schwarz gefärbt werden.
+2. Der Onkel von $z$ ist rot, ebenso wie der Vater von $z$. Dann muss die rote Ebene um eine Ebene nach oben geschoben werden.
+    1.  Der Vater und der Onkel von $z$ werden schwarz gefärbt.
+    2.  Der Großvater von $z$ wird rot gefärbt.
+    3.  Die Rot-Schwarz-Bedingung muss ausgehend vom Großvater geprüft werden.
+4. Der Onkel von $z$ ist schwarz, außerdem sind $z$ und der Vater $\mathrm{parent}(z)$ beide linke bzw. rechte Kinder.
+    1. Der Onkel von $z$ wird rot gefärbt.
+    2. Rotation um den Großvater von $z$:
+        1. $z$ und Vater sind linke Kinder: Rechtsrotaton
+        2. $z$ und Vater sind rechte Kinder: Linksrotation
+5. Der Onkel von $z$ ist schwarz.
+    1. Rotation um den Vaterknoten.
+        1.  $z$ ist ein rechtes Kind und der Vater ist ein linkes Kind: Linksrotation
+        2.  $z$ ist ein linkes Kind und der Vater ist ein rechtes Kind: Rechtsrotation
+    2. Die Rot-Schwarz-Bedingung muss ausgehend vom Vater geprüft werden.
+
+```
+RS-Einfügen-Fix(T,z)
+    while color[parent[z]] = rot do
+        if parent[z] = left[parent[parent[z]]] then
+            y = right[parent[parent[z]]] \\ Onkel von z
+
+            if color[y] = rot then \\ Onkel ist rot
+                color[parent[z]] = schwarz \\ Vater
+                color[y] = schwarz \\ Onkel
+                color[parent[parent[z]]] = rot \\ Großvater
+                \\ prüfe beim Großvater weiter
+                z = parent[parent[z]]
+            else
+                if z = right[parent[z]] then
+                    \\ Onkel schwarz und parent[z] rechter Knoten
+                    z = parent[z]
+                    Linksrotation(T,z)
+                    \\ prüfe beim Vater weiter
+                else
+                    \\ Onkel schwarz, z und parent[z] linker Knoten
+                    color[parent[z]] = schwarz
+                    color[parent[parent[z]]] = rot
+                    Rechtsrotation(T, parent[parent[z]])
+        else
+            \\ analog (Übung)
+    color[root[T]] = schwarz
 ```
 
