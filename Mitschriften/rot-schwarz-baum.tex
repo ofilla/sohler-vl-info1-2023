@@ -1,7 +1,7 @@
 \documentclass[border=0.2cm,convert]{standalone}
 \usepackage{tikz}
 
-% convert -density 600x600 -quality 90 -resize 800x600 
+% xelatex --shell-escape *.tex
 
 \tikzset{level distance=2em}
 \tikzset{level 1/.style = {sibling distance = 6cm}}
@@ -9,7 +9,7 @@
 \tikzset{level 3/.style = {sibling distance = 2cm}}
 \tikzset{every node/.style={draw,circle}}
 
-\newcommand{\blanknode}[0]{node[style={draw,rectangle}]{NIL}}
+\newcommand{\leaf}[0]{node[style={draw,rectangle}]{NIL}}
 
 
 \begin{document}
@@ -18,20 +18,20 @@
 \node{5}
     child {
         node {2}
-        child {\blanknode}
-        child {\blanknode}
+        child {\leaf}
+        child {\leaf}
     }
     child {
         node {7}
         child {
             node [red] {6}
-            child {\blanknode}
-            child {\blanknode}
+            child {\leaf}
+            child {\leaf}
         }
         child {
             node [red] {9}
-            child {\blanknode}
-            child {\blanknode}
+            child {\leaf}
+            child {\leaf}
         }
     };
 \end{tikzpicture}
