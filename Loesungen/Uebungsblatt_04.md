@@ -8,8 +8,11 @@ date:
 # Übungsblatt 4
 ## 1. Binäre Suche
 > Betrachten Sie das folgende Feld von Zahlen:
+> 
 > $A = [6, 3, 36, 99, 2, 39, 12, 45, 23, 17, 24]$
+> 
 > Strukturieren Sie die Elemente in dem Feld um, sodass Binäre Suche anwendbar ist.
+> 
 > Führen Sie anschließend die aus der Vorlesung bekannte Methode $\mathrm{BinäreSuche}(A,12,1,11)$ aus, um in dem Feld $A[1, \dots , 11]$ nach dem Wert $12$ zu suchen und geben Sie die Ausgabe, sowie die besuchten Teilfelder des Algorithmus an.
 
 Pseudocode der Suchfunktion:
@@ -44,6 +47,7 @@ BinäreSuche(A,12,1,11)
 
 ## 2. Teile und Herrsche
 > Gegeben sei ein aufsteigend sortiertes Feld A aus n natürlichen Zahlen. Bei der Übertragung des Feldes ist ein Fehler unterlaufen. Die Diagnose des Fehlers besagt, dass es nach der Übertragung maximal einen Wert gibt, welcher verfälscht wurde. Dies bedeutet, dass die betroffene Stelle des Feldes einen größeren Wert als ursprünglich haben kann. Dadurch kann es sein, dass das Feld nach der Übertragung nicht mehr aufsteigend sortiert ist. Also kann binäre Suche auf dem Feld nicht mehr angewandt werden.
+> 
 > Trotz dieses Fehlers sollen aber alle unverfälschten Werte von Feld $A$ in Laufzeit $\mathcal O(\log n)$ gesucht werden können.
 
 ### a) Algorithmus

@@ -158,8 +158,8 @@ Binom(n, k)
 
 ## 4. Insertion Sort
 > Gegeben sei das folgende Feld A:
-> ![](./img/1.4a.png)
-> Verwenden sie InsertionSort, um das Feld A zu sortieren. Geben Sie dabei den Zustand
+> ![](./img/01.4a.png)
+> Verwenden sie $\mathrm{InsertionSort}$, um das Feld $A$ zu sortieren. Geben Sie dabei den Zustand
 des Feldes nach jeder Iteration der for-Schleife an.
 
-![Zustand nach jedem Schleifendurchlauf](./img/1.4b.png)
+![Zustand nach jedem Schleifendurchlauf](./img/01.4b.png)

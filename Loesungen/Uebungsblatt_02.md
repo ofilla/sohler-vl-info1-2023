@@ -8,8 +8,6 @@ date:
 # Übungsblatt 2
 Ich benutze hier `\\` für inline-Kommentare in Pseudocode. Dies ist meines Erachtens besser lesbar.
 
-Restliche Aufgaben wegen Zeitdruck nicht gelöst.
-
 ## 1. Laufzeitanalyse
 > Betrachten Sie folgenden Algorithmus:
 > ```
