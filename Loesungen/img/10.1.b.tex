@@ -1,0 +1,99 @@
+\documentclass[border=0.2cm,convert]{standalone}
+\usepackage{tikz}
+
+% xelatex --shell-escape *.tex
+
+\usetikzlibrary{arrows,trees,positioning}
+
+\tikzset{level distance=2em}
+\tikzset{level 1/.style = {sibling distance = 5cm}}
+\tikzset{level 2/.style = {sibling distance = 2.5cm}}
+\tikzset{level 3/.style = {sibling distance = 1.5cm}}
+\tikzset{level 4/.style = {sibling distance = 1cm}}
+\tikzset{every node/.style={draw,circle}}
+
+\tikzset{black/.style={circle, white, draw=black, fill=black, font=\bfseries\sffamily}}
+\tikzset{red/.style={circle, draw=red, font=\bfseries\sffamily, very thick}}
+\tikzset{nil/.style={rectangle, draw=black, very thick}}
+
+\begin{document}
+\begin{tabular}{cc}
+$1.\ -\ 30 $ & $2.\ -\ 42$ \\
+\begin{tikzpicture}
+\node[black]{30}
+    child[transparent]{}
+    child[transparent]{}
+    ;
+\end{tikzpicture}
+&
+\begin{tikzpicture}
+\node[black]{30}
+    child[transparent]{}
+    child {node[red]{42}}
+    ;
+\end{tikzpicture}
+\\
+$3.\ -\ 41 $ & $4.\ -\ 50$ \\
+\begin{tikzpicture}
+\node[black]{41}
+    child {node[black]{30}}
+    child {node[black]{42}}
+    ;
+\end{tikzpicture}
+&
+\begin{tikzpicture}
+\node[black]{41}
+    child {node[black]{30}}
+    child {
+        node[black]{42}
+        child[transparent]{}
+        child{node[red]{50}}
+    }
+    ;
+\end{tikzpicture}
+\\
+$5.\ -\ 55$ & $6.\ -\ 1$ \\
+\begin{tikzpicture}
+\node[black]{41}
+    child {node[black]{30}}
+    child {
+        node[red]{50}
+        child{node[black]{42}}
+        child{node[black]{55}}
+    }
+    ;
+\end{tikzpicture}
+&
+\begin{tikzpicture}
+\node[black]{41}
+    child {
+        node[black]{30}
+        child{node[red]{1}}
+        child[transparent]{}
+    }
+    child {
+        node[red]{50}
+        child{node[black]{42}}
+        child{node[black]{55}}
+    }
+    ;
+\end{tikzpicture}
+\\
+$7.\ -\ 3$ \\
+\begin{tikzpicture}
+\node[black]{41}
+    child {
+        node[red]{3}
+        child{node[black]{1}}
+        child{node[black]{30}}
+    }
+    child {
+        node[red]{50}
+        child{node[black]{42}}
+        child{node[black]{55}}
+    }
+    ;
+\end{tikzpicture}
+\end{tabular}
+\end{document}
+
