@@ -522,7 +522,6 @@ Die Struktur des Rot-Schwarz-Baumes $T$ wird nach dem Einfügen eines neuen Knot
 
 Hierbei wandert die Rot-Markierung des neuen Knotens schrittweise eine Ebene Richtung Wurzel. Wenn diese Markierung an der Wurzel angekommen ist, muss diese noch schwarz gefärbt werden, damit die Rot-Schwarz-Eigenschaft erfüllt ist.
 
-
 Beim Reparieren soll man folgende Schleifeninvariante gelten.
 
 1. Knoten $z$ ist rot.
@@ -535,9 +534,9 @@ Beim Reparieren soll man folgende Schleifeninvariante gelten.
 ##### Fallunterscheidung
 1. Falls $z$ die Wurzel ist, muss $z$ schwarz gefärbt werden.
 2. Der Onkel von $z$ ist rot, ebenso wie der Vater von $z$. Dann muss die rote Ebene um eine Ebene nach oben geschoben werden.
-    1.  Der Vater und der Onkel von $z$ werden schwarz gefärbt.
-    2.  Der Großvater von $z$ wird rot gefärbt.
-    3.  Die Rot-Schwarz-Bedingung muss ausgehend vom Großvater geprüft werden.
+    1. Der Vater und der Onkel von $z$ werden schwarz gefärbt.
+    2. Der Großvater von $z$ wird rot gefärbt.
+    3. Die Rot-Schwarz-Bedingung muss ausgehend vom Großvater geprüft werden.
 4. Der Onkel von $z$ ist schwarz, außerdem sind $z$ und der Vater $\mathrm{parent}(z)$ beide linke bzw. rechte Kinder.
     1. Der Onkel von $z$ wird rot gefärbt.
     2. Rotation um den Großvater von $z$:
@@ -545,12 +544,13 @@ Beim Reparieren soll man folgende Schleifeninvariante gelten.
         2. $z$ und Vater sind rechte Kinder: Linksrotation
 5. Der Onkel von $z$ ist schwarz.
     1. Rotation um den Vaterknoten.
-        1.  $z$ ist ein rechtes Kind und der Vater ist ein linkes Kind: Linksrotation
-        2.  $z$ ist ein linkes Kind und der Vater ist ein rechtes Kind: Rechtsrotation
+        1. $z$ ist ein rechtes Kind und der Vater ist ein linkes Kind: Linksrotation
+        2. $z$ ist ein linkes Kind und der Vater ist ein rechtes Kind: Rechtsrotation
     2. Die Rot-Schwarz-Bedingung muss ausgehend vom Vater geprüft werden.
 
+##### Pseudocode
 ```
-RS-Einfügen-Fix(T,z)
+RSEinfügenFix(T,z)
     while color[parent[z]] = rot do
         if parent[z] = left[parent[parent[z]]] then
             y = right[parent[parent[z]]] \\ Onkel von z
@@ -575,5 +575,92 @@ RS-Einfügen-Fix(T,z)
         else
             \\ analog (Übung)
     color[root[T]] = schwarz
+```
+
+#### RS-Löschen
+Der Prozedur wird ein Knoten $z$ übergeben, die aus dem Baum $T$ gelöscht werden soll. Das Löschen erfolgt wie beim allgemeinen binären Suchbaum. Danach muss der Baum repariert werden, falls die Rot-Schwarz-Eigenschaft nicht mehr gilt. Das Löschen erfolgt in Laufzeit $\mathcal O(\log_2n)$.
+
+1. Wenn $z$ keine Kinder hat, kann $z$ einfach entfernt werden.
+2. Wenn $z$ ein Kind hat, dann wird $z$ mit seinem Kind ersetzt.
+3. Wenn $z$ zwei Kinder hat, dann muss es mit seinem Nachfolger $y$ ersetzt werden. Dazu muss der Schlüssel $\mathrm{key}[z]$ auf den des Nachfolgers $\mathrm{key}[y]$ gesetzt werden, woraufhin der Nachfolger $y$ entfernt werden kann.
+4. Falls $z$ schwarz ist, müssen die Rot-Schwarz-Eigenschaft wiederhergestellt werden.
+
+```
+RSLöschen(T,z)
+    if left[z] = NIL[T] or right[z] = NIL[T]
+    then y = z
+    else y = NachfolgerSuche(z)
+
+    if left[y] != NIL[T]
+    then x = left[y]
+    else x = right[y]
+
+    parent[x] = parent[y]
+
+    if parent[y] = NIL[T]
+    then root[T] = x
+    else
+        if y = left[parent[y]]
+        then left[parent[y]] = x
+        else right[parent[y]] = x
+
+    key[z] = key[y]
+
+    if color[y] = schwarz
+    then RS-Löschen-Fix(T,x)
+
+    parent[NIL[T]] = NIL
+    delete y
+```
+
+#### RS-Löschen-Fix
+Die Struktur des Rot-Schwarz-Baumes $T$ wird nach dem Löschen eines Knotens $z$ in der Laufzeit $\mathcal O(\log_2n)$ wieder repariert. Nachdem diese Prozedur am Ende der Prozedur $\mathrm{RSLöschen}(T,z)$ ausgeführt wurde, erfüllt $T$ wieder die Rot-Schwarz-Eigenschaft.
+
+Die Rot-Schwarz-Eigenschaft kann verletzt worden sein, wenn $z$ schwarz ist, denn dann kann es sein, dass nach dem Löschen zwei rote Knoten aufeinanderfolgen.
+
+##### Fallunterscheidung
+Wenn der Knoten $x$, der Knoten $z$ ersetzt, rot ist, muss $x$ nur schwarz gefärbt werden um den Baum zu reparieren. Sei $x$ schwarz, dann gibt es folgende Fälle.
+
+1. Der Geschwisterknoten von $x$ ist rot, dann muss nur $x$ schwarz gefärbt werden.
+2. Der Geschwisterknoten $w$ von $x$ und beide Kinder von $w$ sind schwarz.
+    1. $\mathrm{parent}[x]$ ist rot.
+    2. $\mathrm{parent}[x]$ ist schwarz.
+3. Der Geschwisterknoten $w$ von $x$ ist schwarz und ein Kind von $w$ ist rot.
+    1. $\mathrm{left}[w]$ ist rot und $\mathrm{right}[w]$ ist schwarz.
+    2. $\mathrm{left}[w]$ ist schwarz und $\mathrm{right}[w]$ ist rot.
+
+##### Pseudocode
+```
+RS-Löschen-Fix(T,x)
+    while x != root[T] and color[x]=schwarz do
+        if x = left[parent[x]] then
+            w = right[parent[x]]
+            if color[w] = rot
+            then \\ Geschwisterknoten ist rot
+                color[w] = schwarz
+                color[parent[x]] = rot
+                Linksrotation(T, parent(x))
+                w = right[parent[x]]
+
+            if color[left[w]] = schwarz and color[right[w]] = schwarz
+            then \\ beide Kinder des Geschwisterknotens sind schwarz
+                color[w] = rot
+                x = parent[x]
+            else \\ mindestens ein Kind des Geschwisterknotens ist rot
+                if color[right[w]] = schwarz
+                then \\ nur das linke Kind des Geschwisterknotens ist schwarz
+                    color[left[w]] = schwarz
+                    color[w] = rot
+                    Rechtsrotation(T,w)
+                    w = right[parent[x]]
+                else \\ nur das rechte Kind des Geschwisterknotens ist schwarz
+                    color[w] = color[parent[x]]
+                    color[parent[x]] = schwarz
+                    color[right[w]] = schwarz
+                    Linksrotation(T, parent[x])
+                    x = root[T]
+        else
+            \\ analoger Fall
+    color[x] = schwarz
 ```
 
