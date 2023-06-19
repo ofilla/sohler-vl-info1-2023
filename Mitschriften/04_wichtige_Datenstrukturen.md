@@ -26,7 +26,80 @@ Wie bei einfachen Feldern sind der Speicherbedarf in $\mathcal O(N)$ und die Suc
 ## Graphen
 Bestehen aus _Knoten_ und _Kanten_. Kanten können _gerichtet_ sein.
 
+Es gibt auch Graphenvarianten, bei denen eine Kante nur einen Knoten mit sich selbst verbindet, ebenso welche, die mehrere Kanten zwischen Knoten erlauben.
+
 Beispielsweise das "Pageranking" von Google war ein _Graphalgorithmus_, der Google die Vorherrschaft auf dem Suchmaschinenmarkt einbrachte: Das Ranking einer Website wurde aus der Anzahl von Verweisen auf ebendiese Website ermittelt.
+
+### Wege
+Ein Weg der Länge $k$ von Knoten $u$ zu Knoten $v$ in einem Graph $G=(V,E)$ ist eine Sequenz von $k+1$ Knoten $(v_0,\dots, v_k)$ mit $u=v_0$ und $v = v_k$, die paarweise durch Kanten $(v_{i-1}, v_i)\in E$ verbunden sind (mit $k=1,\dots,k$).
+
+#### Erreichbarkeit
+$u$ ist von $v$ aus erreichbar, wenn es einen Weg von $u$ nach $v$ gibt.
+
+#### Einfachkeit
+Ein Weg heißt einfach, wenn kein Knoten mehrfach auf dem Weg vorkommt.
+
+#### Kreis
+Ein Kreis ist ein Weg $(v_0,\dots, v_k)$, bei dem Startknoten $v_0$ und Endknoten $v_k$ identisch sind $(v_0=v_k)$.
+
+Ein Kreis heißt einfach, wenn der Weg ein einfacher Weg ist, also wenn kein Knoten mehrfach auf dem Weg vorkommt.
+
+### Wald & Baum
+Ein kreisfreier ungerichteter Graph heißt Wald. Ein ungerichteter, zusammenhängender, kreisfreier Graph heißt Baum.
+
+### Nachbar
+Ein Knoten $u$ ist ein Nachbar eines Knotens $v$ in einem Graph $G=(V,E)$, wenn es eine Kante $(v,u)\in E$ gibt, die sie verbindet.
+
+### Gerichtete Graphen
+Ein gerichteter Graph ist ein Paar $(V,E)$, wobei die Knotenmenge $V$ eine endliche Größe $|V|$ hat und $E\subseteq V\times V$ die Kantenmenge des Graphen ist. Eine gerichtete Kante von $u$ nach $v$ wird als $(u,v)$ geschrieben.
+
+Ein gerichteter Graph heißt _stark zusammenhängend_, wenn es von jedem Knoten einen Weg zu jedem anderen Knoten im Graph gibt. Die _starken Zusammenhangskomponenten_ eines Graphen sind die Äquivalenzklassen der Relation "ist beidseitig erreichbar".
+
+Der _Ausgangsgrad_ eines Knotens in einem gerichteten Graph ist die Anzahl Kanten, die den Knoten verlassen. Der _Eingangsgrad_ eines Knotens in einem gerichteten Graph ist die Anzahl Kanten, die auf den Knoten zeigen.
+
+### Ungerichtete Graphen
+Ein gerichteter Graph ist ein Paar $(V,E)$, wobei die Knotenmenge $V$ eine endliche Größe $|V|$ hat und $E=\{(a, b)| a,b\in V\}$ die Menge aller Knotenpaare des Graphen ist. Kanten werden als $\{u,v\}$ geschrieben, oft wird aber auch als $(u,v)$, was dieselbe Kante wie $(v,u)$ darstellt.
+
+Ein ungerichteter Graph heißt _zusammenhängend_, wenn es von jedem Knoten einen Weg zu jedem anderen Knoten im Graph gibt. Die _Zusammenhangskomponenten_ eines Graphen sind die Äquivalenzklassen der Relation "ist erreichbar".
+
+Der _Grad_ eines Knotens $v$ in einem ungerichteten Graph ist die Anzahl Kanten, die an $v$ anliegen.
+
+Für die Adjazenzmatrix $A$ gilt $A=A^\mathrm{T}$, für die Adjazenzliste $\mathrm{Adj}$ gilt $u\in\mathrm{Adj}[v]\Leftrightarrow v\in\mathrm{Adj}[u]$.
+
+### Gewichtete Graphen
+Es gibt gewichtete und ungewichtete Graphen. Bei gewichteten Graphen haben Knoten und / oder Kanten Gewichte.
+
+Wenn ein Graph ein Straßenverkehrsnetz darstellt, können solche Gewichte beispielsweise die erlaubte Höchtgeschwindigkeit oder die Durchschnittsgeschwindigkeit sein.
+
+### Zusammenhang
+Ein gerichteter Graph heißt _stark zusammenhängend_, wenn es von jedem Knoten einen Weg zu jedem anderen Knoten im Graph gibt. Ein ungerichteter Graph heißt _zusammenhängend_, wenn es von jedem Knoten einen Weg zu jedem anderen Knoten im Graph gibt.
+
+#### Zusammenhangskomponenten
+Die _starken Zusammenhangskomponenten_ eines Graphen sind die Äquivalenzklassen der Relation "ist beidseitig erreichbar". Die _Zusammenhangskomponenten_ eines Graphen sind die Äquivalenzklassen der Relation "ist erreichbar".
+
+### Knotengrade
+Der _Ausgangsgrad_ eines Knotens in einem gerichteten Graph ist die Anzahl Kanten, die den Knoten verlassen. Der _Eingangsgrad_ eines Knotens in einem gerichteten Graph ist die Anzahl Kanten, die auf den Knoten zeigen.
+
+### Adjazenzmatrix
+Für dicht besetzte Graphen mit $|E| \lesssim |V|^2$ eignen sich Adjazenzmatrizen zur Speicherung der Knoten.
+
+Hierbei ist $A=(a_{ij})$ eine $|V|\times|V|$-Matrix. Hierbei wird für jedes Knotenpaar gespeichert, ob sie durch eine Kante verbunden sind. Bei gewichteten Graphen wird stattdessen das Gewicht $w$ gespeichert, bei ungewichteten gilt $w=1$. Bei ungerichteten Graphen gilt $A=A^\mathrm{T}$.
+
+$$
+    a_{ij} = \begin{cases}
+        w &: (i, j)\in E \\
+        0 &: (i, j)\notin E \\
+        \end{cases}
+$$
+
+### Adjazenzlisten
+Für dünn besetzte Graphen mit $|E|\ll |V|^2$ eignen sich besonders Adjazenzlisten zum Speichern der Kanten. Hierbei wird für jeden Knoten $v$ eine Liste angelegt, in der die Nachbarn von $v$ gespeichert sind.
+
+Es gibt ein Feld $\mathrm{Adj}$ mit $|V|$ einträgen, je einem pro Knoten. $\mathrm{Adj}[v]$ enthält die Knoten $u$, die mit $v$ benachbart sind. Es gibt also für jedes $u$ eine Kante $(u,v)\in E$.
+
+Für ungerichtete Graphen gilt $u\in\mathrm{Adj}[v]\Leftrightarrow v\in\mathrm{Adj}[u]$.
+
+Für gewichtete Graphen wird das Gewicht $w(u,v)$ zusammen mit dem Knoten $v$ in der Adjazenzliste $\mathrm{Adj}[u]$ von $u$ gespeichert.
 
 ## Binärbäume
 Ein Binärbaum $T$ ist eine Struktur, die auf einer endlichen Menge definiert ist. Diese Menge nennt man auch die _Knotenmenge_ des Binärbaums. Daher ist die leere Menge ein _leerer Baum_. Graphen sind eine Untergruppe der Graphen.
@@ -96,4 +169,35 @@ Die Tiefe eines Knotens $v$ ist die Länge eines Weges von der Wurzel zu $v$.
 
 ### Onkelknoten
 Der Onkelknoten eines Knotens $v$ mit einer Tiefe von mindestens $2$ ist das Kind von $\mathrm{parent}[\mathrm{parent}[v]]$, das nicht $\mathrm{parent}[v]$ ist.
+
+## Felder mit direkter Adressierung
+Sei $U\subset \mathbb N_0$ ein Universum der Größe $|U|$ $(U=\{1, \dots, |U|-1\})$. Dann gibt es keine doppelt vorkommenden Schlüssel und in dem Feld $T=\mathrm{new\ array}[|U|]$ derselben Größe können Werte gespeichert werden.
+
+Das Suchen, Einfügen und Löschen von Elementen der Liste funktioniert in konstanter Laufzeit $\mathcal O(1)$, da die Größe des Universums Konstant ist. Die Schlüssel für $T$ müssen dann alle aus $U$ stammen, zudem ist der Speicherbedarf $\Omega(|U|)$. Dies ist nicht sehr effizient.
+
+## Hashtabellen
+Da Felder mit direkter Adressierung einen extrem ineffizienten Speicherbedarf haben, wird stattdessen eine _Hashfunktion_ $h: U \rightarrow \{1, \dots, m-1\}$ verwendet, die das Universum $U$ auf eine Hashtabelle $T[0..m-1]$ der Größe $m$ abbildet. Für einen Schlüssel $k$ nennen wir $h(k)$ den Hashwert von $k$.
+
+### Kollisionen
+Kollisionen sind möglich, das heißt es gibt verschiedene Schlüssel $a, b$ gibt, die den selben Hashwert $h(a)=h(b)$ haben.
+
+Dies kann durch Verkettungen in Hashtabellen gelöst werden. Dabei verweist jeder Eintrag in der Hashtabelle $T$ auf eine verkette Liste, die die Schlüssel speichert.
+
+### Hashfunktionen
+Hashfunktionen werden in der Regel zufällig gewählt, weil bei einer zufälligen Wahl nur wenige Kollisionen zu erwarten sind. Allerdings benötigt die Abbildung einer vollständig zufälligen Hashfunktion viel Speicher.
+
+Deswegen wird oft eine Hashfunktion $h$ zufällig aus einer Menge geeigneter Funktionen gewählt, sodass sich die Hashfunktion ähnlich einer vollständig zufälligen Hashfunktion verhält.
+
+* Divisionsmethode: $h(k) = k \mod m$
+    * $m$ sei eine Primzahl, die nicht zu nah an einer Zweierpotenz liegt
+* Multiplikationsmethode: $\exists A\in(0,1): h(k) = \lfloor m (kA – \lfloor kA\rfloor)\rfloor$
+* Universelles Hashing: $h_{a,b}(k) = ((ak+b) \mod p) \mod m$
+    * $a\in\{1, \dots, p-1\}$ und $b\in\{0, \dots, p-1\}$ werden zufällig gewählt
+
+Die erwartete Durchschnittslaufzeit für Suchen, Einfügen und Löschen ist $\mathcal O(1+\frac{n}{m})$, wobei $n$ die Anzahl gespeicherter Schlüssel und $m$ die Größe der Hashtabelle ist.
+
+### Offener Adressierung
+Alle Schlüssel werden in der Hashtabelle $T$ gespeichert. Beim Einfügen, suchen oder löschen wird des Schlüssels wird zunächst $T[h(k)]$ ausprobiert. Falls das Element belegt ist bzw. den falschen Wert enthält, wird $T[h(k)+1]$, dann $T[h(k)+2]$ und so weiter, bis entweder alle Elemente aus $T$ ausprobiert wurden oder das entsprechende / freie Feld gefunden wurde.
+
+Ein freies Feld wird meist mit $-1$ markiert, ein gelöschtes mit $-2$. Die spezielle Markierung eines gelöschten Feldes ist notwendig, weil die Suche nicht bei einem gelöschten Element abbrechen darf, da das gesuchte Element danach folgen kann.
 

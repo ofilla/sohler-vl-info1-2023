@@ -347,7 +347,7 @@ Eine Reihenfolge ohne Inversionen ist nicht-absteigend sortiert.
 
 Gibt es in einer Reihenfolge von Aufgaben eine Inversion $(i,j)$, dann gibt es auch eine Inversion zweier in der Reihenfolge benachbarter Aufgaben und man kann Aufgabe $i$ und $j$ vertauschen, ohne die Lösung zu verschlechtern.
 
-## Graphalgorithmen
+## Suchbaumalgorithmen
 ### Binäre Suchbäume
 #### Inorder-Tree-Walk
 Sei $x$ ein binärer Suchbaum. Dann gibt diese Prozedur den kompletten Baum in aufsteigender Reihenfolge in Laufzeit $\mathcal O(n)$ aus.
@@ -662,5 +662,46 @@ RS-Löschen-Fix(T,x)
         else
             \\ analoger Fall
     color[x] = schwarz
+```
+
+## Hashalgorithmen
+### Einfügen mit Offener Adressierung
+Alle Schlüssel werden in der Hashtabelle $T$ gespeichert. Zunächst wird versucht, den Schlüssel $k$ in $T[h(k)]$ einzufügen. Falls dort schon ein Schlüssel gespeichert ist, wird $T[h(k)+1]$ ausprobiert. Dies wird fortgeführt, bis der Schlüssel gespeichert wurde. Wurden alle $m$ Elemente der Hashtabelle ausprobiert, wird ein Fehler ausgegeben.
+
+```
+Einfügen(T,k)
+    i = 0
+    while i<m do
+        j = (h(k) + i) mod m
+        if T[j] < 0
+        then T[j] = k
+        else i = i+1
+    if i=m
+    then output << "Zu viele Schlüssel in der Hash-Tabelle"
+```
+
+### Suche mit Offener Adressierung
+Die Suche funktioniert analog zum Einfügen und wird abgebrochen, wenn der Schlüssel gefunden wurde, alle Zellen der Hashtabelle durchsucht oder eine leere Zelle gefunden wurde. In den letzteren Fällen ist der Schlüssel nicht gespeichert.
+
+Um zu zeigen, dass kein gültiger Wert gespeichert ist, wird in leeren Zellen $-1$ gespeichert. Dies kann man als Zustand nach der Initialisierung annehmen.
+
+```
+Suche(T,k)
+    i = 0
+    while i<m and T[j] != -1 do
+        j = (h(k) + i) mod m
+        if T[j] = k then return j
+        i = i+1
+    return -1
+```
+
+### Löschen mit Offener Adressierung
+Da die Suche nicht abbrechen darf, wenn ein Element in $T$ gelöscht wurde, muss ein anderer Wert gespeichert werden, um die Löschung zu markieren. Dazu kann man $\mathrm{DELETED}=-2$ wählen. Das zu löschende Feld muss erst gefunden werden, dann kann es gelöscht werden.
+
+```java
+Löschen(T,k)
+    i = Suche(T, k)
+    if i = -1 then return -1 \\ nicht gefunden
+    T[i] = -2
 ```
 

@@ -483,7 +483,7 @@ Eine Reihenfolge ohne Inversionen ist nicht-absteigend sortiert.
 
 Gibt es in einer Reihenfolge von Aufgaben eine Inversion $(i,j)$, dann gibt es auch eine Inversion zweier in der Reihenfolge benachbarter Aufgaben und man kann Aufgabe $i$ und $j$ vertauschen, ohne die Lösung zu verschlechtern.
 
-## Graphalgorithmen
+## Suchbaumalgorithmen
 ### Binäre Suchbäume
 #### Inorder-Tree-Walk
 Sei $x$ ein binärer Suchbaum. Dann gibt diese Prozedur den kompletten Baum in aufsteigender Reihenfolge in Laufzeit $\mathcal O(n)$ aus.
@@ -658,7 +658,6 @@ Die Struktur des Rot-Schwarz-Baumes $T$ wird nach dem Einfügen eines neuen Knot
 
 Hierbei wandert die Rot-Markierung des neuen Knotens schrittweise eine Ebene Richtung Wurzel. Wenn diese Markierung an der Wurzel angekommen ist, muss diese noch schwarz gefärbt werden, damit die Rot-Schwarz-Eigenschaft erfüllt ist.
 
-
 Beim Reparieren soll man folgende Schleifeninvariante gelten.
 
 1. Knoten $z$ ist rot.
@@ -671,9 +670,9 @@ Beim Reparieren soll man folgende Schleifeninvariante gelten.
 ##### Fallunterscheidung
 1. Falls $z$ die Wurzel ist, muss $z$ schwarz gefärbt werden.
 2. Der Onkel von $z$ ist rot, ebenso wie der Vater von $z$. Dann muss die rote Ebene um eine Ebene nach oben geschoben werden.
-    1.  Der Vater und der Onkel von $z$ werden schwarz gefärbt.
-    2.  Der Großvater von $z$ wird rot gefärbt.
-    3.  Die Rot-Schwarz-Bedingung muss ausgehend vom Großvater geprüft werden.
+    1. Der Vater und der Onkel von $z$ werden schwarz gefärbt.
+    2. Der Großvater von $z$ wird rot gefärbt.
+    3. Die Rot-Schwarz-Bedingung muss ausgehend vom Großvater geprüft werden.
 4. Der Onkel von $z$ ist schwarz, außerdem sind $z$ und der Vater $\mathrm{parent}(z)$ beide linke bzw. rechte Kinder.
     1. Der Onkel von $z$ wird rot gefärbt.
     2. Rotation um den Großvater von $z$:
@@ -681,12 +680,13 @@ Beim Reparieren soll man folgende Schleifeninvariante gelten.
         2. $z$ und Vater sind rechte Kinder: Linksrotation
 5. Der Onkel von $z$ ist schwarz.
     1. Rotation um den Vaterknoten.
-        1.  $z$ ist ein rechtes Kind und der Vater ist ein linkes Kind: Linksrotation
-        2.  $z$ ist ein linkes Kind und der Vater ist ein rechtes Kind: Rechtsrotation
+        1. $z$ ist ein rechtes Kind und der Vater ist ein linkes Kind: Linksrotation
+        2. $z$ ist ein linkes Kind und der Vater ist ein rechtes Kind: Rechtsrotation
     2. Die Rot-Schwarz-Bedingung muss ausgehend vom Vater geprüft werden.
 
+##### Pseudocode
 ```
-RS-Einfügen-Fix(T,z)
+RSEinfügenFix(T,z)
     while color[parent[z]] = rot do
         if parent[z] = left[parent[parent[z]]] then
             y = right[parent[parent[z]]] \\ Onkel von z
@@ -711,6 +711,134 @@ RS-Einfügen-Fix(T,z)
         else
             \\ analog (Übung)
     color[root[T]] = schwarz
+```
+
+#### RS-Löschen
+Der Prozedur wird ein Knoten $z$ übergeben, die aus dem Baum $T$ gelöscht werden soll. Das Löschen erfolgt wie beim allgemeinen binären Suchbaum. Danach muss der Baum repariert werden, falls die Rot-Schwarz-Eigenschaft nicht mehr gilt. Das Löschen erfolgt in Laufzeit $\mathcal O(\log_2n)$.
+
+1. Wenn $z$ keine Kinder hat, kann $z$ einfach entfernt werden.
+2. Wenn $z$ ein Kind hat, dann wird $z$ mit seinem Kind ersetzt.
+3. Wenn $z$ zwei Kinder hat, dann muss es mit seinem Nachfolger $y$ ersetzt werden. Dazu muss der Schlüssel $\mathrm{key}[z]$ auf den des Nachfolgers $\mathrm{key}[y]$ gesetzt werden, woraufhin der Nachfolger $y$ entfernt werden kann.
+4. Falls $z$ schwarz ist, müssen die Rot-Schwarz-Eigenschaft wiederhergestellt werden.
+
+```
+RSLöschen(T,z)
+    if left[z] = NIL[T] or right[z] = NIL[T]
+    then y = z
+    else y = NachfolgerSuche(z)
+
+    if left[y] != NIL[T]
+    then x = left[y]
+    else x = right[y]
+
+    parent[x] = parent[y]
+
+    if parent[y] = NIL[T]
+    then root[T] = x
+    else
+        if y = left[parent[y]]
+        then left[parent[y]] = x
+        else right[parent[y]] = x
+
+    key[z] = key[y]
+
+    if color[y] = schwarz
+    then RS-Löschen-Fix(T,x)
+
+    parent[NIL[T]] = NIL
+    delete y
+```
+
+#### RS-Löschen-Fix
+Die Struktur des Rot-Schwarz-Baumes $T$ wird nach dem Löschen eines Knotens $z$ in der Laufzeit $\mathcal O(\log_2n)$ wieder repariert. Nachdem diese Prozedur am Ende der Prozedur $\mathrm{RSLöschen}(T,z)$ ausgeführt wurde, erfüllt $T$ wieder die Rot-Schwarz-Eigenschaft.
+
+Die Rot-Schwarz-Eigenschaft kann verletzt worden sein, wenn $z$ schwarz ist, denn dann kann es sein, dass nach dem Löschen zwei rote Knoten aufeinanderfolgen.
+
+##### Fallunterscheidung
+Wenn der Knoten $x$, der Knoten $z$ ersetzt, rot ist, muss $x$ nur schwarz gefärbt werden um den Baum zu reparieren. Sei $x$ schwarz, dann gibt es folgende Fälle.
+
+1. Der Geschwisterknoten von $x$ ist rot, dann muss nur $x$ schwarz gefärbt werden.
+2. Der Geschwisterknoten $w$ von $x$ und beide Kinder von $w$ sind schwarz.
+    1. $\mathrm{parent}[x]$ ist rot.
+    2. $\mathrm{parent}[x]$ ist schwarz.
+3. Der Geschwisterknoten $w$ von $x$ ist schwarz und ein Kind von $w$ ist rot.
+    1. $\mathrm{left}[w]$ ist rot und $\mathrm{right}[w]$ ist schwarz.
+    2. $\mathrm{left}[w]$ ist schwarz und $\mathrm{right}[w]$ ist rot.
+
+##### Pseudocode
+```
+RS-Löschen-Fix(T,x)
+    while x != root[T] and color[x]=schwarz do
+        if x = left[parent[x]] then
+            w = right[parent[x]]
+            if color[w] = rot
+            then \\ Geschwisterknoten ist rot
+                color[w] = schwarz
+                color[parent[x]] = rot
+                Linksrotation(T, parent(x))
+                w = right[parent[x]]
+
+            if color[left[w]] = schwarz and color[right[w]] = schwarz
+            then \\ beide Kinder des Geschwisterknotens sind schwarz
+                color[w] = rot
+                x = parent[x]
+            else \\ mindestens ein Kind des Geschwisterknotens ist rot
+                if color[right[w]] = schwarz
+                then \\ nur das linke Kind des Geschwisterknotens ist schwarz
+                    color[left[w]] = schwarz
+                    color[w] = rot
+                    Rechtsrotation(T,w)
+                    w = right[parent[x]]
+                else \\ nur das rechte Kind des Geschwisterknotens ist schwarz
+                    color[w] = color[parent[x]]
+                    color[parent[x]] = schwarz
+                    color[right[w]] = schwarz
+                    Linksrotation(T, parent[x])
+                    x = root[T]
+        else
+            \\ analoger Fall
+    color[x] = schwarz
+```
+
+## Hashalgorithmen
+### Einfügen mit Offener Adressierung
+Alle Schlüssel werden in der Hashtabelle $T$ gespeichert. Zunächst wird versucht, den Schlüssel $k$ in $T[h(k)]$ einzufügen. Falls dort schon ein Schlüssel gespeichert ist, wird $T[h(k)+1]$ ausprobiert. Dies wird fortgeführt, bis der Schlüssel gespeichert wurde. Wurden alle $m$ Elemente der Hashtabelle ausprobiert, wird ein Fehler ausgegeben.
+
+```
+Einfügen(T,k)
+    i = 0
+    while i<m do
+        j = (h(k) + i) mod m
+        if T[j] < 0
+        then T[j] = k
+        else i = i+1
+    if i=m
+    then output << "Zu viele Schlüssel in der Hash-Tabelle"
+```
+
+### Suche mit Offener Adressierung
+Die Suche funktioniert analog zum Einfügen und wird abgebrochen, wenn der Schlüssel gefunden wurde, alle Zellen der Hashtabelle durchsucht oder eine leere Zelle gefunden wurde. In den letzteren Fällen ist der Schlüssel nicht gespeichert.
+
+Um zu zeigen, dass kein gültiger Wert gespeichert ist, wird in leeren Zellen $-1$ gespeichert. Dies kann man als Zustand nach der Initialisierung annehmen.
+
+```
+Suche(T,k)
+    i = 0
+    while i<m and T[j] != -1 do
+        j = (h(k) + i) mod m
+        if T[j] = k then return j
+        i = i+1
+    return -1
+```
+
+### Löschen mit Offener Adressierung
+Da die Suche nicht abbrechen darf, wenn ein Element in $T$ gelöscht wurde, muss ein anderer Wert gespeichert werden, um die Löschung zu markieren. Dazu kann man $\mathrm{DELETED}=-2$ wählen. Das zu löschende Feld muss erst gefunden werden, dann kann es gelöscht werden.
+
+```java
+Löschen(T,k)
+    i = Suche(T, k)
+    if i = -1 then return -1 \\ nicht gefunden
+    T[i] = -2
 ```
 
 # 4. wichtige Datenstrukturen
@@ -741,7 +869,80 @@ Wie bei einfachen Feldern sind der Speicherbedarf in $\mathcal O(N)$ und die Suc
 ## Graphen
 Bestehen aus _Knoten_ und _Kanten_. Kanten können _gerichtet_ sein.
 
+Es gibt auch Graphenvarianten, bei denen eine Kante nur einen Knoten mit sich selbst verbindet, ebenso welche, die mehrere Kanten zwischen Knoten erlauben.
+
 Beispielsweise das "Pageranking" von Google war ein _Graphalgorithmus_, der Google die Vorherrschaft auf dem Suchmaschinenmarkt einbrachte: Das Ranking einer Website wurde aus der Anzahl von Verweisen auf ebendiese Website ermittelt.
+
+### Wege
+Ein Weg der Länge $k$ von Knoten $u$ zu Knoten $v$ in einem Graph $G=(V,E)$ ist eine Sequenz von $k+1$ Knoten $(v_0,\dots, v_k)$ mit $u=v_0$ und $v = v_k$, die paarweise durch Kanten $(v_{i-1}, v_i)\in E$ verbunden sind (mit $k=1,\dots,k$).
+
+#### Erreichbarkeit
+$u$ ist von $v$ aus erreichbar, wenn es einen Weg von $u$ nach $v$ gibt.
+
+#### Einfachkeit
+Ein Weg heißt einfach, wenn kein Knoten mehrfach auf dem Weg vorkommt.
+
+#### Kreis
+Ein Kreis ist ein Weg $(v_0,\dots, v_k)$, bei dem Startknoten $v_0$ und Endknoten $v_k$ identisch sind $(v_0=v_k)$.
+
+Ein Kreis heißt einfach, wenn der Weg ein einfacher Weg ist, also wenn kein Knoten mehrfach auf dem Weg vorkommt.
+
+### Wald & Baum
+Ein kreisfreier ungerichteter Graph heißt Wald. Ein ungerichteter, zusammenhängender, kreisfreier Graph heißt Baum.
+
+### Nachbar
+Ein Knoten $u$ ist ein Nachbar eines Knotens $v$ in einem Graph $G=(V,E)$, wenn es eine Kante $(v,u)\in E$ gibt, die sie verbindet.
+
+### Gerichtete Graphen
+Ein gerichteter Graph ist ein Paar $(V,E)$, wobei die Knotenmenge $V$ eine endliche Größe $|V|$ hat und $E\subseteq V\times V$ die Kantenmenge des Graphen ist. Eine gerichtete Kante von $u$ nach $v$ wird als $(u,v)$ geschrieben.
+
+Ein gerichteter Graph heißt _stark zusammenhängend_, wenn es von jedem Knoten einen Weg zu jedem anderen Knoten im Graph gibt. Die _starken Zusammenhangskomponenten_ eines Graphen sind die Äquivalenzklassen der Relation "ist beidseitig erreichbar".
+
+Der _Ausgangsgrad_ eines Knotens in einem gerichteten Graph ist die Anzahl Kanten, die den Knoten verlassen. Der _Eingangsgrad_ eines Knotens in einem gerichteten Graph ist die Anzahl Kanten, die auf den Knoten zeigen.
+
+### Ungerichtete Graphen
+Ein gerichteter Graph ist ein Paar $(V,E)$, wobei die Knotenmenge $V$ eine endliche Größe $|V|$ hat und $E=\{(a, b)| a,b\in V\}$ die Menge aller Knotenpaare des Graphen ist. Kanten werden als $\{u,v\}$ geschrieben, oft wird aber auch als $(u,v)$, was dieselbe Kante wie $(v,u)$ darstellt.
+
+Ein ungerichteter Graph heißt _zusammenhängend_, wenn es von jedem Knoten einen Weg zu jedem anderen Knoten im Graph gibt. Die _Zusammenhangskomponenten_ eines Graphen sind die Äquivalenzklassen der Relation "ist erreichbar".
+
+Der _Grad_ eines Knotens $v$ in einem ungerichteten Graph ist die Anzahl Kanten, die an $v$ anliegen.
+
+Für die Adjazenzmatrix $A$ gilt $A=A^\mathrm{T}$, für die Adjazenzliste $\mathrm{Adj}$ gilt $u\in\mathrm{Adj}[v]\Leftrightarrow v\in\mathrm{Adj}[u]$.
+
+### Gewichtete Graphen
+Es gibt gewichtete und ungewichtete Graphen. Bei gewichteten Graphen haben Knoten und / oder Kanten Gewichte.
+
+Wenn ein Graph ein Straßenverkehrsnetz darstellt, können solche Gewichte beispielsweise die erlaubte Höchtgeschwindigkeit oder die Durchschnittsgeschwindigkeit sein.
+
+### Zusammenhang
+Ein gerichteter Graph heißt _stark zusammenhängend_, wenn es von jedem Knoten einen Weg zu jedem anderen Knoten im Graph gibt. Ein ungerichteter Graph heißt _zusammenhängend_, wenn es von jedem Knoten einen Weg zu jedem anderen Knoten im Graph gibt.
+
+#### Zusammenhangskomponenten
+Die _starken Zusammenhangskomponenten_ eines Graphen sind die Äquivalenzklassen der Relation "ist beidseitig erreichbar". Die _Zusammenhangskomponenten_ eines Graphen sind die Äquivalenzklassen der Relation "ist erreichbar".
+
+### Knotengrade
+Der _Ausgangsgrad_ eines Knotens in einem gerichteten Graph ist die Anzahl Kanten, die den Knoten verlassen. Der _Eingangsgrad_ eines Knotens in einem gerichteten Graph ist die Anzahl Kanten, die auf den Knoten zeigen.
+
+### Adjazenzmatrix
+Für dicht besetzte Graphen mit $|E| \lesssim |V|^2$ eignen sich Adjazenzmatrizen zur Speicherung der Knoten.
+
+Hierbei ist $A=(a_{ij})$ eine $|V|\times|V|$-Matrix. Hierbei wird für jedes Knotenpaar gespeichert, ob sie durch eine Kante verbunden sind. Bei gewichteten Graphen wird stattdessen das Gewicht $w$ gespeichert, bei ungewichteten gilt $w=1$. Bei ungerichteten Graphen gilt $A=A^\mathrm{T}$.
+
+$$
+    a_{ij} = \begin{cases}
+        w &: (i, j)\in E \\
+        0 &: (i, j)\notin E \\
+        \end{cases}
+$$
+
+### Adjazenzlisten
+Für dünn besetzte Graphen mit $|E|\ll |V|^2$ eignen sich besonders Adjazenzlisten zum Speichern der Kanten. Hierbei wird für jeden Knoten $v$ eine Liste angelegt, in der die Nachbarn von $v$ gespeichert sind.
+
+Es gibt ein Feld $\mathrm{Adj}$ mit $|V|$ einträgen, je einem pro Knoten. $\mathrm{Adj}[v]$ enthält die Knoten $u$, die mit $v$ benachbart sind. Es gibt also für jedes $u$ eine Kante $(u,v)\in E$.
+
+Für ungerichtete Graphen gilt $u\in\mathrm{Adj}[v]\Leftrightarrow v\in\mathrm{Adj}[u]$.
+
+Für gewichtete Graphen wird das Gewicht $w(u,v)$ zusammen mit dem Knoten $v$ in der Adjazenzliste $\mathrm{Adj}[u]$ von $u$ gespeichert.
 
 ## Binärbäume
 Ein Binärbaum $T$ ist eine Struktur, die auf einer endlichen Menge definiert ist. Diese Menge nennt man auch die _Knotenmenge_ des Binärbaums. Daher ist die leere Menge ein _leerer Baum_. Graphen sind eine Untergruppe der Graphen.
@@ -774,7 +975,7 @@ Suchalgorithmen brauchen die Laufzeit $\mathcal O(h)$, wobei $h$ die Höhe des B
 Die Wost-Case-Speichergröße eines binären Suchbaums ist $\Omega(n)$. Dieser Fall tritt ein, falls die Eingabewerte sortiert sind.
 
 ## Rot-Schwarz-Bäume
-Rot-Schwarz-Bäume sind balancierte binäre Suchbäume, die nach dem Speichern oder Löschen eines Knotens immer so balanciert werden, dass eine Baumhöhe von $\mathcal O(\log_2n)$ garantiert wird. Das Speichern und Löschen kann in einer Laufzeit von $\mathcal O(\log_2n)$ erfolgen, sodass alle Operationen diese Laufzeit teilen.
+Rot-Schwarz-Bäume sind balancierte binäre Suchbäume, die nach dem Speichern oder Löschen eines Knotens immer so balanciert werden, dass eine Baumhöhe von $\mathcal O(\log_2n)$ garantiert wird. Das Speichern und Löschen kann ebenso wie das Suchen in einer Laufzeit von $\mathcal O(\log_2n)$ erfolgen.
 
 Der Verbundtyp eines Knotens $k$ enthält die Elemente Farbe $\mathrm{color}[k]$ und Schlüssel $\mathrm{key}[k]$ sowie Zeiger zu dem Elternknoten $\mathrm{parent}[k]$ und den Unterbäumen $\mathrm{left}[k]$ sowie $\mathrm{right}[k]$. Zeiger auf $\mathrm{NIL}$ werden als Zeiger auf Blätter interpretiert, die leere Bäume sind.
 
@@ -811,6 +1012,37 @@ Die Tiefe eines Knotens $v$ ist die Länge eines Weges von der Wurzel zu $v$.
 
 ### Onkelknoten
 Der Onkelknoten eines Knotens $v$ mit einer Tiefe von mindestens $2$ ist das Kind von $\mathrm{parent}[\mathrm{parent}[v]]$, das nicht $\mathrm{parent}[v]$ ist.
+
+## Felder mit direkter Adressierung
+Sei $U\subset \mathbb N_0$ ein Universum der Größe $|U|$ $(U=\{1, \dots, |U|-1\})$. Dann gibt es keine doppelt vorkommenden Schlüssel und in dem Feld $T=\mathrm{new\ array}[|U|]$ derselben Größe können Werte gespeichert werden.
+
+Das Suchen, Einfügen und Löschen von Elementen der Liste funktioniert in konstanter Laufzeit $\mathcal O(1)$, da die Größe des Universums Konstant ist. Die Schlüssel für $T$ müssen dann alle aus $U$ stammen, zudem ist der Speicherbedarf $\Omega(|U|)$. Dies ist nicht sehr effizient.
+
+## Hashtabellen
+Da Felder mit direkter Adressierung einen extrem ineffizienten Speicherbedarf haben, wird stattdessen eine _Hashfunktion_ $h: U \rightarrow \{1, \dots, m-1\}$ verwendet, die das Universum $U$ auf eine Hashtabelle $T[0..m-1]$ der Größe $m$ abbildet. Für einen Schlüssel $k$ nennen wir $h(k)$ den Hashwert von $k$.
+
+### Kollisionen
+Kollisionen sind möglich, das heißt es gibt verschiedene Schlüssel $a, b$ gibt, die den selben Hashwert $h(a)=h(b)$ haben.
+
+Dies kann durch Verkettungen in Hashtabellen gelöst werden. Dabei verweist jeder Eintrag in der Hashtabelle $T$ auf eine verkette Liste, die die Schlüssel speichert.
+
+### Hashfunktionen
+Hashfunktionen werden in der Regel zufällig gewählt, weil bei einer zufälligen Wahl nur wenige Kollisionen zu erwarten sind. Allerdings benötigt die Abbildung einer vollständig zufälligen Hashfunktion viel Speicher.
+
+Deswegen wird oft eine Hashfunktion $h$ zufällig aus einer Menge geeigneter Funktionen gewählt, sodass sich die Hashfunktion ähnlich einer vollständig zufälligen Hashfunktion verhält.
+
+* Divisionsmethode: $h(k) = k \mod m$
+    * $m$ sei eine Primzahl, die nicht zu nah an einer Zweierpotenz liegt
+* Multiplikationsmethode: $\exists A\in(0,1): h(k) = \lfloor m (kA – \lfloor kA\rfloor)\rfloor$
+* Universelles Hashing: $h_{a,b}(k) = ((ak+b) \mod p) \mod m$
+    * $a\in\{1, \dots, p-1\}$ und $b\in\{0, \dots, p-1\}$ werden zufällig gewählt
+
+Die erwartete Durchschnittslaufzeit für Suchen, Einfügen und Löschen ist $\mathcal O(1+\frac{n}{m})$, wobei $n$ die Anzahl gespeicherter Schlüssel und $m$ die Größe der Hashtabelle ist.
+
+### Offener Adressierung
+Alle Schlüssel werden in der Hashtabelle $T$ gespeichert. Beim Einfügen, suchen oder löschen wird des Schlüssels wird zunächst $T[h(k)]$ ausprobiert. Falls das Element belegt ist bzw. den falschen Wert enthält, wird $T[h(k)+1]$, dann $T[h(k)+2]$ und so weiter, bis entweder alle Elemente aus $T$ ausprobiert wurden oder das entsprechende / freie Feld gefunden wurde.
+
+Ein freies Feld wird meist mit $-1$ markiert, ein gelöschtes mit $-2$. Die spezielle Markierung eines gelöschten Feldes ist notwendig, weil die Suche nicht bei einem gelöschten Element abbrechen darf, da das gesuchte Element danach folgen kann.
 
 # 5. Speicher und Datentypen
 ## Speichermodell
