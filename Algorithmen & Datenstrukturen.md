@@ -14,14 +14,14 @@ Dies ist eine _inoffizielle_ Mitschrift aus der Vorlesung zu Algorithmen & Daten
 
 # 1. Definitionen
 ## Informatik
-Informatik ist die Disziplin der automatischen Verarbeitung von Information.[^1]
+Informatik ist die Disziplin der automatischen Verarbeitung von Information.[^11]
 
-[^1]: https://gi.de/fileadmin/GI/Hauptseite/Themen/was-ist-informatik-kurz.pdf
+[^11]: https://gi.de/fileadmin/GI/Hauptseite/Themen/was-ist-informatik-kurz.pdf
 
 ## Algorithmus
-Ein Algorithmus ist eine wohldefinierte Handlungsvorschrift, die einen Wert oder eine Menge von Werten als Eingabe erhält und als Ausgabe einen Wert oder eine Menge von Werten liefert.[^2]
+Ein Algorithmus ist eine wohldefinierte Handlungsvorschrift, die einen Wert oder eine Menge von Werten als Eingabe erhält und als Ausgabe einen Wert oder eine Menge von Werten liefert.[^12]
 
-[^2]: [@AlgorithmsCormen2022]
+[^12]: [@AlgorithmsCormen2022]
 
 ## Datenstruktur
 Eine Datenstruktur ist eine Anordnung von Daten im Speicher eines Rechners, die effizienten Zugriff auf die Daten ermöglicht.
@@ -96,7 +96,6 @@ Gierige Algorithmen sind dazu gedacht, Optimierungsprobleme zu lösen. Sie löse
 
 Manchmal kann eine optimale Lösung gefunden werden, manchmal kann aber nur eine approximative Lösung gefunden werden. Üblicherweise lassen sich diese Algorithmen in polynomieller Laufzeit implementieren.
 
-
 Eine Idee zum Entwickeln kann sein, nur bestimmte Ereignisse zu überprüfen. Beispielsweise bei der Verteilung von (Zeit-)Intervallen sind nur die Zeitpunkte betrachten, zu denen mindestens ein Interval beginnt oder endet.
 
 ### Beweise
@@ -111,9 +110,9 @@ Zu einem bestimmten Zeitpunkt im Algorithmus muss gezeigt werden, dass der gieri
 ## Rekursion
 Eine rekursive Methode ruft sich selbst mit veränderten Parametern auf. Hierzu ist zu Beginn der Methode eine Abbruchbedingung notwendig, die den einfachsten Fall des Problems löst. Ansonsten kommt es zu einer Endlosrekursion.
 
-Zur Entwicklung von neuen Algorithmen ist Rekursion oft hilfreich, wenn man ein Problem auf eine kleinere Stufe desselben Problems runterbrechen kann. Allerdings sind manche rekursive Methoden ineffizient,[^3] daher sollte ein solcher Algorithmus oft verbessert / angepasst werden.
+Zur Entwicklung von neuen Algorithmen ist Rekursion oft hilfreich, wenn man ein Problem auf eine kleinere Stufe desselben Problems runterbrechen kann. Allerdings sind manche rekursive Methoden ineffizient,[^21] daher sollte ein solcher Algorithmus oft verbessert / angepasst werden.
 
-[^3]: Beispielsweise die Berechnung von Fibbonacci-Zahlen ist rekursiv extrem ineffizient, so lange keine Ergebnisse zwischengespeichert werden.
+[^21]: Beispielsweise die Berechnung von Fibbonacci-Zahlen ist rekursiv extrem ineffizient, so lange keine Ergebnisse zwischengespeichert werden.
 
 ### Laufzeit
 Die Laufzeit kann durch eine Laufzeitanalyse vorhergesagt werden.
@@ -202,7 +201,7 @@ Dazu wird wie bei der schriftlichen Multiplikation vorgegangen, wobei $A,B,C,D$ 
 Effizienter wird die Multiplikation, wenn die Identität $(A+B)(C+D)=AC+BC+AD+BD$ verwendet wird. Damit kann die Summe $BC+AD$ durch $(A+B)(C+D)-AC-BD$ ausgedrückt werden, die Werte $AC$ und $BD$ müssen ohnehin berechnet werden. Dadurch kann man sich eine Multiplikation sparen und man erhält die Laufzeit von $T(n)=3T(\frac{n}{2})+cn \in \Theta(n)$.
 
 ### Algorithmus von Strassen (Matrixmultiplikation)
-Mithilfe des Algorithmus von Strassen kann das Produkt zweier $n\times n$-Matrizen rekursiv in der Worst-Case-Laufzeit [[20230405211233]] $\mathcal O(n^2)$ [[20230531175315]] berechnet werden.
+Mithilfe des Algorithmus von Strassen kann das Produkt zweier $n\times n$-Matrizen rekursiv in der Worst-Case-Laufzeit $\mathcal O(n^2)$ berechnet werden.
 
 Dazu kann jede $n\times n$-Matrix in $4$ Teilmatrizen der Größe $\frac{n}{2}\times\frac{n}{2}$ aufteilen. Dann werden $8$ $\frac{n}{2}\times\frac{n}{2}$-Matrizen multipliziert und $4$ $\frac{n}{2}\times\frac{n}{2}$-Matrizen addiert.
 
@@ -402,9 +401,9 @@ Es gibt einen Rucksack mit begrenzter Kapazität, in den Objekte mit verschieden
 
 Dazu hat man eine Menge $M=\{1,\dots,n\}$ an Objekten, die jeweils eine Größe und einen Wert haben. Dies kann man auch durch getrennte Felder für die Werte $w_i$, die Gewichte $g_i$ und die Rucksackgröße $G$ darstellen.
 
-Dies ist ein Optimierungsproblem.[^4]
+Dies ist ein Optimierungsproblem.[^31]
 
-[^4]: siehe Kapitel _Optimierungsprobleme_
+[^31]: siehe Kapitel _Optimierungsprobleme_
 
 ### Wechselgeldrückgabe
 Ein eingegebener Centbetrag soll mit möglichst wenig Münzen zurückgegeben werden. Dies wird mit einem gierigen Algorithmus gelöst.
@@ -841,30 +840,82 @@ Löschen(T,k)
     T[i] = -2
 ```
 
+## Graphalgorithmen
+### Quadrat
+
+### Single Source Shortest Path ($\mathrm{SSSP}$)
+Gegeben seien ein Graph $G$ und ein Startknoten $s\in G$. Dann soll der Algorithmus für jeden anderen Knoten $s\neq k\in G$ den kürzesten Weg von $s$ nach $k$ berechnen. Für ungewichtete Graphen kann dies über die Breitensuche ermittelt werden.
+
+### All Pairs Shortest Path ($\mathrm{APSP}$)
+Gegeben seien ein Graph $G$. Dann soll der Algorithmus für alle Knotenpaare  $a, b\in G: a\neq b$ den kürzesten Weg von $a$ nach $b$ berechnen.
+
+### Breitensuche ($\mathrm{BFS}$)
+Sei ein Graph $G=(V,E)$ in der Adjazenzlistendarstellung dargestellt. Dann können alle von einem Startknoten $s$ ausgehenden Wege in der Worst-Case-Laufzeit $\mathrm O(|V|+|E|)$ gesucht werden.
+
+#### Technische Invariante
+Allen Knoten wird eine von $3$ Farben ($\mathrm{weiß}$, $\mathrm{grau}$, $\mathrm{schwarz}$) zugewiesen. Alle noch nicht "entdeckten" Knoten sind $\mathrm{weiß}$. Wenn $u$ schwarz ist, dann sind seine adjazenten Knoten $\mathrm{grau}$ oder $\mathrm{schwarz}$. $\mathrm{Graue}$ Knoten können auch $\mathrm{weiße}$ adjazente Knoten haben.
+
+#### Breitensuchbaum
+Dazu wird ein Breitensuchbaum $\mathrm{BFS}$ erstellt. Zu Beginn der Breitensuche enthält $B$ nur einen Knoten, den Startknoten $s=\mathrm{root}[B]$.
+
+Wird im Laufe des Algorithmus ein $\mathrm{weißer}$ Knoten $v$ entdeckt, der über die Kante $(u,v)$ entdeckt wurde, werden $(u,v)$ und $v$ dem Baum hinzugefügt. $u$ wird dabei der Vater von $v$.
+
+#### Pseudocode
+Bei der Initialisierung werdenfür jeden Knoten $u$ der Abstand $\mathrm d[u]=\infty$ zu $s$, der Vaterknoten $\pi[u]=\mathrm{pi}[u]=\mathrm{NIL}$ und die Farbe $\mathrm{color}[u]=\mathrm{weiß}$ initialisiert. Zudem wird $s$ in der Warteschlange $Q$ gespeichert.
+
+```
+BFS(G,s)
+    initialisiere BFS
+    while Q != {} do
+        u = head[Q]
+        for each v in Adj[u] do
+            if color[v] = weiß then
+                color[v] = grau
+                d[v] = d[u] + 1
+                pi[v] = u
+                enqueue(Q,v)
+        dequeue(Q)
+        color[u] = schwarz
+```
+
 # 4. wichtige Datenstrukturen
-## Einfache Felder
+## Felder
+### Einfache Felder
 Felder sind eine Datenstruktur, bei denen ein zusammenhängender Speicherblock für $N$ Elemente reserviert wird.
 
 Man kann zudem in einer Variable $n$ speichern, wie viele Elemente gespeichert wurden, um sich zu merken, an welcher Stelle das nächste Element eingefügt werden darf. Dann sind immer die ersten $n$ Elemente des Feldes verwendet.
 
 Der Speicherbedarf ist $\mathcal O(N)$, ebenso wie die Laufzeit für die Suche eines Elementes $\mathcal O(N)$ beträgt. Das Speichern und Löschen eines Elements laufen dagegen in konstanter Laufzeit $\mathcal O(1)$.
 
-## Sortierte Felder
+### Sortierte Felder
 Sortierte Felder sind eine Erweiterung von Einfachen Feldern, bei denen die Elemente in sortierter Reihenfolge gespeichert sind.
 
 Wird ein neues Elemente gespeichert, muss dies wie bei $\mathrm{InsertionSort}$ an der richtigen Position geschehen, andere Elemente müssen dazu verschoben werden. Ebenso müssen beim Löschen Elemente verschoben werden, damit nur die ersten $n$ Positionen besetzt sind.
 
 Dadurch ist der Speicherbedarf unverändert $\mathcal O(N)$. Die Suche nach einem Element erfolgt mittels $\mathrm{BinarySearch}$ in Laufzeit $\mathcal O(\log_2N)$, allerdings brauchen Speichern und Löschen dafür die Laufzeit $\mathcal O(N)$.
 
+### Felder mit direkter Adressierung
+Sei $U\subset \mathbb N_0$ ein Universum der Größe $|U|$ $(U=\{1, \dots, |U|-1\})$. Dann gibt es keine doppelt vorkommenden Schlüssel und in dem Feld $T=\mathrm{new\ array}[|U|]$ derselben Größe können Werte gespeichert werden.
+
+Das Suchen, Einfügen und Löschen von Elementen der Liste funktioniert in konstanter Laufzeit $\mathcal O(1)$, da die Größe des Universums Konstant ist. Die Schlüssel für $T$ müssen dann alle aus $U$ stammen, zudem ist der Speicherbedarf $\Omega(|U|)$. Dies ist nicht sehr effizient.
+
 ## Listen
+### Einfach verkette Liste
 Im Unterschied zu Feldern sind die Elemente einer Liste nicht in einem zusammenhängenden Speicherblock gespeichert. Deshalb müssen in jedem Listenelement Zeiger auf das nächste oder das folgende Element gespeichert werden.
 
 Ein Listenelement $x$ ist damit ein Verbunddatentyp, bestehend aus dem zu speichernden Schlüssel $\mathrm{key}[x]$ sowie Zeiger auf das vorherige Element $\mathrm{prev}[x]$ und / oder das folgende Element $\mathrm{next}[x]$. Zudem wird der Zeiger auf das erste Element der Liste in $\mathrm{head}[L]$ gespeichert. Wenn es keinen Vorgänger bzw. Nachfolger gibt, wird $\mathrm{NIL}$ in dem entsprechenden Zeiger gespeichert.
 
-### Doppelt Verkettete Listen
+### Doppelt verkettete Liste
 Bei doppelt verketteten Listen werden sowohl Vorgänger als auch Nachfolger eines Elementes $x$ in $x$ gespeichert.
 
 Wie bei einfachen Feldern sind der Speicherbedarf in $\mathcal O(N)$ und die Suche in $\mathcal O(N)$, das Speichern oder Löschen in konstanter Laufzeit $\mathcal O(1)$. Allerdings ist die Suche deutlich länger, da für jedes Element nicht nur ein Index erhöht wird, sondern jedes nachfolgende Element einzeln ermittelt werden muss.
+
+### (Warte-)Schlange (Queue)
+Bei einer Warteschlange $Q$ werden neue Elemente am Ende angefügt, während die Elemente vom Anfang ausgehend bearbeitet werden. Sie fällt in die Gruppe der _FIFO_-Speicher[^41]. Dies kann durch eine (doppelt) verkettete Liste dargestellt werden.
+
+$\mathrm{head}[Q$ verweist auf das vorderste Element von $Q$, $\mathrm{tail}[Q]$ auf das Ende. Die Operation $\mathrm{dequeue}(Q)$ entfernt das erste Element aus $Q$ und gibt es dann zurück, die Operation $\mathrm{enqueue}(Q, x)$ fügt das Element $x$ am Ende von $Q$ an.
+
+[^41]: FIFO: first in, first out
 
 ## Graphen
 Bestehen aus _Knoten_ und _Kanten_. Kanten können _gerichtet_ sein.
@@ -887,7 +938,7 @@ Ein Kreis ist ein Weg $(v_0,\dots, v_k)$, bei dem Startknoten $v_0$ und Endknote
 
 Ein Kreis heißt einfach, wenn der Weg ein einfacher Weg ist, also wenn kein Knoten mehrfach auf dem Weg vorkommt.
 
-### Wald & Baum
+### Wald & Bäume
 Ein kreisfreier ungerichteter Graph heißt Wald. Ein ungerichteter, zusammenhängender, kreisfreier Graph heißt Baum.
 
 ### Nachbar
@@ -944,19 +995,37 @@ Für ungerichtete Graphen gilt $u\in\mathrm{Adj}[v]\Leftrightarrow v\in\mathrm{A
 
 Für gewichtete Graphen wird das Gewicht $w(u,v)$ zusammen mit dem Knoten $v$ in der Adjazenzliste $\mathrm{Adj}[u]$ von $u$ gespeichert.
 
-## Binärbäume
+## Bäume
+Ein Baum ist ungerichteter, zusammenhängender und kreisfreier Graph.
+
+### Baumhöhe
+Die Höhe eines Baums mit Wurzel $v$ ist die Anzahl Kanten des längsten einfachen Weges von der Wurzel zu einem Blatt.
+
+Ein Binärbaum der Höhe $h$ hat maximal $2^{h+1}+1$, aber mindestens $\lfloor\log_2n\rfloor$ Knoten.
+
+### Rotationen
+Rotationen können die Struktur von Suchbäumen verändern und gleichzeitig die Suchbaumeigenschaft aufrecht erhalten. Sie werden dazu genutzt, Suchbäume zu balancieren.
+
+Sei $p$ ein Knoten in einem Rot-Schwarz-Baum mit $\mathrm{left}[p]=l$ und $\mathrm{right}[p]=r$.
+
+Dann verschiebt eine Rechtsrotation die Struktur nach rechts, sodass $l$ die Position von $p$ einnimmt und $p=\mathrm{right}[l]$ wird. Eine Linksrotation verschiebt die Struktur nach links, sodass $r$ die Position von $p$ einnimmt und $p=\mathrm{left}[r]$ wird.
+
+Anders formuliert wirkt eine Rechtsrotation rechts herum im Uhrzeigersinn, und eine Linksrotation links herum gegen den Uhrzeigersinn.
+
+### Onkelknoten
+Der Onkelknoten eines Knotens $v$ mit einer Tiefe von mindestens $2$ ist das Kind von $\mathrm{parent}[\mathrm{parent}[v]]$, das nicht $\mathrm{parent}[v]$ ist.
+
+### Tiefe eines Knotens
+Die Tiefe eines Knotens $v$ ist die Länge eines Weges von der Wurzel zu $v$.
+
+### Binärbäume
 Ein Binärbaum $T$ ist eine Struktur, die auf einer endlichen Menge definiert ist. Diese Menge nennt man auch die _Knotenmenge_ des Binärbaums. Daher ist die leere Menge ein _leerer Baum_. Graphen sind eine Untergruppe der Graphen.
 
 Ein Binärbaum ist ein Tripel $(v, T_1, T_2)$, wobei $T_1$ und $T_2$ wiederum Binärbäume mit disjunkten Knotenmengen $V_1$ und $V_2$ sind und $v\notin V_1\cup V_2$ Wurzelknoten heißt. Die Knotenmenge des Baums ist dann ${v}\cup V_1 \cup V_2$. $T_1$ heißt linker Unterbaum von $v$ und $T_2$ heißt rechter Unterbaum von $v$. Blattknoten sind die Knoten, deren Unterbäume leer sind. Der Wurzelknoten ist der einzige Knoten, der keine Elternknoten hat.
 
 Ein Knoten $v$ ist ein Verbundobjekt aus dem Schlüssel $\mathrm{key}[v]$ sowie Zeigern auf den Elternknoten $\mathrm{parent}[v]$, den linken Unterbaum $\mathrm{left}[v]$ und den rechten Unterbaum $\mathrm{right}[v]$. Zudem gibt es einen Zeiger $\mathrm{root}[T]$, der auf den Wurzelknoten des Baumes $T$ zeigt.
 
-### Baumhöhe
-Die Höhe eines Binärbaums mit Wurzel $v$ ist die Anzahl Kanten des längsten einfachen Weges von der Wurzel zu einem Blatt.
-
-Ein Binärbaum der Höhe $h$ hat maximal $2^{h+1}+1$, aber mindestens $\lfloor\log_2n\rfloor$ Knoten.
-
-## Binäre Suchbäume
+### Binäre Suchbäume
 In einem binären Suchbaum werden die Schlüssel sortiert in einem Binärbaum gespeichert.
 
 Seien $y$ ein Knoten in einem binären Suchbaum und $x$ der Elternknoten von $y$. Wenn $\mathrm{key}[y]>\mathrm{key}[x]$, dann ist $y$ der rechte Unterbaum, ansonsten ist er der linke Unterbaum.
@@ -974,7 +1043,7 @@ Suchalgorithmen brauchen die Laufzeit $\mathcal O(h)$, wobei $h$ die Höhe des B
 
 Die Wost-Case-Speichergröße eines binären Suchbaums ist $\Omega(n)$. Dieser Fall tritt ein, falls die Eingabewerte sortiert sind.
 
-## Rot-Schwarz-Bäume
+### Rot-Schwarz-Bäume
 Rot-Schwarz-Bäume sind balancierte binäre Suchbäume, die nach dem Speichern oder Löschen eines Knotens immer so balanciert werden, dass eine Baumhöhe von $\mathcal O(\log_2n)$ garantiert wird. Das Speichern und Löschen kann ebenso wie das Suchen in einer Laufzeit von $\mathcal O(\log_2n)$ erfolgen.
 
 Der Verbundtyp eines Knotens $k$ enthält die Elemente Farbe $\mathrm{color}[k]$ und Schlüssel $\mathrm{key}[k]$ sowie Zeiger zu dem Elternknoten $\mathrm{parent}[k]$ und den Unterbäumen $\mathrm{left}[k]$ sowie $\mathrm{right}[k]$. Zeiger auf $\mathrm{NIL}$ werden als Zeiger auf Blätter interpretiert, die leere Bäume sind.
@@ -983,40 +1052,20 @@ Der Verbundtyp eines Knotens $k$ enthält die Elemente Farbe $\mathrm{color}[k]$
 
 In Darstellungen wird üblicherweise auf die $\mathrm{NIL}$-Einträge verzichtet.
 
-### Die Rot-Schwarz-Eigenschaft
+#### Die Rot-Schwarz-Eigenschaft
 Jeder Knoten ist entweder rot oder schwarz, die Wurzel und alle Blätter sind schwarz, ebenso alle Kinder eines roten Knotens. Zudem haben alle Pfade von einem beliebigen Knoten zu den Blätter dieselbe Anzahl an schwarzen Knoten.
 
 Da keine zwei aufeinanderfolgende Knoten in einem Suchpfad rot sein dürfen und alle Pfade zu einem Blatt gleich viele schwarze Knoten haben, hat der Baum eine logarithmische Höhe.
 
 Es gibt nach dem Einfügen oder Löschen eines Knotens zwei Bedingungen, die verletzt sein können. Deshalb muss der Baum neu balanciert werden. Dabei kann die Wurzel rot sein oder es kann ein roter Knoten ein rotes Kind haben.
 
-### Der $\mathrm{NIL}$-Knoten
+#### Der $\mathrm{NIL}$-Knoten
 Zur Implementierung ist es sinnvoll, einen besonderen Knoten zu definieren. Dieser Knoten heißt $\mathrm{NIL}[T]$ und hat alle Werte auf $\mathrm{NIL}$ gesetzt. Nur $\mathrm{key}[\mathrm{NIL}[T]]$ darf $0$ sein und somit davon abweichen. Dann werden alle Verweise in Bäumen, die $\mathrm{NIL}$ wären, auf den $\mathrm{NIL}$-Knoten gesetzt. Im obigen Beispiel zeigen demnach die Knoten $2$, $6$ und $9$ je zweimal ($\mathrm{left}$ und $\mathrm{right}$) auf $\mathrm{NIL}[T]$. In Darstellungen wird $\mathrm{NIL}[T]$ normalerweise nicht gezeichnet.
 
-### Die Schwarzhöhe
+#### Die Schwarzhöhe
 Die Schwarzhöhe $\mathrm{sh}(v)$ eines Knotens $v$ in einem Rot-Schwarz-Baum ist die Anzahl der schwarzen Knoten ohne Knoten $v$ auf einem Pfad von $v$ zum Knoten $\mathrm{NIL}[T]$. Hierbei wird $\mathrm{NIL}[T]$ mitgezählt, falls $v\neq \mathrm{NIL}[T]$.
 
 Ein Unterbaum mit der Wurzel $v$ eines Rot-Schwarz-Baums hat mindestens $2^{\mathrm{sh}(v) - 1}$ interne Knoten.
-
-### Rotationen
-Rotationen können die Struktur von Suchbäumen verändern und gleichzeitig die Suchbaumeigenschaft aufrecht erhalten. Sie werden dazu genutzt, Suchbäume zu balancieren.
-
-Sei $p$ ein Knoten in einem Rot-Schwarz-Baum mit $\mathrm{left}[p]=l$ und $\mathrm{right}[p]=r$.
-
-Dann verschiebt eine Rechtsrotation die Struktur nach rechts, sodass $l$ die Position von $p$ einnimmt und $p=\mathrm{right}[l]$ wird. Eine Linksrotation verschiebt die Struktur nach links, sodass $r$ die Position von $p$ einnimmt und $p=\mathrm{left}[r]$ wird.
-
-Anders formuliert wirkt eine Rechtsrotation rechts herum im Uhrzeigersinn, und eine Linksrotation links herum gegen den Uhrzeigersinn.
-
-### Tiefe eines Knotens
-Die Tiefe eines Knotens $v$ ist die Länge eines Weges von der Wurzel zu $v$.
-
-### Onkelknoten
-Der Onkelknoten eines Knotens $v$ mit einer Tiefe von mindestens $2$ ist das Kind von $\mathrm{parent}[\mathrm{parent}[v]]$, das nicht $\mathrm{parent}[v]$ ist.
-
-## Felder mit direkter Adressierung
-Sei $U\subset \mathbb N_0$ ein Universum der Größe $|U|$ $(U=\{1, \dots, |U|-1\})$. Dann gibt es keine doppelt vorkommenden Schlüssel und in dem Feld $T=\mathrm{new\ array}[|U|]$ derselben Größe können Werte gespeichert werden.
-
-Das Suchen, Einfügen und Löschen von Elementen der Liste funktioniert in konstanter Laufzeit $\mathcal O(1)$, da die Größe des Universums Konstant ist. Die Schlüssel für $T$ müssen dann alle aus $U$ stammen, zudem ist der Speicherbedarf $\Omega(|U|)$. Dies ist nicht sehr effizient.
 
 ## Hashtabellen
 Da Felder mit direkter Adressierung einen extrem ineffizienten Speicherbedarf haben, wird stattdessen eine _Hashfunktion_ $h: U \rightarrow \{1, \dots, m-1\}$ verwendet, die das Universum $U$ auf eine Hashtabelle $T[0..m-1]$ der Größe $m$ abbildet. Für einen Schlüssel $k$ nennen wir $h(k)$ den Hashwert von $k$.
@@ -1039,7 +1088,7 @@ Deswegen wird oft eine Hashfunktion $h$ zufällig aus einer Menge geeigneter Fun
 
 Die erwartete Durchschnittslaufzeit für Suchen, Einfügen und Löschen ist $\mathcal O(1+\frac{n}{m})$, wobei $n$ die Anzahl gespeicherter Schlüssel und $m$ die Größe der Hashtabelle ist.
 
-### Offener Adressierung
+### Offene Adressierung
 Alle Schlüssel werden in der Hashtabelle $T$ gespeichert. Beim Einfügen, suchen oder löschen wird des Schlüssels wird zunächst $T[h(k)]$ ausprobiert. Falls das Element belegt ist bzw. den falschen Wert enthält, wird $T[h(k)+1]$, dann $T[h(k)+2]$ und so weiter, bis entweder alle Elemente aus $T$ ausprobiert wurden oder das entsprechende / freie Feld gefunden wurde.
 
 Ein freies Feld wird meist mit $-1$ markiert, ein gelöschtes mit $-2$. Die spezielle Markierung eines gelöschten Feldes ist notwendig, weil die Suche nicht bei einem gelöschten Element abbrechen darf, da das gesuchte Element danach folgen kann.
@@ -1250,7 +1299,7 @@ Dies ist der Standard, normalerweise ist diese Analyse gemeint, wenn man von "La
 Die Worst-Case Laufzeit $T(n) = \mathrm{avg}[\text{Laufzeit}]$ ist die längste Laufzeit für alle möglichen Eingaben der Größe $n$. Allerdings benötigt diese Betrachtung eine Definition von "Durschschnittlich", also auch eine Wahrscheinlichkeitsverteilung von Eingabegrößen. Daher wird sie i.A. nicht verwendet.
 
 ## Master-Theorem
-Seien $a\ge 1$ und $b\ge 1$ ganzzahlige Konstanten und $f: \mathbb N\rightarrow \mathbb N$ eine Funktion auf natürlichen Zahlen. Sei die Laufzeit [[20230405210837]] $T(n)$ durch folgende rekursive Gleichung beschrieben. [[20230424184614]]
+Seien $a\ge 1$ und $b\ge 1$ ganzzahlige Konstanten und $f: \mathbb N\rightarrow \mathbb N$ eine Funktion auf natürlichen Zahlen. Sei die Laufzeit $T(n)$ durch folgende rekursive Gleichung beschrieben.
 
 $$
     T(n) \le
@@ -1290,7 +1339,7 @@ Die folgenen Erklärungen sind nicht zwangsweise mathematisch korrekt, daher sin
 3. Der Aufwand $f(n)$ _sinkt_ in jeder Rekursionsebene (abhängig von $n$). Hier fließt in jeder Rekursionsebene $a$ als dominanter Faktor ein, daher dominiert insgesamt $a^T$.
 
 ### Alternative Formulierung
-Es gibt noch andere Formulierungen. Die folgende Formulierung ist gängiger.[^5]
+Es gibt noch andere Formulierungen. Die folgende Formulierung ist gängiger.[^71]
 Seien $a\ge 1$ und $b\ge 1$ ganzzahlige Konstanten und $f: \mathbb N\rightarrow \mathbb N$. Gelte weiterhin für die Laufzeit $T(n)$:
 $$
     T(n) \le
@@ -1317,7 +1366,7 @@ $$
 \end{aligned}
 $$
 
-[^5]: _Theorem 4.1_ [@AlgorithmsCormen2022, p. 103]
+[^71]: _Theorem 4.1_ [@AlgorithmsCormen2022, p. 103]
 
 # 8. Landau-Notation
 Die detaillierte Laufzeitanalyse hat einige Schwachstellen: Konstante Faktoren werden durch Hardware und Software beeinflusst, die außerhalb des Algorithmus liegen. Zudem ist die Notation fehleranfällig und kompliziert.
@@ -1448,14 +1497,14 @@ Sei $A(n)$ eine Aussage über den Zustand des Algorithmus vor dem $n$-ten Eintri
 
 Der Beweis für die Korrektheit erfolgt über Vollständige Induktion. Hierbei ist wesentlich, auf den (Pseudo-)Code einzugehen, d.h. was in welcher Zeile gemacht wird.
 
-Für _for_-Schleifen werden hierbei folgende Annahmen getroffen:[^6]
+Für _for_-Schleifen werden hierbei folgende Annahmen getroffen:[^91]
 * Die Laufvariable $i$ wird am Ende des Schleifenrumpfs erhöht.
 * Zur Initialisierung wird die Laufvariable $i$ auf den Startwert gesetzt.
 * Die Invariante kann von dem Laufparameter $i$ abhängen.
 
 Lemma: $A(i)$ ist eine korrekte Schleifeninvariante.
 
-[^6]: siehe Pseudocode/for-Schleife
+[^91]: siehe Pseudocode/for-Schleife
 
 ### Rekursion
 * Der Rekursionsabbruch entspricht dem Anfang der Vollständigen Induktion.

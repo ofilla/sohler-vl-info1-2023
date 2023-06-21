@@ -14,14 +14,14 @@ Dies ist eine _inoffizielle_ Mitschrift aus der Vorlesung zu Algorithmen & Daten
 
 # 1. Definitionen
 ## Informatik
-Informatik ist die Disziplin der automatischen Verarbeitung von Information.[^1]
+Informatik ist die Disziplin der automatischen Verarbeitung von Information.[^11]
 
-[^1]: https://gi.de/fileadmin/GI/Hauptseite/Themen/was-ist-informatik-kurz.pdf
+[^11]: https://gi.de/fileadmin/GI/Hauptseite/Themen/was-ist-informatik-kurz.pdf
 
 ## Algorithmus
-Ein Algorithmus ist eine wohldefinierte Handlungsvorschrift, die einen Wert oder eine Menge von Werten als Eingabe erhält und als Ausgabe einen Wert oder eine Menge von Werten liefert.[^2]
+Ein Algorithmus ist eine wohldefinierte Handlungsvorschrift, die einen Wert oder eine Menge von Werten als Eingabe erhält und als Ausgabe einen Wert oder eine Menge von Werten liefert.[^12]
 
-[^2]: [@AlgorithmsCormen2022]
+[^12]: [@AlgorithmsCormen2022]
 
 ## Datenstruktur
 Eine Datenstruktur ist eine Anordnung von Daten im Speicher eines Rechners, die effizienten Zugriff auf die Daten ermöglicht.

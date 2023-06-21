@@ -14,7 +14,7 @@ Dies ist der Standard, normalerweise ist diese Analyse gemeint, wenn man von "La
 Die Worst-Case Laufzeit $T(n) = \mathrm{avg}[\text{Laufzeit}]$ ist die längste Laufzeit für alle möglichen Eingaben der Größe $n$. Allerdings benötigt diese Betrachtung eine Definition von "Durschschnittlich", also auch eine Wahrscheinlichkeitsverteilung von Eingabegrößen. Daher wird sie i.A. nicht verwendet.
 
 ## Master-Theorem
-Seien $a\ge 1$ und $b\ge 1$ ganzzahlige Konstanten und $f: \mathbb N\rightarrow \mathbb N$ eine Funktion auf natürlichen Zahlen. Sei die Laufzeit [[20230405210837]] $T(n)$ durch folgende rekursive Gleichung beschrieben. [[20230424184614]]
+Seien $a\ge 1$ und $b\ge 1$ ganzzahlige Konstanten und $f: \mathbb N\rightarrow \mathbb N$ eine Funktion auf natürlichen Zahlen. Sei die Laufzeit $T(n)$ durch folgende rekursive Gleichung beschrieben.
 
 $$
     T(n) \le
@@ -54,7 +54,7 @@ Die folgenen Erklärungen sind nicht zwangsweise mathematisch korrekt, daher sin
 3. Der Aufwand $f(n)$ _sinkt_ in jeder Rekursionsebene (abhängig von $n$). Hier fließt in jeder Rekursionsebene $a$ als dominanter Faktor ein, daher dominiert insgesamt $a^T$.
 
 ### Alternative Formulierung
-Es gibt noch andere Formulierungen. Die folgende Formulierung ist gängiger.[^5]
+Es gibt noch andere Formulierungen. Die folgende Formulierung ist gängiger.[^71]
 Seien $a\ge 1$ und $b\ge 1$ ganzzahlige Konstanten und $f: \mathbb N\rightarrow \mathbb N$. Gelte weiterhin für die Laufzeit $T(n)$:
 $$
     T(n) \le
@@ -81,5 +81,5 @@ $$
 \end{aligned}
 $$
 
-[^5]: _Theorem 4.1_ [@AlgorithmsCormen2022, p. 103]
+[^71]: _Theorem 4.1_ [@AlgorithmsCormen2022, p. 103]
 

@@ -66,7 +66,7 @@ Dazu wird wie bei der schriftlichen Multiplikation vorgegangen, wobei $A,B,C,D$ 
 Effizienter wird die Multiplikation, wenn die Identität $(A+B)(C+D)=AC+BC+AD+BD$ verwendet wird. Damit kann die Summe $BC+AD$ durch $(A+B)(C+D)-AC-BD$ ausgedrückt werden, die Werte $AC$ und $BD$ müssen ohnehin berechnet werden. Dadurch kann man sich eine Multiplikation sparen und man erhält die Laufzeit von $T(n)=3T(\frac{n}{2})+cn \in \Theta(n)$.
 
 ### Algorithmus von Strassen (Matrixmultiplikation)
-Mithilfe des Algorithmus von Strassen kann das Produkt zweier $n\times n$-Matrizen rekursiv in der Worst-Case-Laufzeit [[20230405211233]] $\mathcal O(n^2)$ [[20230531175315]] berechnet werden.
+Mithilfe des Algorithmus von Strassen kann das Produkt zweier $n\times n$-Matrizen rekursiv in der Worst-Case-Laufzeit $\mathcal O(n^2)$ berechnet werden.
 
 Dazu kann jede $n\times n$-Matrix in $4$ Teilmatrizen der Größe $\frac{n}{2}\times\frac{n}{2}$ aufteilen. Dann werden $8$ $\frac{n}{2}\times\frac{n}{2}$-Matrizen multipliziert und $4$ $\frac{n}{2}\times\frac{n}{2}$-Matrizen addiert.
 
@@ -266,9 +266,9 @@ Es gibt einen Rucksack mit begrenzter Kapazität, in den Objekte mit verschieden
 
 Dazu hat man eine Menge $M=\{1,\dots,n\}$ an Objekten, die jeweils eine Größe und einen Wert haben. Dies kann man auch durch getrennte Felder für die Werte $w_i$, die Gewichte $g_i$ und die Rucksackgröße $G$ darstellen.
 
-Dies ist ein Optimierungsproblem.[^4]
+Dies ist ein Optimierungsproblem.[^31]
 
-[^4]: siehe Kapitel _Optimierungsprobleme_
+[^31]: siehe Kapitel _Optimierungsprobleme_
 
 ### Wechselgeldrückgabe
 Ein eingegebener Centbetrag soll mit möglichst wenig Münzen zurückgegeben werden. Dies wird mit einem gierigen Algorithmus gelöst.
@@ -703,5 +703,43 @@ Löschen(T,k)
     i = Suche(T, k)
     if i = -1 then return -1 \\ nicht gefunden
     T[i] = -2
+```
+
+## Graphalgorithmen
+### Quadrat
+
+### Single Source Shortest Path ($\mathrm{SSSP}$)
+Gegeben seien ein Graph $G$ und ein Startknoten $s\in G$. Dann soll der Algorithmus für jeden anderen Knoten $s\neq k\in G$ den kürzesten Weg von $s$ nach $k$ berechnen. Für ungewichtete Graphen kann dies über die Breitensuche ermittelt werden.
+
+### All Pairs Shortest Path ($\mathrm{APSP}$)
+Gegeben seien ein Graph $G$. Dann soll der Algorithmus für alle Knotenpaare  $a, b\in G: a\neq b$ den kürzesten Weg von $a$ nach $b$ berechnen.
+
+### Breitensuche ($\mathrm{BFS}$)
+Sei ein Graph $G=(V,E)$ in der Adjazenzlistendarstellung dargestellt. Dann können alle von einem Startknoten $s$ ausgehenden Wege in der Worst-Case-Laufzeit $\mathrm O(|V|+|E|)$ gesucht werden.
+
+#### Technische Invariante
+Allen Knoten wird eine von $3$ Farben ($\mathrm{weiß}$, $\mathrm{grau}$, $\mathrm{schwarz}$) zugewiesen. Alle noch nicht "entdeckten" Knoten sind $\mathrm{weiß}$. Wenn $u$ schwarz ist, dann sind seine adjazenten Knoten $\mathrm{grau}$ oder $\mathrm{schwarz}$. $\mathrm{Graue}$ Knoten können auch $\mathrm{weiße}$ adjazente Knoten haben.
+
+#### Breitensuchbaum
+Dazu wird ein Breitensuchbaum $\mathrm{BFS}$ erstellt. Zu Beginn der Breitensuche enthält $B$ nur einen Knoten, den Startknoten $s=\mathrm{root}[B]$.
+
+Wird im Laufe des Algorithmus ein $\mathrm{weißer}$ Knoten $v$ entdeckt, der über die Kante $(u,v)$ entdeckt wurde, werden $(u,v)$ und $v$ dem Baum hinzugefügt. $u$ wird dabei der Vater von $v$.
+
+#### Pseudocode
+Bei der Initialisierung werdenfür jeden Knoten $u$ der Abstand $\mathrm d[u]=\infty$ zu $s$, der Vaterknoten $\pi[u]=\mathrm{pi}[u]=\mathrm{NIL}$ und die Farbe $\mathrm{color}[u]=\mathrm{weiß}$ initialisiert. Zudem wird $s$ in der Warteschlange $Q$ gespeichert.
+
+```
+BFS(G,s)
+    initialisiere BFS
+    while Q != {} do
+        u = head[Q]
+        for each v in Adj[u] do
+            if color[v] = weiß then
+                color[v] = grau
+                d[v] = d[u] + 1
+                pi[v] = u
+                enqueue(Q,v)
+        dequeue(Q)
+        color[u] = schwarz
 ```
 

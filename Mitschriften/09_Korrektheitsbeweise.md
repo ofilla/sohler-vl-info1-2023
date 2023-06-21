@@ -23,14 +23,14 @@ Sei $A(n)$ eine Aussage über den Zustand des Algorithmus vor dem $n$-ten Eintri
 
 Der Beweis für die Korrektheit erfolgt über Vollständige Induktion. Hierbei ist wesentlich, auf den (Pseudo-)Code einzugehen, d.h. was in welcher Zeile gemacht wird.
 
-Für _for_-Schleifen werden hierbei folgende Annahmen getroffen:[^6]
+Für _for_-Schleifen werden hierbei folgende Annahmen getroffen:[^91]
 * Die Laufvariable $i$ wird am Ende des Schleifenrumpfs erhöht.
 * Zur Initialisierung wird die Laufvariable $i$ auf den Startwert gesetzt.
 * Die Invariante kann von dem Laufparameter $i$ abhängen.
 
 Lemma: $A(i)$ ist eine korrekte Schleifeninvariante.
 
-[^6]: siehe Pseudocode/for-Schleife
+[^91]: siehe Pseudocode/for-Schleife
 
 ### Rekursion
 * Der Rekursionsabbruch entspricht dem Anfang der Vollständigen Induktion.
