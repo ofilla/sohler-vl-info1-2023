@@ -692,24 +692,24 @@ RSEinfügenFix(T,z)
             y = right[parent[parent[z]]] \\ Onkel von z
 
             if color[y] = rot then \\ Onkel ist rot
-                color[parent[z]] = schwarz \\ Vater
-                color[y] = schwarz \\ Onkel
-                color[parent[parent[z]]] = rot \\ Großvater
+                \\ schiebe rote "Ebene" eine Stufe höher
+                color[parent[z]] = schwarz
+                color[y] = schwarz
+                color[parent[parent[z]]] = rot
                 \\ prüfe beim Großvater weiter
                 z = parent[parent[z]]
-            else
+            else \\ Onkel schwarz
                 if z = right[parent[z]] then
-                    \\ Onkel schwarz und parent[z] rechter Knoten
-                    z = parent[z]
-                    Linksrotation(T,z)
+                    \\ parent[z] rechter Knoten
+                    Linksrotation(T, parent[z])
                     \\ prüfe beim Vater weiter
-                else
-                    \\ Onkel schwarz, z und parent[z] linker Knoten
+                    z = parent[z]
+                else \\ z und parent[z] linke Knoten
                     color[parent[z]] = schwarz
                     color[parent[parent[z]]] = rot
                     Rechtsrotation(T, parent[parent[z]])
         else
-            \\ analog (Übung)
+            \\ analog
     color[root[T]] = schwarz
 ```
 
@@ -755,7 +755,7 @@ Die Struktur des Rot-Schwarz-Baumes $T$ wird nach dem Löschen eines Knotens $z$
 Die Rot-Schwarz-Eigenschaft kann verletzt worden sein, wenn $z$ schwarz ist, denn dann kann es sein, dass nach dem Löschen zwei rote Knoten aufeinanderfolgen.
 
 ##### Fallunterscheidung
-Wenn der Knoten $x$, der Knoten $z$ ersetzt, rot ist, muss $x$ nur schwarz gefärbt werden um den Baum zu reparieren. Sei $x$ schwarz, dann gibt es folgende Fälle.
+Wenn der Knoten $x$, der den Knoten $z$ ersetzt, rot ist, muss $x$ nur schwarz gefärbt werden um den Baum zu reparieren. Sei $x$ schwarz, dann gibt es folgende Fälle.
 
 1. Der Geschwisterknoten von $x$ ist rot, dann muss nur $x$ schwarz gefärbt werden.
 2. Der Geschwisterknoten $w$ von $x$ und beide Kinder von $w$ sind schwarz.
