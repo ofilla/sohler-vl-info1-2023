@@ -6,6 +6,7 @@
 \tikzset{level distance=2em}
 \tikzset{level 1/.style = {sibling distance = 5cm}}
 \tikzset{level 2/.style = {sibling distance = 2.5cm}}
+\tikzset{level 3/.style = {sibling distance = 1cm}}
 \tikzset{every node/.style={draw,circle}}
 \tikzset{blank/.style={draw=none}}
 
@@ -18,12 +19,20 @@
         child {
             node {5}
             child {node[style={draw,rectangle}]{NIL}}
-            child {node {19}}
+            child {
+                node {19}
+                child {node[style={draw,rectangle}]{NIL}}
+                child {node[style={draw,rectangle}]{NIL}}
+            }
         }
     }
     child {
         node {87}
-        child {node {65}}
+        child {
+            node {65}
+            child {node[style={draw,rectangle}]{NIL}}
+            child {node[style={draw,rectangle}]{NIL}}
+        }
         child {node[style={draw,rectangle}]{NIL}}
     };
 \end{tikzpicture}
