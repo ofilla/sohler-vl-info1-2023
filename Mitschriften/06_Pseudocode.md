@@ -13,6 +13,7 @@
 
 ## Verbunddatentypen
 Laufzeit der Initialisierung: entspricht reserviertem Speicherplatz
+
 ```
 Verbund list_item:
     previous
@@ -34,28 +35,33 @@ Laufzeit der Initialisierung: entspricht reserviertem Speicherplatz
 ## Zuweisung
 ### Typ 1
 Es wird eine Kopie von `Y` in `X` gespeichert. Variablen müssen definiert sein.
+
 ```
 X = Y
 ```
 ### Typ 2
 Ein _konstant großer_ mathematischer Ausdruck wird in `X` gespeichert. Variablen müssen definiert sein.
+
 ```
 X = 10
 Y = 2
 X = X*Y
 ```
+
 Nicht konstant groß ist z.B. $\sum_{i=1}^N i$. Dies hätte Laufzeit $N$.
 Die Summe $\sum_{i=1}^8 i$ ist dagegen konstant groß.
 Ggf. wird eine Variable 
 
 ## Bedingte Verzweigungen
 _lazy evaluation_: Bei _UND_-Verknüpfungen wird nach dem ersten _False_-Ergebnis abgebrochen.
+
 ```
 X = 10
 Y = 20
 if X > Y then output << Y
 else output << X
 ```
+
 ## Schleifen
 ### for
 Annahmen:
@@ -86,6 +92,7 @@ output << j  \* 1 \*
 
 ### while
 Der Schleifenrumpf kann $0$-mal durchlaufen werden.
+
 ```
 i=n  \* 1 \*
 j=0  \* 1 \*
@@ -94,8 +101,10 @@ while i>0 do  \* n+1 \*
     i=i-1  \* n \*
 output << j  \* 1 \*
 ```
+
 ### repeat
 Der Schleifenkörper wird mindestens $1$-mal durchlaufen
+
 ```
 i=n  \* 1 \*
 j=0  \* 1 \*

@@ -48,8 +48,7 @@ $$
     \}
 $$
 
-* Diese Definition kann in konstruierten Fällen zu ungewünschten Aussagen führen!
-    * z.B. $g(1,m) = m^2$ und $\forall n>1: g(n,m)=m$
+Diese Definition kann in konstruierten Fällen zu ungewünschten Aussagen führen, beispielsweise falls $g(1,m) = m^2$ und $\forall n>1: g(n,m)=m$.
 
 ## $\Omega$-Notation
 Die $\Omega$-Notation liefert eine _untere Schranke_ für die Laufzeit.

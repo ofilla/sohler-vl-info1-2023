@@ -32,7 +32,6 @@ Weiterhin gilt:
 3. $\forall i>1,g[i]>j: \mathrm{Opt}(i,j) = \mathrm{Opt}(i-1,j)$
 4. $\forall i>1, g[i]\le j: \mathrm{Opt}(i,j) = \max\{\mathrm{Opt}(i-1,j), w[i] + \mathrm{Opt}(i-1,j-g[i])\}$
 
-
 ## Methode: Dynamische Programmierung
 Dynamische Programmierung kann genutzt werden, um Optimierungsprobleme zu lösen
 

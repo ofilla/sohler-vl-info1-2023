@@ -33,7 +33,7 @@ Wie bei einfachen Feldern sind der Speicherbedarf in $\mathcal O(N)$ und die Suc
 ### (Warte-)Schlange (Queue)
 Bei einer Warteschlange $Q$ werden neue Elemente am Ende angefügt, während die Elemente vom Anfang ausgehend bearbeitet werden. Sie fällt in die Gruppe der _FIFO_-Speicher[^41]. Dies kann durch eine (doppelt) verkettete Liste dargestellt werden.
 
-$\mathrm{head}[Q$ verweist auf das vorderste Element von $Q$, $\mathrm{tail}[Q]$ auf das Ende. Die Operation $\mathrm{dequeue}(Q)$ entfernt das erste Element aus $Q$ und gibt es dann zurück, die Operation $\mathrm{enqueue}(Q, x)$ fügt das Element $x$ am Ende von $Q$ an.
+$\mathrm{head}[Q]$ verweist auf das vorderste Element von $Q$, $\mathrm{tail}[Q]$ auf das Ende. Die Operation $\mathrm{dequeue}(Q)$ entfernt das erste Element aus $Q$ und gibt es dann zurück, die Operation $\mathrm{enqueue}(Q, x)$ fügt das Element $x$ am Ende von $Q$ an.
 
 [^41]: FIFO: first in, first out
 
@@ -213,7 +213,7 @@ Da Felder mit direkter Adressierung einen extrem ineffizienten Speicherbedarf ha
 ### Kollisionen
 Kollisionen sind möglich, das heißt es gibt verschiedene Schlüssel $a, b$ gibt, die den selben Hashwert $h(a)=h(b)$ haben.
 
-Dies kann durch Verkettungen in Hashtabellen gelöst werden. Dabei verweist jeder Eintrag in der Hashtabelle $T$ auf eine verkette Liste, die die Schlüssel speichert.
+Dies kann durch Verkettungen in Hashtabellen gelöst werden. Dabei verweist jeder Eintrag in der Hashtabelle $T$ auf eine verkette Liste, die die Schlüssel speichert. Alternativ kann die offene Adressierung verwendet werden.
 
 ### Hashfunktionen
 Hashfunktionen werden in der Regel zufällig gewählt, weil bei einer zufälligen Wahl nur wenige Kollisionen zu erwarten sind. Allerdings benötigt die Abbildung einer vollständig zufälligen Hashfunktion viel Speicher.

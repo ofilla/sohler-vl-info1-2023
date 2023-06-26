@@ -77,7 +77,9 @@ $$
 
 ## 2. Teile und Herrsche
 > Wir betrachten den Aktienkurs der Firma Informatik AG. Der Wert einer Aktie über $n$ Zeiteinheiten wird dabei in dem Array $A$ gespeichert. Wir möchten wissen zu welchen Zeiten wir die Aktie kaufen und verkaufen sollten, um den maximalen Gewinn zu erziehlen.
+> 
 > Kauf und Verkauf dürfen dabei aber nur einmal passieren.
+> 
 > Formal ist also ein Array $A[1..n]$ von positiven ganzen Zahlen gegeben und wir wollen die größte Wertdifferenz $A[i] − A[j]$ für $j \le i$ bestimmen.
 
 ### a)

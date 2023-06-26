@@ -177,6 +177,26 @@ MergeSort(A,p,r) \\ Sortiert A[p..r]
         Merge(A,p,q,r) \\ Füge die Teile zusammen
 ```
 
+#### Pseudocode: Merge
+```
+Merge(A, p, q, r)
+    B = new array[1..(r-p+1)] \\ Feld zum Einsortieren
+    i = p \\ aktuelle Position linker Teilarray
+    j = q+1 \\ aktuelle Position rechter Teilarray
+    for k=1 to r-p+1 do
+        \\ wenn rechter Rand überschritten wurde oder das linke Element kleiner ist
+        if i <= q and (j>r or A[i] <= A[j])
+        then
+            \\ dann nehme das linke Element (falls vorhanden)
+            B[k] = A[i] \\ in richtige Position in B einfügen
+            i = i+1
+        else
+            \\ sonst nehme das rechte Element
+            B[k] = A[j] \\ in richtige Position in B einfügen
+            j = j+1
+    A[p..r] = B[1..(r-p+1)] \\ kopiere Daten von B nach A
+```
+
 ### BinarySearch
 $\mathrm{BinarySearch}$ sucht erst in beiden Hälften eines Feldes seperat, die Ergebnisse vergleicht. Dadurch wird das Feld rekursiv durchsucht.
 
@@ -264,28 +284,8 @@ $$
 $$
 
 #### dynamischer Algorithmus
-Ein besserer Algorithmus speichert Zwischenergebnisse, um doppelte Berechnungen zu vermeiden. Dies gehört zur Dynamischen Programmierung.
+Ein besserer Algorithmus speichert Zwischenergebnisse, um doppelte Berechnungen zu vermeiden. Dies gehört zur Dynamischen Programmierung und benötigt eine Worst-Case-Laufzeit von $\mathcal O(n)$.
 
-Für jedes $m>0$ gilt, dass $\mathrm{FibDynamicCalc}(m)$ maximal zweimal aufgerufen wird. Daher ist die Laufzeit von $\mathrm{FibDynamic}(n)$ linear $T(n)\in\mathcal O(n)$.
-
-```
-FibDynamic(n)
-    F = new array [1..n]
-    for i=1 to n do
-        F[i]=0
-    F[1] = 1
-    F[2] = 1
-
-    return FibDynamicCalc(F, n)
-
-FibDynamicCalc(F, n)
-    if F[n] > 0 then return F[n]
-    else
-        F[n] = FibDynamicCalc(F,n-1) + FibDynamicCalc(F,n-2)
-    return F[n]
-```
-
-Vereinfacht:
 ```
 Fib1(n)
     F = new array[1..n]
@@ -841,8 +841,6 @@ Löschen(T,k)
 ```
 
 ## Graphalgorithmen
-### Quadrat
-
 ### Single Source Shortest Path ($\mathrm{SSSP}$)
 Gegeben seien ein Graph $G$ und ein Startknoten $s\in G$. Dann soll der Algorithmus für jeden anderen Knoten $s\neq k\in G$ den kürzesten Weg von $s$ nach $k$ berechnen. Für ungewichtete Graphen kann dies über die Breitensuche ermittelt werden.
 
@@ -850,7 +848,9 @@ Gegeben seien ein Graph $G$ und ein Startknoten $s\in G$. Dann soll der Algorith
 Gegeben seien ein Graph $G$. Dann soll der Algorithmus für alle Knotenpaare  $a, b\in G: a\neq b$ den kürzesten Weg von $a$ nach $b$ berechnen.
 
 ### Breitensuche ($\mathrm{BFS}$)
-Sei ein Graph $G=(V,E)$ in der Adjazenzlistendarstellung dargestellt. Dann können alle von einem Startknoten $s$ ausgehenden Wege in der Worst-Case-Laufzeit $\mathrm O(|V|+|E|)$ gesucht werden.
+Sei ein Graph $G=(V,E)$ in der Adjazenzlistendarstellung dargestellt. Dann können alle von einem Startknoten $s$ ausgehenden Wege in der Worst-Case-Laufzeit $\mathrm O(|V|+|E|)$ gesucht werden, dies nennt man Breitensuche (_BFS_)[^32].
+
+[^32]: breadth first search
 
 #### Technische Invariante
 Allen Knoten wird eine von $3$ Farben ($\mathrm{weiß}$, $\mathrm{grau}$, $\mathrm{schwarz}$) zugewiesen. Alle noch nicht "entdeckten" Knoten sind $\mathrm{weiß}$. Wenn $u$ schwarz ist, dann sind seine adjazenten Knoten $\mathrm{grau}$ oder $\mathrm{schwarz}$. $\mathrm{Graue}$ Knoten können auch $\mathrm{weiße}$ adjazente Knoten haben.
@@ -903,7 +903,6 @@ DijkstrasAlgorithmus(G, w, s)
                 pi[v] = u
         color[u] = schwarz
 ```
-
 # 4. wichtige Datenstrukturen
 ## Felder
 ### Einfache Felder
@@ -939,7 +938,7 @@ Wie bei einfachen Feldern sind der Speicherbedarf in $\mathcal O(N)$ und die Suc
 ### (Warte-)Schlange (Queue)
 Bei einer Warteschlange $Q$ werden neue Elemente am Ende angefügt, während die Elemente vom Anfang ausgehend bearbeitet werden. Sie fällt in die Gruppe der _FIFO_-Speicher[^41]. Dies kann durch eine (doppelt) verkettete Liste dargestellt werden.
 
-$\mathrm{head}[Q$ verweist auf das vorderste Element von $Q$, $\mathrm{tail}[Q]$ auf das Ende. Die Operation $\mathrm{dequeue}(Q)$ entfernt das erste Element aus $Q$ und gibt es dann zurück, die Operation $\mathrm{enqueue}(Q, x)$ fügt das Element $x$ am Ende von $Q$ an.
+$\mathrm{head}[Q]$ verweist auf das vorderste Element von $Q$, $\mathrm{tail}[Q]$ auf das Ende. Die Operation $\mathrm{dequeue}(Q)$ entfernt das erste Element aus $Q$ und gibt es dann zurück, die Operation $\mathrm{enqueue}(Q, x)$ fügt das Element $x$ am Ende von $Q$ an.
 
 [^41]: FIFO: first in, first out
 
@@ -1119,7 +1118,7 @@ Da Felder mit direkter Adressierung einen extrem ineffizienten Speicherbedarf ha
 ### Kollisionen
 Kollisionen sind möglich, das heißt es gibt verschiedene Schlüssel $a, b$ gibt, die den selben Hashwert $h(a)=h(b)$ haben.
 
-Dies kann durch Verkettungen in Hashtabellen gelöst werden. Dabei verweist jeder Eintrag in der Hashtabelle $T$ auf eine verkette Liste, die die Schlüssel speichert.
+Dies kann durch Verkettungen in Hashtabellen gelöst werden. Dabei verweist jeder Eintrag in der Hashtabelle $T$ auf eine verkette Liste, die die Schlüssel speichert. Alternativ kann die offene Adressierung verwendet werden.
 
 ### Hashfunktionen
 Hashfunktionen werden in der Regel zufällig gewählt, weil bei einer zufälligen Wahl nur wenige Kollisionen zu erwarten sind. Allerdings benötigt die Abbildung einer vollständig zufälligen Hashfunktion viel Speicher.
@@ -1167,17 +1166,19 @@ In diesem Fall wird immer auf die erste Speicherzelle verwiesen.
 ## Nicht-Elementare Datentypen
 Nicht-Elementare Datentypen sind aus mehreren Elementaren Datentypen zusammengesetzt.
 
-## Felder
+### Felder
 Felder sind zusammenhängende Speicherbereiche, die denselben elementaren Datentyp enthalten.
 In einer Variable wird eine Referenz auf die erste Speicherzelle gespeichert.
+
 ```
 li = new array[n]
 li[1] = 4
 ```
 
-## Verbunddaten
+### Verbunddaten
 _Elementare Datentypen_ [[20230405203745]] können als Verbund organisiert werden.
 In einer Variable wird eine Referenz auf die erste Speicherzelle gespeichert.
+
 ```
 Verbund list_item:
     previous
@@ -1212,6 +1213,7 @@ next[li] = NIL
 
 ## Verbunddatentypen
 Laufzeit der Initialisierung: entspricht reserviertem Speicherplatz
+
 ```
 Verbund list_item:
     previous
@@ -1233,28 +1235,33 @@ Laufzeit der Initialisierung: entspricht reserviertem Speicherplatz
 ## Zuweisung
 ### Typ 1
 Es wird eine Kopie von `Y` in `X` gespeichert. Variablen müssen definiert sein.
+
 ```
 X = Y
 ```
 ### Typ 2
 Ein _konstant großer_ mathematischer Ausdruck wird in `X` gespeichert. Variablen müssen definiert sein.
+
 ```
 X = 10
 Y = 2
 X = X*Y
 ```
+
 Nicht konstant groß ist z.B. $\sum_{i=1}^N i$. Dies hätte Laufzeit $N$.
 Die Summe $\sum_{i=1}^8 i$ ist dagegen konstant groß.
 Ggf. wird eine Variable 
 
 ## Bedingte Verzweigungen
 _lazy evaluation_: Bei _UND_-Verknüpfungen wird nach dem ersten _False_-Ergebnis abgebrochen.
+
 ```
 X = 10
 Y = 20
 if X > Y then output << Y
 else output << X
 ```
+
 ## Schleifen
 ### for
 Annahmen:
@@ -1285,6 +1292,7 @@ output << j  \* 1 \*
 
 ### while
 Der Schleifenrumpf kann $0$-mal durchlaufen werden.
+
 ```
 i=n  \* 1 \*
 j=0  \* 1 \*
@@ -1293,8 +1301,10 @@ while i>0 do  \* n+1 \*
     i=i-1  \* n \*
 output << j  \* 1 \*
 ```
+
 ### repeat
 Der Schleifenkörper wird mindestens $1$-mal durchlaufen
+
 ```
 i=n  \* 1 \*
 j=0  \* 1 \*
@@ -1342,7 +1352,7 @@ Die Worst-Case Laufzeit $T(n) = \max[\text{Laufzeit}]$ ist die längste Laufzeit
 Dies ist der Standard, normalerweise ist diese Analyse gemeint, wenn man von "Laufzeitanalyse" spricht.
 
 ## Average Case Analyse
-Die Worst-Case Laufzeit $T(n) = \mathrm{avg}[\text{Laufzeit}]$ ist die längste Laufzeit für alle möglichen Eingaben der Größe $n$. Allerdings benötigt diese Betrachtung eine Definition von "Durschschnittlich", also auch eine Wahrscheinlichkeitsverteilung von Eingabegrößen. Daher wird sie i.A. nicht verwendet.
+Die Worst-Case Laufzeit $T(n) = \mathrm{avg}[\text{Laufzeit}]$ ist die längste Laufzeit für alle möglichen Eingaben der Größe $n$. Allerdings benötigt diese Betrachtung eine Definition von "Durchschnittlich", also auch eine Wahrscheinlichkeitsverteilung von Eingabegrößen. Daher wird sie i.A. nicht verwendet.
 
 ## Master-Theorem
 Seien $a\ge 1$ und $b\ge 1$ ganzzahlige Konstanten und $f: \mathbb N\rightarrow \mathbb N$ eine Funktion auf natürlichen Zahlen. Sei die Laufzeit $T(n)$ durch folgende rekursive Gleichung beschrieben.
@@ -1355,7 +1365,7 @@ $$
         \end{cases}
 $$
 
-Es gebe ein $\gamma$, sodass gilt:
+Es gebe ein $\gamma>0$, sodass gilt:
 
 $$
 \begin{aligned}
@@ -1370,7 +1380,7 @@ $$
         &&\Rightarrow&&
         T(n) &\in\mathcal O{\large(}f(n){\large)} \\
     3. &&
-        0<\gamma<1:&&
+        \gamma<1:&&
         f(n) \le \gamma af\left(\frac{n}{b}\right)
         &&\Rightarrow&&
         T(n) &\in\mathcal O{\large(}a^{\log_b(n)}{\large)} \\
@@ -1387,6 +1397,7 @@ Die folgenen Erklärungen sind nicht zwangsweise mathematisch korrekt, daher sin
 ### Alternative Formulierung
 Es gibt noch andere Formulierungen. Die folgende Formulierung ist gängiger.[^71]
 Seien $a\ge 1$ und $b\ge 1$ ganzzahlige Konstanten und $f: \mathbb N\rightarrow \mathbb N$. Gelte weiterhin für die Laufzeit $T(n)$:
+
 $$
     T(n) \le
         \begin{cases}
@@ -1464,8 +1475,7 @@ $$
     \}
 $$
 
-* Diese Definition kann in konstruierten Fällen zu ungewünschten Aussagen führen!
-    * z.B. $g(1,m) = m^2$ und $\forall n>1: g(n,m)=m$
+Diese Definition kann in konstruierten Fällen zu ungewünschten Aussagen führen, beispielsweise falls $g(1,m) = m^2$ und $\forall n>1: g(n,m)=m$.
 
 ## $\Omega$-Notation
 Die $\Omega$-Notation liefert eine _untere Schranke_ für die Laufzeit.
@@ -1556,7 +1566,7 @@ Lemma: $A(i)$ ist eine korrekte Schleifeninvariante.
 * Der Rekursionsabbruch entspricht dem Anfang der Vollständigen Induktion.
 * Der Rekursionsaufruf entspricht dem Induktionsschritt.
 
-### Binärbäume
+### Bäume
 Aussagen über Bäume werden durch vollständige Induktion über die Höhe eines Baumes bewiesen. Dabei beginnt man mit einem leeren Baum, dessen Höhe als $0$ oder $-1$ bezeichnet wird.
 
 Dabei kann man immer annehmen, dass ein Baum der Höhe $i+1$ aus einer Wurzel $v$ und zwei Teilbäumen $A,B$
@@ -1604,7 +1614,6 @@ Weiterhin gilt:
 2. $\forall j<g[1]: \mathrm{Opt}(1,j)=0$
 3. $\forall i>1,g[i]>j: \mathrm{Opt}(i,j) = \mathrm{Opt}(i-1,j)$
 4. $\forall i>1, g[i]\le j: \mathrm{Opt}(i,j) = \max\{\mathrm{Opt}(i-1,j), w[i] + \mathrm{Opt}(i-1,j-g[i])\}$
-
 
 ## Methode: Dynamische Programmierung
 Dynamische Programmierung kann genutzt werden, um Optimierungsprobleme zu lösen

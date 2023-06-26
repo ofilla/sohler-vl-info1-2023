@@ -11,7 +11,7 @@ Die Worst-Case Laufzeit $T(n) = \max[\text{Laufzeit}]$ ist die längste Laufzeit
 Dies ist der Standard, normalerweise ist diese Analyse gemeint, wenn man von "Laufzeitanalyse" spricht.
 
 ## Average Case Analyse
-Die Worst-Case Laufzeit $T(n) = \mathrm{avg}[\text{Laufzeit}]$ ist die längste Laufzeit für alle möglichen Eingaben der Größe $n$. Allerdings benötigt diese Betrachtung eine Definition von "Durschschnittlich", also auch eine Wahrscheinlichkeitsverteilung von Eingabegrößen. Daher wird sie i.A. nicht verwendet.
+Die Worst-Case Laufzeit $T(n) = \mathrm{avg}[\text{Laufzeit}]$ ist die längste Laufzeit für alle möglichen Eingaben der Größe $n$. Allerdings benötigt diese Betrachtung eine Definition von "Durchschnittlich", also auch eine Wahrscheinlichkeitsverteilung von Eingabegrößen. Daher wird sie i.A. nicht verwendet.
 
 ## Master-Theorem
 Seien $a\ge 1$ und $b\ge 1$ ganzzahlige Konstanten und $f: \mathbb N\rightarrow \mathbb N$ eine Funktion auf natürlichen Zahlen. Sei die Laufzeit $T(n)$ durch folgende rekursive Gleichung beschrieben.
@@ -24,7 +24,7 @@ $$
         \end{cases}
 $$
 
-Es gebe ein $\gamma$, sodass gilt:
+Es gebe ein $\gamma>0$, sodass gilt:
 
 $$
 \begin{aligned}
@@ -39,7 +39,7 @@ $$
         &&\Rightarrow&&
         T(n) &\in\mathcal O{\large(}f(n){\large)} \\
     3. &&
-        0<\gamma<1:&&
+        \gamma<1:&&
         f(n) \le \gamma af\left(\frac{n}{b}\right)
         &&\Rightarrow&&
         T(n) &\in\mathcal O{\large(}a^{\log_b(n)}{\large)} \\
@@ -56,6 +56,7 @@ Die folgenen Erklärungen sind nicht zwangsweise mathematisch korrekt, daher sin
 ### Alternative Formulierung
 Es gibt noch andere Formulierungen. Die folgende Formulierung ist gängiger.[^71]
 Seien $a\ge 1$ und $b\ge 1$ ganzzahlige Konstanten und $f: \mathbb N\rightarrow \mathbb N$. Gelte weiterhin für die Laufzeit $T(n)$:
+
 $$
     T(n) \le
         \begin{cases}

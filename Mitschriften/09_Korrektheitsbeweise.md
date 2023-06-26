@@ -36,7 +36,7 @@ Lemma: $A(i)$ ist eine korrekte Schleifeninvariante.
 * Der Rekursionsabbruch entspricht dem Anfang der Vollständigen Induktion.
 * Der Rekursionsaufruf entspricht dem Induktionsschritt.
 
-### Binärbäume
+### Bäume
 Aussagen über Bäume werden durch vollständige Induktion über die Höhe eines Baumes bewiesen. Dabei beginnt man mit einem leeren Baum, dessen Höhe als $0$ oder $-1$ bezeichnet wird.
 
 Dabei kann man immer annehmen, dass ein Baum der Höhe $i+1$ aus einer Wurzel $v$ und zwei Teilbäumen $A,B$

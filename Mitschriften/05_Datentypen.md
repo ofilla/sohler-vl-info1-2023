@@ -26,17 +26,19 @@ In diesem Fall wird immer auf die erste Speicherzelle verwiesen.
 ## Nicht-Elementare Datentypen
 Nicht-Elementare Datentypen sind aus mehreren Elementaren Datentypen zusammengesetzt.
 
-## Felder
+### Felder
 Felder sind zusammenhängende Speicherbereiche, die denselben elementaren Datentyp enthalten.
 In einer Variable wird eine Referenz auf die erste Speicherzelle gespeichert.
+
 ```
 li = new array[n]
 li[1] = 4
 ```
 
-## Verbunddaten
+### Verbunddaten
 _Elementare Datentypen_ [[20230405203745]] können als Verbund organisiert werden.
 In einer Variable wird eine Referenz auf die erste Speicherzelle gespeichert.
+
 ```
 Verbund list_item:
     previous

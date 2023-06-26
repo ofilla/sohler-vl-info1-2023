@@ -42,6 +42,26 @@ MergeSort(A,p,r) \\ Sortiert A[p..r]
         Merge(A,p,q,r) \\ Füge die Teile zusammen
 ```
 
+#### Pseudocode: Merge
+```
+Merge(A, p, q, r)
+    B = new array[1..(r-p+1)] \\ Feld zum Einsortieren
+    i = p \\ aktuelle Position linker Teilarray
+    j = q+1 \\ aktuelle Position rechter Teilarray
+    for k=1 to r-p+1 do
+        \\ wenn rechter Rand überschritten wurde oder das linke Element kleiner ist
+        if i <= q and (j>r or A[i] <= A[j])
+        then
+            \\ dann nehme das linke Element (falls vorhanden)
+            B[k] = A[i] \\ in richtige Position in B einfügen
+            i = i+1
+        else
+            \\ sonst nehme das rechte Element
+            B[k] = A[j] \\ in richtige Position in B einfügen
+            j = j+1
+    A[p..r] = B[1..(r-p+1)] \\ kopiere Daten von B nach A
+```
+
 ### BinarySearch
 $\mathrm{BinarySearch}$ sucht erst in beiden Hälften eines Feldes seperat, die Ergebnisse vergleicht. Dadurch wird das Feld rekursiv durchsucht.
 
@@ -129,28 +149,8 @@ $$
 $$
 
 #### dynamischer Algorithmus
-Ein besserer Algorithmus speichert Zwischenergebnisse, um doppelte Berechnungen zu vermeiden. Dies gehört zur Dynamischen Programmierung.
+Ein besserer Algorithmus speichert Zwischenergebnisse, um doppelte Berechnungen zu vermeiden. Dies gehört zur Dynamischen Programmierung und benötigt eine Worst-Case-Laufzeit von $\mathcal O(n)$.
 
-Für jedes $m>0$ gilt, dass $\mathrm{FibDynamicCalc}(m)$ maximal zweimal aufgerufen wird. Daher ist die Laufzeit von $\mathrm{FibDynamic}(n)$ linear $T(n)\in\mathcal O(n)$.
-
-```
-FibDynamic(n)
-    F = new array [1..n]
-    for i=1 to n do
-        F[i]=0
-    F[1] = 1
-    F[2] = 1
-
-    return FibDynamicCalc(F, n)
-
-FibDynamicCalc(F, n)
-    if F[n] > 0 then return F[n]
-    else
-        F[n] = FibDynamicCalc(F,n-1) + FibDynamicCalc(F,n-2)
-    return F[n]
-```
-
-Vereinfacht:
 ```
 Fib1(n)
     F = new array[1..n]
@@ -706,8 +706,6 @@ Löschen(T,k)
 ```
 
 ## Graphalgorithmen
-### Quadrat
-
 ### Single Source Shortest Path ($\mathrm{SSSP}$)
 Gegeben seien ein Graph $G$ und ein Startknoten $s\in G$. Dann soll der Algorithmus für jeden anderen Knoten $s\neq k\in G$ den kürzesten Weg von $s$ nach $k$ berechnen. Für ungewichtete Graphen kann dies über die Breitensuche ermittelt werden.
 
@@ -715,7 +713,9 @@ Gegeben seien ein Graph $G$ und ein Startknoten $s\in G$. Dann soll der Algorith
 Gegeben seien ein Graph $G$. Dann soll der Algorithmus für alle Knotenpaare  $a, b\in G: a\neq b$ den kürzesten Weg von $a$ nach $b$ berechnen.
 
 ### Breitensuche ($\mathrm{BFS}$)
-Sei ein Graph $G=(V,E)$ in der Adjazenzlistendarstellung dargestellt. Dann können alle von einem Startknoten $s$ ausgehenden Wege in der Worst-Case-Laufzeit $\mathrm O(|V|+|E|)$ gesucht werden.
+Sei ein Graph $G=(V,E)$ in der Adjazenzlistendarstellung dargestellt. Dann können alle von einem Startknoten $s$ ausgehenden Wege in der Worst-Case-Laufzeit $\mathrm O(|V|+|E|)$ gesucht werden, dies nennt man Breitensuche (_BFS_)[^32].
+
+[^32]: breadth first search
 
 #### Technische Invariante
 Allen Knoten wird eine von $3$ Farben ($\mathrm{weiß}$, $\mathrm{grau}$, $\mathrm{schwarz}$) zugewiesen. Alle noch nicht "entdeckten" Knoten sind $\mathrm{weiß}$. Wenn $u$ schwarz ist, dann sind seine adjazenten Knoten $\mathrm{grau}$ oder $\mathrm{schwarz}$. $\mathrm{Graue}$ Knoten können auch $\mathrm{weiße}$ adjazente Knoten haben.
@@ -768,4 +768,3 @@ DijkstrasAlgorithmus(G, w, s)
                 pi[v] = u
         color[u] = schwarz
 ```
-
