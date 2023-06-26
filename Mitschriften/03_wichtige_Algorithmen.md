@@ -743,3 +743,29 @@ BFS(G,s)
         color[u] = schwarz
 ```
 
+### Dijkstras Algorithmus
+Sei $G=(V,E)$ ein gewichteter Graph in Adjazenzlistendarstellung, dessen Kanten nicht-negative Gewichte haben. Dann kann Dijkstras Algorithmus die Kürzesten Wege von einem Startknoten $s\in V$ zu allen anderen Knoten ermitteln. Dies benötigt die Laufzeit $\mathcal O([|V|+|E|]\log_2 |V|)$.
+
+Dazu wird von $s$ ausgehend immer derjenige Knoten $u$ als nächstes betrachtet, der den kürzesten Gesamtweg hat. Für jeden benachbarten Knoten kann ein bislang kürzester Weg ermittelt werden. Danach wird der aktuelle Knoten schwarz gefärbt um zu speichern, dass der kürzeste Weg für $u$ korrekt berechnet ist.
+
+Für den Fall, dass nur eine geringe Anzahl $W$ von ganzzahligen Gewichten $w\in\{1,\dots,W\}$ erlaubt ist, kann der Algorithmus so modifiziert werden, dass die Laufzeit $\mathcal O(W\cdot |V| + |E|)$ ist.
+
+Zu jedem Ausführungszeitpunkt von Dijkstras Algorithmus ist für jeden Knoten $w$ die Strecke $\mathrm d[w]$ größer oder gleich dem kürzesten Weg: $\mathrm d[w] \ge \delta(s,w)$.
+
+#### Pseudocode
+Für alle Knoten $u \neq s$ wird der Weg zu diesem Knoten als $\mathrm d[u]=\infty$ initialisiert, der Weg nach $s$ als $\mathrm d[s]=0$. Alle Knoten werden mit der Farbe $\mathrm{color}[u]=\mathrm{weiß}$ initialisiert. $\mathrm{pi}[v]=\pi[v]$ verweist auf den Vaterknoten von $v$.
+
+```
+DijkstrasAlgorithmus(G, w, s)
+    Initialisiere SSSP
+    Q = V[G]
+    while Q != {} do
+        u = ExtractMin(Q)
+        for each v in Adj[u] do
+            if d[u] + w(u,v) < d[v] then
+                d[v] = d[u] + w(u, v)
+                DecreaseKey(v, d[v])
+                pi[v] = u
+        color[u] = schwarz
+```
+

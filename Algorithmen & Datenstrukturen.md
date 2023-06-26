@@ -878,6 +878,32 @@ BFS(G,s)
         color[u] = schwarz
 ```
 
+### Dijkstras Algorithmus
+Sei $G=(V,E)$ ein gewichteter Graph in Adjazenzlistendarstellung, dessen Kanten nicht-negative Gewichte haben. Dann kann Dijkstras Algorithmus die Kürzesten Wege von einem Startknoten $s\in V$ zu allen anderen Knoten ermitteln. Dies benötigt die Laufzeit $\mathcal O([|V|+|E|]\log_2 |V|)$.
+
+Dazu wird von $s$ ausgehend immer derjenige Knoten $u$ als nächstes betrachtet, der den kürzesten Gesamtweg hat. Für jeden benachbarten Knoten kann ein bislang kürzester Weg ermittelt werden. Danach wird der aktuelle Knoten schwarz gefärbt um zu speichern, dass der kürzeste Weg für $u$ korrekt berechnet ist.
+
+Für den Fall, dass nur eine geringe Anzahl $W$ von ganzzahligen Gewichten $w\in\{1,\dots,W\}$ erlaubt ist, kann der Algorithmus so modifiziert werden, dass die Laufzeit $\mathcal O(W\cdot |V| + |E|)$ ist.
+
+Zu jedem Ausführungszeitpunkt von Dijkstras Algorithmus ist für jeden Knoten $w$ die Strecke $\mathrm d[w]$ größer oder gleich dem kürzesten Weg: $\mathrm d[w] \ge \delta(s,w)$.
+
+#### Pseudocode
+Für alle Knoten $u \neq s$ wird der Weg zu diesem Knoten als $\mathrm d[u]=\infty$ initialisiert, der Weg nach $s$ als $\mathrm d[s]=0$. Alle Knoten werden mit der Farbe $\mathrm{color}[u]=\mathrm{weiß}$ initialisiert. $\mathrm{pi}[v]=\pi[v]$ verweist auf den Vaterknoten von $v$.
+
+```
+DijkstrasAlgorithmus(G, w, s)
+    Initialisiere SSSP
+    Q = V[G]
+    while Q != {} do
+        u = ExtractMin(Q)
+        for each v in Adj[u] do
+            if d[u] + w(u,v) < d[v] then
+                d[v] = d[u] + w(u, v)
+                DecreaseKey(v, d[v])
+                pi[v] = u
+        color[u] = schwarz
+```
+
 # 4. wichtige Datenstrukturen
 ## Felder
 ### Einfache Felder
@@ -917,6 +943,13 @@ $\mathrm{head}[Q$ verweist auf das vorderste Element von $Q$, $\mathrm{tail}[Q]$
 
 [^41]: FIFO: first in, first out
 
+### Prioritätenschlange (Priority Queue)
+Eine Prioritätenschlange $Q$ ist eine Erweiterung der Schlange, bei der jedes Element $v$ eine Priorität $p_v$ hat.
+
+Es gibt die Operationen $\mathrm{Einfügen}(Q)$ und $\mathrm{Löschen}(Q)$ wie bei der normalen Schlange. Zudem gibt es die Operation $\mathrm{ExtractMin}(Q)$, die das Objekt mit der geringsten Priorität zurückgibt und aus $Q$ löscht. Weiterhin kann man mit $\mathrm{DecreaseKey}(v,p)$ die Priorität des Elements $v$ auf den Wert $p$ verringern.
+
+Wird die Prioritätenschlange durch einen Rot-Schwarz-Baum realisiert, können all diese Operationen in der Worst-Case-Laufzeit $\mathcal O(\log_2n)$ erfolgen. Dann wird bei $\mathrm{DecreaseKey}(v,p)$ ein neuer Knoten angelegt und der alte gelöscht. Falls mehrere Elemente die gleichen Prioritäten haben, muss eine weitere Information zur Sortierung verwendet werden.
+
 ## Graphen
 Bestehen aus _Knoten_ und _Kanten_. Kanten können _gerichtet_ sein.
 
@@ -937,6 +970,16 @@ Ein Weg heißt einfach, wenn kein Knoten mehrfach auf dem Weg vorkommt.
 Ein Kreis ist ein Weg $(v_0,\dots, v_k)$, bei dem Startknoten $v_0$ und Endknoten $v_k$ identisch sind $(v_0=v_k)$.
 
 Ein Kreis heißt einfach, wenn der Weg ein einfacher Weg ist, also wenn kein Knoten mehrfach auf dem Weg vorkommt.
+
+#### Länge von Wegen
+Sei $G=(V,E)$ ein Graph. Dann ist $w: E\rightarrow\mathbb R$ eine Abbildung, die die Länge $w(e)$ der Kante $e\in E$ oder die Länge $w(u,v)$ der Kante $(u,v)$ beschreibt. Für den Weg $p=\braket{v_0, v_1,\dots, v_k}$ ist die Länge des Weges $p$ durch $w(p)=\sum_ {i=1}^k w(v_{i-1}, v_i)$ gegeben.
+
+#### Kürzester Weg
+Sei $G$ ein Graph, dann gibt $\delta(u,v) = \min_{\{p\}} w(p)$ die Länge des kürzesten Weges $u$ nach $v$ an. $\{p\}$ ist dabei die Menge aller Wege von $u$ nach $v$. Falls es keinen Weg von $u$ nach $v$ gibt, gilt $\delta(u,v)=\infty$.
+
+Wenn $\braket{v_1,\dots, v_k}$ ein kürzester Weg von $v_1$ nach $v_k$ ist, dann ist $\forall 1\le i<j \le k$ der Weg $\braket{v_i,\dots, v_j}$ ein kürzester Weg von $v_i$ nach $v_j$.
+
+Sei $G=(V,E)$ ein gewichteter Graph und sei $s\in V$ ein beliebiger Knoten, dann gilt für jede Kante $(u,v)\in E$, dass $\delta(s,v) \le \delta(s,u)+w(u,v)$.
 
 ### Wald & Bäume
 Ein kreisfreier ungerichteter Graph heißt Wald. Ein ungerichteter, zusammenhängender, kreisfreier Graph heißt Baum.
@@ -965,6 +1008,8 @@ Es gibt gewichtete und ungewichtete Graphen. Bei gewichteten Graphen haben Knote
 
 Wenn ein Graph ein Straßenverkehrsnetz darstellt, können solche Gewichte beispielsweise die erlaubte Höchtgeschwindigkeit oder die Durchschnittsgeschwindigkeit sein.
 
+Bei gewichteten Graphen können Kanten i.A. auch negative Gewichte haben. Dann kann es sein, dass ein kürzester Weg nicht wohldefiniert ist, insbesondere wenn es Kreise gibt, die einen "negativen" Weg haben.
+
 ### Zusammenhang
 Ein gerichteter Graph heißt _stark zusammenhängend_, wenn es von jedem Knoten einen Weg zu jedem anderen Knoten im Graph gibt. Ein ungerichteter Graph heißt _zusammenhängend_, wenn es von jedem Knoten einen Weg zu jedem anderen Knoten im Graph gibt.
 
@@ -974,7 +1019,8 @@ Die _starken Zusammenhangskomponenten_ eines Graphen sind die Äquivalenzklassen
 ### Knotengrade
 Der _Ausgangsgrad_ eines Knotens in einem gerichteten Graph ist die Anzahl Kanten, die den Knoten verlassen. Der _Eingangsgrad_ eines Knotens in einem gerichteten Graph ist die Anzahl Kanten, die auf den Knoten zeigen.
 
-### Adjazenzmatrix
+### Darstellungen
+#### Adjazenzmatrix
 Für dicht besetzte Graphen mit $|E| \lesssim |V|^2$ eignen sich Adjazenzmatrizen zur Speicherung der Knoten.
 
 Hierbei ist $A=(a_{ij})$ eine $|V|\times|V|$-Matrix. Hierbei wird für jedes Knotenpaar gespeichert, ob sie durch eine Kante verbunden sind. Bei gewichteten Graphen wird stattdessen das Gewicht $w$ gespeichert, bei ungewichteten gilt $w=1$. Bei ungerichteten Graphen gilt $A=A^\mathrm{T}$.
@@ -986,7 +1032,7 @@ $$
         \end{cases}
 $$
 
-### Adjazenzlisten
+#### Adjazenzlisten
 Für dünn besetzte Graphen mit $|E|\ll |V|^2$ eignen sich besonders Adjazenzlisten zum Speichern der Kanten. Hierbei wird für jeden Knoten $v$ eine Liste angelegt, in der die Nachbarn von $v$ gespeichert sind.
 
 Es gibt ein Feld $\mathrm{Adj}$ mit $|V|$ einträgen, je einem pro Knoten. $\mathrm{Adj}[v]$ enthält die Knoten $u$, die mit $v$ benachbart sind. Es gibt also für jedes $u$ eine Kante $(u,v)\in E$.
