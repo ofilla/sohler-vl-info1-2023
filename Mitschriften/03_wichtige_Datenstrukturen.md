@@ -1,4 +1,4 @@
-# 4. wichtige Datenstrukturen
+# 3. wichtige Datenstrukturen
 ## Felder
 ### Einfache Felder
 Felder sind eine Datenstruktur, bei denen ein zusammenhängender Speicherblock für $N$ Elemente reserviert wird.

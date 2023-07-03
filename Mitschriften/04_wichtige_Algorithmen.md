@@ -1,4 +1,4 @@
-# 3. wichtige Algorithmen
+# 4. wichtige Algorithmen
 ## Rekursionsalgorithmen
 ### Insertion Sort
 ```
