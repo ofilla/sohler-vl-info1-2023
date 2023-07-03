@@ -175,7 +175,7 @@ $\mathrm{head}[Q]$ verweist auf das vorderste Element von $Q$, $\mathrm{tail}[Q]
 ### Prioritätenschlange (Priority Queue)
 Eine Prioritätenschlange $Q$ ist eine Erweiterung der Schlange, bei der jedes Element $v$ eine Priorität $p_v$ hat.
 
-Es gibt die Operationen $\mathrm{Einfügen}(Q)$ und $\mathrm{Löschen}(Q)$ wie bei der normalen Schlange. Zudem gibt es die Operation $\mathrm{ExtractMin}(Q)$, die das Objekt mit der geringsten Priorität zurückgibt und aus $Q$ löscht. Weiterhin kann man mit $\mathrm{DecreaseKey}(v,p)$ die Priorität des Elements $v$ auf den Wert $p$ verringern.
+Es gibt die Operationen $\mathrm{Einfügen}(Q, v)$ und $\mathrm{Löschen}(Q, v)$ wie bei der normalen Schlange. Zudem gibt es die Operation $\mathrm{ExtractMin}(Q)$, die das Objekt mit der geringsten Priorität zurückgibt und aus $Q$ löscht. Weiterhin kann man mit $\mathrm{DecreaseKey}(v,p)$ die Priorität des Elements $v$ auf den Wert $p$ verringern.
 
 Wird die Prioritätenschlange durch einen Rot-Schwarz-Baum realisiert, können all diese Operationen in der Worst-Case-Laufzeit $\mathcal O(\log_2n)$ erfolgen. Dann wird bei $\mathrm{DecreaseKey}(v,p)$ ein neuer Knoten angelegt und der alte gelöscht. Falls mehrere Elemente die gleichen Prioritäten haben, muss eine weitere Information zur Sortierung verwendet werden.
 
