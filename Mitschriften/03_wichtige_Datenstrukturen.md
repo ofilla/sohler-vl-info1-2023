@@ -45,7 +45,7 @@ Es gibt die Operationen $\mathrm{Einfügen}(Q)$ und $\mathrm{Löschen}(Q)$ wie b
 Wird die Prioritätenschlange durch einen Rot-Schwarz-Baum realisiert, können all diese Operationen in der Worst-Case-Laufzeit $\mathcal O(\log_2n)$ erfolgen. Dann wird bei $\mathrm{DecreaseKey}(v,p)$ ein neuer Knoten angelegt und der alte gelöscht. Falls mehrere Elemente die gleichen Prioritäten haben, muss eine weitere Information zur Sortierung verwendet werden.
 
 ## Graphen
-Bestehen aus _Knoten_ und _Kanten_. Kanten können _gerichtet_ sein.
+Graphen bestehen aus _Knoten_ und _Kanten_. Kanten können _gerichtet_ sein.
 
 Es gibt auch Graphenvarianten, bei denen eine Kante nur einen Knoten mit sich selbst verbindet, ebenso welche, die mehrere Kanten zwischen Knoten erlauben.
 
@@ -65,15 +65,19 @@ Ein Kreis ist ein Weg $(v_0,\dots, v_k)$, bei dem Startknoten $v_0$ und Endknote
 
 Ein Kreis heißt einfach, wenn der Weg ein einfacher Weg ist, also wenn kein Knoten mehrfach auf dem Weg vorkommt.
 
+Ein negativer Kreis ist ein Kreis in einem gewichteten Graphen, bei dem die Summe der Gewichte entlang des Kreises negativ ist. Wenn es einen negativen Kreis gibt, gibt es keinen (wohldefinierten) kürzesten Weg.
+
 #### Länge von Wegen
 Sei $G=(V,E)$ ein Graph. Dann ist $w: E\rightarrow\mathbb R$ eine Abbildung, die die Länge $w(e)$ der Kante $e\in E$ oder die Länge $w(u,v)$ der Kante $(u,v)$ beschreibt. Für den Weg $p=\braket{v_0, v_1,\dots, v_k}$ ist die Länge des Weges $p$ durch $w(p)=\sum_ {i=1}^k w(v_{i-1}, v_i)$ gegeben.
 
 #### Kürzester Weg
 Sei $G$ ein Graph, dann gibt $\delta(u,v) = \min_{\{p\}} w(p)$ die Länge des kürzesten Weges $u$ nach $v$ an. $\{p\}$ ist dabei die Menge aller Wege von $u$ nach $v$. Falls es keinen Weg von $u$ nach $v$ gibt, gilt $\delta(u,v)=\infty$.
 
-Wenn $\braket{v_1,\dots, v_k}$ ein kürzester Weg von $v_1$ nach $v_k$ ist, dann ist $\forall 1\le i<j \le k$ der Weg $\braket{v_i,\dots, v_j}$ ein kürzester Weg von $v_i$ nach $v_j$.
+Wenn $\braket{v_1,\dots, v_k}$ ein kürzester Weg von $v_1$ nach $v_k$ ist, dann ist $\forall 1\le i<j \le k$ der Weg $\braket{v_i,\dots, v_j}$ ein kürzester Weg von $v_i$ nach $v_j$. In diesem kommt kein Knoten doppelt vor.
 
 Sei $G=(V,E)$ ein gewichteter Graph und sei $s\in V$ ein beliebiger Knoten, dann gilt für jede Kante $(u,v)\in E$, dass $\delta(s,v) \le \delta(s,u)+w(u,v)$.
+
+Hat $G$ einen negativen Kreis, so gibt es keinen wohldefinierten kürzesten Weg. Negative Kreise können werden, falls sich der kürzeste Weg nach $|V|$ Kanten für mindestens einen Knoten ändert.
 
 ### Wald & Bäume
 Ein kreisfreier ungerichteter Graph heißt Wald. Ein ungerichteter, zusammenhängender, kreisfreier Graph heißt Baum.

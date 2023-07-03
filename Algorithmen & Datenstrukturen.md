@@ -180,7 +180,7 @@ Es gibt die Operationen $\mathrm{Einfügen}(Q)$ und $\mathrm{Löschen}(Q)$ wie b
 Wird die Prioritätenschlange durch einen Rot-Schwarz-Baum realisiert, können all diese Operationen in der Worst-Case-Laufzeit $\mathcal O(\log_2n)$ erfolgen. Dann wird bei $\mathrm{DecreaseKey}(v,p)$ ein neuer Knoten angelegt und der alte gelöscht. Falls mehrere Elemente die gleichen Prioritäten haben, muss eine weitere Information zur Sortierung verwendet werden.
 
 ## Graphen
-Bestehen aus _Knoten_ und _Kanten_. Kanten können _gerichtet_ sein.
+Graphen bestehen aus _Knoten_ und _Kanten_. Kanten können _gerichtet_ sein.
 
 Es gibt auch Graphenvarianten, bei denen eine Kante nur einen Knoten mit sich selbst verbindet, ebenso welche, die mehrere Kanten zwischen Knoten erlauben.
 
@@ -200,15 +200,19 @@ Ein Kreis ist ein Weg $(v_0,\dots, v_k)$, bei dem Startknoten $v_0$ und Endknote
 
 Ein Kreis heißt einfach, wenn der Weg ein einfacher Weg ist, also wenn kein Knoten mehrfach auf dem Weg vorkommt.
 
+Ein negativer Kreis ist ein Kreis in einem gewichteten Graphen, bei dem die Summe der Gewichte entlang des Kreises negativ ist. Wenn es einen negativen Kreis gibt, gibt es keinen (wohldefinierten) kürzesten Weg.
+
 #### Länge von Wegen
 Sei $G=(V,E)$ ein Graph. Dann ist $w: E\rightarrow\mathbb R$ eine Abbildung, die die Länge $w(e)$ der Kante $e\in E$ oder die Länge $w(u,v)$ der Kante $(u,v)$ beschreibt. Für den Weg $p=\braket{v_0, v_1,\dots, v_k}$ ist die Länge des Weges $p$ durch $w(p)=\sum_ {i=1}^k w(v_{i-1}, v_i)$ gegeben.
 
 #### Kürzester Weg
 Sei $G$ ein Graph, dann gibt $\delta(u,v) = \min_{\{p\}} w(p)$ die Länge des kürzesten Weges $u$ nach $v$ an. $\{p\}$ ist dabei die Menge aller Wege von $u$ nach $v$. Falls es keinen Weg von $u$ nach $v$ gibt, gilt $\delta(u,v)=\infty$.
 
-Wenn $\braket{v_1,\dots, v_k}$ ein kürzester Weg von $v_1$ nach $v_k$ ist, dann ist $\forall 1\le i<j \le k$ der Weg $\braket{v_i,\dots, v_j}$ ein kürzester Weg von $v_i$ nach $v_j$.
+Wenn $\braket{v_1,\dots, v_k}$ ein kürzester Weg von $v_1$ nach $v_k$ ist, dann ist $\forall 1\le i<j \le k$ der Weg $\braket{v_i,\dots, v_j}$ ein kürzester Weg von $v_i$ nach $v_j$. In diesem kommt kein Knoten doppelt vor.
 
 Sei $G=(V,E)$ ein gewichteter Graph und sei $s\in V$ ein beliebiger Knoten, dann gilt für jede Kante $(u,v)\in E$, dass $\delta(s,v) \le \delta(s,u)+w(u,v)$.
+
+Hat $G$ einen negativen Kreis, so gibt es keinen wohldefinierten kürzesten Weg. Negative Kreise können werden, falls sich der kürzeste Weg nach $|V|$ Kanten für mindestens einen Knoten ändert.
 
 ### Wald & Bäume
 Ein kreisfreier ungerichteter Graph heißt Wald. Ein ungerichteter, zusammenhängender, kreisfreier Graph heißt Baum.
@@ -1077,10 +1081,14 @@ Löschen(T,k)
 
 ## Graphalgorithmen
 ### Single Source Shortest Path ($\mathrm{SSSP}$)
-Gegeben seien ein Graph $G$ und ein Startknoten $s\in G$. Dann soll der Algorithmus für jeden anderen Knoten $s\neq k\in G$ den kürzesten Weg von $s$ nach $k$ berechnen. Für ungewichtete Graphen kann dies über die Breitensuche ermittelt werden.
+Gegeben seien ein Graph $G$ und ein Startknoten $s\in G$. Dann soll der Algorithmus für jeden anderen Knoten $s\neq k\in G$ den kürzesten Weg von $s$ nach $k$ berechnen.
+
+Für ungewichtete Graphen kann dies über die Breitensuche ermittelt werden. Für gewichtete Graphen ohne negative Gewichte liefert Dijkstras Algorithmus den kürzesten Weg, für gewichtete Graphen mit negativen Gewichten kann der Bellman-Ford-Algorithmus verwendet werden.
 
 ### All Pairs Shortest Path ($\mathrm{APSP}$)
 Gegeben seien ein Graph $G$. Dann soll der Algorithmus für alle Knotenpaare  $a, b\in G: a\neq b$ den kürzesten Weg von $a$ nach $b$ berechnen.
+
+Dies kann mit dem Floyd-Warshall-Algorithmus erfolgen.
 
 ### Breitensuche ($\mathrm{BFS}$)
 Sei ein Graph $G=(V,E)$ in der Adjazenzlistendarstellung dargestellt. Dann können alle von einem Startknoten $s$ ausgehenden Wege in der Worst-Case-Laufzeit $\mathrm O(|V|+|E|)$ gesucht werden, dies nennt man Breitensuche (_BFS_)[^32].
@@ -1138,6 +1146,87 @@ DijkstrasAlgorithmus(G, w, s)
                 pi[v] = u
         color[u] = schwarz
 ```
+
+### Bellman-Ford-Algorithmus
+Der Bellman-Ford-Algorithmus ist dazu gedacht, die Länge eines kürzesten Weges eines gewichteten Graphen $G=(V,E)$ vom Startknoten $s\in V$ aus zu berechnen, wobei Kanten $(u,v)\in E$ negative Gewichte $w(u,v)$ haben dürfen. In der hier angegebenen Beschreibung darf der Graph allerdings keine negativen Kreise haben.
+
+#### rekursive Beschreibung
+Sei $P$ ein optimaler $s$-$v$-Weg mit maximal $i$ Kanten mit $u$ als dem letzten Knoten vor $v$, dann sei $\mathrm{Opt}(i, v)$ die Länge von $P$.
+
+ $$
+    \mathrm{Opt}(i, v) =
+        \begin{cases}
+            \min_{(u,v)\in E}
+                \{
+                    \mathrm{Opt}(i-1, v),
+                    \mathrm{Opt}(i-1, u) + w(u, v)
+                \}
+                &\Leftrightarrow i > 0 \\
+             0 &\Leftrightarrow i=0 \land v=s \\
+             \infty &\Leftrightarrow i=0 \land v\neq s \\
+        \end{cases}
+$$
+
+Falls $i>0$ Kanten erlaubt sind, so wird zunächst die Länge des optimalen Weges mit einer Kante weniger ermittelt. Dieser kann um die Kante $(u,v)$ ergänzt werden, wenn das Gewicht der Kante $w(u,v)$ den Gesamtweg verringert. Deswegen müssen beide Wege ermittelt werden, der kürzere ist der optimale Weg.
+
+Falls der Weg keine Kanten mehr erlaubt $(i=0)$, dann ist der optimale Weg dann $0$, wenn der Startknoten erreicht wurde, und ansonsten $\infty$.
+
+Dieser Algorithmus benötigt eine Laufzeit in $\mathcal O(|V|^2 |E|)$ und Speicherplatz in $\mathcal O(|V|^2)$. Er kann verbessert werden, wenn zuvor Listen mit Eingangsknoten berechnet werden und nur der optimale Weg $\mathrm{d}[v]$ für jeden Knoten $v$ berechnet wird.
+
+#### Pseudocode
+Um die Performance des obigen Algorithmus zu verbessern, kann für jeden Knoten $v$ eine Liste $\mathrm{In}[v]$ mit allen eingehenden Knoten in der Laufzeit $\mathcal O(|V|+|E|)$ berechnet werden. Wenn nur noch der optimale Weg $\mathrm d[v]$ gespeichert wird, kann zudem der Speicherbedarf reduziert werden. Dann beträgt die Laufzeit $\mathcal O(|V|^2+|V|\cdot |E|)$ und den Speicherplatz $\mathcal O(|V|)$. Falls der Graph mindestens $|V|$ Kanten hat, dann beträgt die Laufzeit immer $\mathcal O(|V|\cdot |E|)$.
+
+```
+Bellman-Ford(G,s)
+    \\ Initialisierung
+    d = new array [1..|V|]
+    for each v in V do
+        d[v] = inf \\ Unendlich
+    d[s]=0
+
+    for i=1 to |V|-1 do
+        for each v in V do
+            for each (u,v) in In[v] do
+                if d[u]+w(u,v) < d[v]
+                then d[v] = d[u] + w(u,v)
+    return d
+```
+
+### Floyd-Warshall-Algorithmus
+Sei $G=(V,E)$ ein Graph ohne negative Kreise. Dann berechnet der Algorithmus von Floyd-Warshall die Entfernung zwischen jedem Knotenpaar in einer Laufzeit $\mathcal O(|V|^3)$.
+
+Hierzu wird eine Adjazenzmatrix $W=(w_{ij})$ übergeben, die für jeden Knoten das Gewicht $w_{ij}$ beinhaltet. Hierbei gelten $\forall i=j: w_{ij}=0$ und $\nexists (i,j)\in E: w_{ij}=\infty$.
+
+Da kein Knoten doppelt in einem kürzsten Weg vorkommt, kann man nur die Wege betrachten, die jeden Knoten maximal einmal enthalten. Daher kann der kürzeste Weg von $i$ nach $j$ entweder der kürzste Weg ohne einen beliebigen Knoten $k$ sein, oder der kürzeste Weg von $i$ nach $k$ zuzüglich des kürzesten Weges von $k$ nach $j$.
+
+Sei $d_{ij}^{(k)}$ die Länge des kürzesten Weges von $i$ nach $j$, der nur die Knoten aus der Menge $\{1,\dots, k\}$ verwendet.
+
+$$
+    d_{ij}^{(k)} =
+        \begin{cases}
+            w_{ij} &\Leftrightarrow k=0 \\
+            \min{\large \{}
+                d_{ij}^{(k-1)},
+                d_{ik}^{(k-1)} + d_{kj}^{(k-1)}
+            {\large \}} &\Leftrightarrow k>0
+        \end{cases}
+$$
+
+Dann kann der jeweils kürzeste Pfad zu allen Knoten in einer dreidimensionalen Matrix $D$ gespeichert werden. Dieser Algorithmus nutzt die Technik der dynamischen Programmierung.
+
+```
+Floyd-Warshall(W,n)
+    \\ Reserviere Speicher für Felder D(k)
+    D = new array[V][V][V]
+    D(0) = W
+
+    for k=1 to n do
+        for i=1 to n do
+            for j=1 to n do
+                d[i, j, k] = min{d[i, j, k-1], d[i, k, k-1]+d[k, j, k-1]}
+    return D(n)
+```
+
 # 5. Speicher und Datentypen
 ## Speichermodell
 * Beliebig viele Speicherzellen (abstrahiert)
