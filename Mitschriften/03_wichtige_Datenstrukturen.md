@@ -211,6 +211,14 @@ Die Schwarzhöhe $\mathrm{sh}(v)$ eines Knotens $v$ in einem Rot-Schwarz-Baum is
 
 Ein Unterbaum mit der Wurzel $v$ eines Rot-Schwarz-Baums hat mindestens $2^{\mathrm{sh}(v) - 1}$ interne Knoten.
 
+### Minimale Spannbäume
+Sei $G=(V,E)$ ein gewichteter, ungerichteter, zusammenhängender Graph. Dann ist ein minimaler Spannbaum ein aufspannender Baum mit dem minimalen Gesamtgewicht.
+
+Sei $G=(V,E)$ ein ungerichteter, gewichteter, zusammenhängender Graph. Sei $(v_0,\dots,v_k)$ ein einfacher Kreis in $G$ und sei $e$ eine Kante des Kreises mit maximalem Gewicht. Dann ist der Graph $G^\prime=(V,E\backslash\{e\})$ zsammenhängend und der minimale Spannbaum hat dasselbe Gewicht wie der minimale Spannbaum von $G$.
+
+### Aufspannende Bäume
+Ein aufspannender Baum ist ein Baum, dessen Knoten die gesamte Knotenmenge $V$ eines Graphen $G=(V,E)$ bilden.
+
 ## Hashtabellen
 Da Felder mit direkter Adressierung einen extrem ineffizienten Speicherbedarf haben, wird stattdessen eine _Hashfunktion_ $h: U \rightarrow \{1, \dots, m-1\}$ verwendet, die das Universum $U$ auf eine Hashtabelle $T[0..m-1]$ der Größe $m$ abbildet. Für einen Schlüssel $k$ nennen wir $h(k)$ den Hashwert von $k$.
 

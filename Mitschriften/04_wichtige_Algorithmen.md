@@ -717,7 +717,7 @@ Gegeben seien ein Graph $G$. Dann soll der Algorithmus für alle Knotenpaare  $a
 Dies kann mit dem Floyd-Warshall-Algorithmus erfolgen.
 
 ### Breitensuche ($\mathrm{BFS}$)
-Sei ein Graph $G=(V,E)$ in der Adjazenzlistendarstellung dargestellt. Dann können alle von einem Startknoten $s$ ausgehenden Wege in der Worst-Case-Laufzeit $\mathrm O(|V|+|E|)$ gesucht werden, dies nennt man Breitensuche (_BFS_)[^32].
+Sei ein Graph $G=(V,E)$ in der Adjazenzlistendarstellung dargestellt. Dann können alle von einem Startknoten $s$ ausgehenden Wege mit einer Breitensuche (_BFS_)[^32] in der Worst-Case-Laufzeit $\mathrm O(|V|+|E|)$ gesucht werden. Hierbei werden zunächst alle Nachbarn eines Knotens betrachtet, bevor diese Nachbarn bearbeitet werden.
 
 [^32]: breadth first search
 
@@ -851,5 +851,87 @@ Floyd-Warshall(W,n)
             for j=1 to n do
                 d[i, j, k] = min{d[i, j, k-1], d[i, k, k-1]+d[k, j, k-1]}
     return D(n)
+```
+
+### Tiefensuche ($DFS$)
+Sei ein Graph $G=(V,E)$ in der Adjazenzlistendarstellung dargestellt. Dann wird in einer Tiefensuche ($DFS$)[^33] jeder Knoten in der Worst-Case-Laufzeit $\mathrm O(|V|+|E|)$ bearbeitet. DIe Tiefensuche ist rekursiv, jeder neu entdeckte Knoten $v_i$ wird unmittelbar als Ausgangspunkt einer Tiefensuche verwendet.
+
+Erst wenn diese Tiefensuche an $v$ abgeschlossen wird, wird nach weiteren unentdeckten Nachbarn des zuvor entdeckten Knotens $v_{i-1}$ gesucht. Wird von einem Knoten $v$ aus ein Knoten $w$ entdeckt, dann werden erst alle Nachbarknoten von $w$ abgearbeitet, bevor die anderen Nachbarknoten von $v$ bearbeitet werden.
+
+Dadurch gibt es einen Unterschied zwischen dem Entdeckungszeitpunkt $d[v]$ eines Knotens $v$ und dem Abarbeitungszeitpunkt $f[v]$, wobei $d[v]<f[v]$ und $d[v], f[v] \in [1, |V|]$ gelten. Vor $d[v]$ ist $v$ $\mathrm{weiß}$, zwischen $d[v]$ und $f[v]$ ist $v$ $\mathrm{grau}$, nach $f[v]$ ist $v$ $\mathrm{schwarz}$.
+
+Die Tiefensuche kann beispielsweise zur Suche von starken Zusammenhangskomponenten oder für topologische Sortierungen verwendet werden.
+
+[^33]: depth first search
+
+#### Technische Invariante
+Allen Knoten wird eine von $3$ Farben ($\mathrm{weiß}$, $\mathrm{grau}$, $\mathrm{schwarz}$) zugewiesen. Alle noch nicht "entdeckten" Knoten sind $\mathrm{weiß}$. Wenn $u$ schwarz ist, dann sind seine adjazenten Knoten $\mathrm{grau}$ oder $\mathrm{schwarz}$. $\mathrm{Graue}$ Knoten können auch $\mathrm{weiße}$ adjazente Knoten haben.
+
+#### Klammersatz zur Tiefensuche
+In jeder Tiefensuche eines gerichteten oder ungerichteten Graphen gilt für jeden Knoten $u$ und $v$ genau eine der folgenden drei Bedingungen.
+
+* Die Intervalle $[d[u],f[u]]$ und $[d[v],f[v]]$ sind vollständig disjunkt.
+* Das Intervall $[d[u],f[u]]$ ist vollständig im Interval $[d[v],f[v]]$ enthalten und $u$ ist der Nachfolger von $v$ im DFS-Wald.
+* Intervall $[d[v],f[v]]$ ist vollständig im Interval $[d[u],f[u]]$ enthalten und $v$ ist Nachfolger von $u$ im DFS-Wald.
+
+Als Korollar folgt dass ein Knoten $v$ ist genau dann echter ($u\neq v$) Nachfolger von Knoten $u$ im $DFS$-Wald von $G$, wenn $d[u]<d[v]<f[v]<f[u]$.
+
+#### Satz vom weißen Weg
+In einem $DFS$-Wald eines gerichteten oder ungerichteten Graphen $G$ ist ein Knoten $v$ genau dann ein Nachfolger des Knotens $u$, wenn $v$ zum Zeitpunkt $d[u]$ über einen Weg weißer Knoten erreicht werden kann.
+
+#### Klassifikation von Kanten
+Kanten im $DFS$-Wald werden allgemein als _Baumkanten_ bezeichnet. _Rückwärtskanten_ sind Kanten $(u,v)$, die den Knoten $u$ mit dem Vorgängerknoten $v$ verbinden. _Vorwärtskanten_ sind Kanten $(u,v)$, die keine Baumkanten sind aber $v$ mit dem Nachfolger $u$ verbinden. Alle übrigen Kanten sind _Kreuzkanten_.
+
+#### Pseudocode
+```
+DFS(G)
+    for each vertex u in V do
+        color[u] = weiß
+        p[u] = NIL
+        time = 0
+
+    for each vertex u in V do
+        if color[u] = weiß
+        then DFS-Visit(u)
+
+DFS-Visit(u)
+    color[u] = grau
+    time = time + 1
+    d[u] = time
+
+    for each v in Adj[u] do
+        if color[v] = weiß
+        then p[v] = u
+        DFS-Visit(v)
+
+    color[u] = schwarz
+    time = time + 1
+    f[u] = time
+```
+
+
+
+## Minimale Spannbäume
+### Berechnung
+```
+MST-1(G)
+    T=G
+    while T ist kein Baum do
+        Finde Kreis in T
+        Entferne die Kante mit maximalem Gewicht aus dem Kreis
+    return T
+```
+
+### Kruskal-Algorithmus
+```
+Kruskal(G)
+    A = {} \\ leere Menge
+    Sortiere Kanten nach Gewicht
+
+    for each (u,v) in E geordnet nach aufsteigendem Gewicht do
+        Graph H = (V,A)
+        if u und v sind nicht in derselben Zusammenhangskomponente in H
+        then A = A + {(u,v)} \\ Vereinigungsmenge
+    return A
 ```
 
