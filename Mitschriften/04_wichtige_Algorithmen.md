@@ -882,6 +882,8 @@ In einem $DFS$-Wald eines gerichteten oder ungerichteten Graphen $G$ ist ein Kno
 #### Klassifikation von Kanten
 Kanten im $DFS$-Wald werden allgemein als _Baumkanten_ bezeichnet. _Rückwärtskanten_ sind Kanten $(u,v)$, die den Knoten $u$ mit dem Vorgängerknoten $v$ verbinden. _Vorwärtskanten_ sind Kanten $(u,v)$, die keine Baumkanten sind aber $v$ mit dem Nachfolger $u$ verbinden. Alle übrigen Kanten sind _Kreuzkanten_.
 
+Vorwärtskanten bilden eine Abkürzung von einem Knoten zu einem Nachfolger, Rückwärtskanten schließen einen Kreis. Kreuzkanten bilden Verbindungen zwischen verschiedenen Bereichen im $DFS$-Wald.
+
 #### Pseudocode
 ```
 DFS(G)
@@ -912,9 +914,13 @@ DFS-Visit(u)
 
 
 ## Minimale Spannbäume
-### Berechnung
+### Kreiseliminierung
+Minimale Spannbäume können berechnet werden, in denen alle Kreise aus einem Graph $G$ eliminieren. So lange es Kreise im Graphen gibt, werden Kreise gesucht, aus denen das Element mit dem größten Gewicht entfernt wird.
+
+Dieser Algorithmus ist recht langsam, weil die Suche nach Kreisen rechenintensiv ist. Zusätzlich muss für jeden Kreis diejenige mit dem größten Gewicht identifiziert werden, auch dies kostet Zeit.
+
 ```
-MST-1(G)
+MST(G)
     T=G
     while T ist kein Baum do
         Finde Kreis in T
@@ -922,7 +928,11 @@ MST-1(G)
     return T
 ```
 
-### Kruskal-Algorithmus
+### Algorithmus von Kruskal
+Der Algorithmus von Kruskal wählt Kanten aus einem Graphen aufsteigend nach Gewicht aus. Dadurch können Inseln von verbundenen Knoten entstehen, die am Ende des Algorithmus verbunden sind.
+
+Der Algorithmus von Kruskal berechnet in der Laufzeit $\mathcal O(|E| \log_2 |E|)$ einen minimalen Spannbaum eines gewichteten, zusammenhängenden, ungerichteten Graphen $G=(V,E)$.
+
 ```
 Kruskal(G)
     A = {} \\ leere Menge
@@ -934,4 +944,26 @@ Kruskal(G)
         then A = A + {(u,v)} \\ Vereinigungsmenge
     return A
 ```
+
+#### Pseudocode
+Die Zusammenhangskomponenten des durch die Kanten aus $A$ erzeugten Graphen können durch eine Union-Find-Datenstruktur dargestellt werden.
+
+```
+Kruskal(G)
+    A = {} \\ leere Menge
+
+    for each vertex v in V do
+        Make-Set(v)
+
+    Sortiere Kanten nach Gewicht
+
+    for each (u,v) in E (geordnet nach aufsteigendem Gewicht) do
+        if Find(u) != Find(v)
+        then
+            A = A + {(u,v)} \\ Vereinigungsmenge
+            Union(u,v)
+    return A
+```
+
+### Algorithmus von Prim
 

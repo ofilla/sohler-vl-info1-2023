@@ -245,3 +245,15 @@ Alle Schlüssel werden in der Hashtabelle $T$ gespeichert. Beim Einfügen, suche
 
 Ein freies Feld wird meist mit $-1$ markiert, ein gelöschtes mit $-2$. Die spezielle Markierung eines gelöschten Feldes ist notwendig, weil die Suche nicht bei einem gelöschten Element abbrechen darf, da das gesuchte Element danach folgen kann.
 
+## Union-Find-Datenstrukturen
+Union-Find-Datenstrukturen speichern Partitionen $\mathcal S = \{S_1,\dots, S_k\}$ einer Grundmenge $V=\bigcup_i S_i$. Diese Partitionen sind disjunkt $(\forall i\neq j: S_i\cap S_j=\empty)$, zudem gibt es für jede Partition einen Repräsentanten, der gespeichert wird.
+
+Die Operation $\mathrm{Make}$-$\mathrm{Set}(x)$ erzeugt eine neue Menge, die nur das Element $x\in V$ enthält, und fügt $x$ in $V$ ein. Die Operation $\mathrm{Union}(x,y)$ vereint die Mengen, die $x$ und $y$ enthalten. Die Operation $\mathrm{Find}(x)$ gibt eine Referenz auf den Repräsentanten der Menge $M\ni x$ zurück.
+
+Diese Datenstruktur kann durch eine Menge an verketteten Listen dargestellt werden, bei der das erste Element einer Liste der Repräsentant ist. Jedes Listenelement enthält einen Zeiger auf den Repräsentanten, um die Gruppenzugehörigkeit darzustellen.
+
+Die Operationen $\mathrm{Make}$-$\mathrm{Set}(x)$ und $\mathrm{Find}(x)$ funktionieren in konstanter Laufzeit $(\mathcal O(1))$. Die Operation $\mathrm{Union}(x,y)$ kann realisiert werden, indem die Liste mit $y$ an die Liste mit $x$ angehängt wird. Dann muss jedes Element, dass zur Liste mit $y$ gehörte, die Referenz auf den Repräsentanten auf $x$ aktualisiert bekommen, dies benötigt eine Worst-Case-Laufzeit von $\mathcal O(m)$, wobei $m$ die Größe der kleineren Liste ist. Daraus folgt, dass immer die kleinere Liste an die größere Liste angehängt werden muss.
+
+Wenn wir verkettete Listen als Union-Find Datenstruktur benutzen und bei einer $\mathrm{Union}$-Operation immer die kürzere hinter die längere Liste hängen und entsprechend aktualisieren, dann benötigt eine Sequenz von $m$ Operationen
+aus $\mathrm{Make}$-$\mathrm{Set}$, $\mathrm{Union}$ und $\mathrm{Find}$, von denen $n$ Operationen $\mathrm{Make}$-$\mathrm{Set}$ sind, $\mathcal O(m+ n \log_2 n)$ Zeit.
+
