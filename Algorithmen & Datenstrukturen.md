@@ -380,6 +380,18 @@ Alle Schlüssel werden in der Hashtabelle $T$ gespeichert. Beim Einfügen, suche
 
 Ein freies Feld wird meist mit $-1$ markiert, ein gelöschtes mit $-2$. Die spezielle Markierung eines gelöschten Feldes ist notwendig, weil die Suche nicht bei einem gelöschten Element abbrechen darf, da das gesuchte Element danach folgen kann.
 
+## Union-Find-Datenstrukturen
+Union-Find-Datenstrukturen speichern Partitionen $\mathcal S = \{S_1,\dots, S_k\}$ einer Grundmenge $V=\bigcup_i S_i$. Diese Partitionen sind disjunkt $(\forall i\neq j: S_i\cap S_j=\empty)$, zudem gibt es für jede Partition einen Repräsentanten, der gespeichert wird.
+
+Die Operation $\mathrm{Make}$-$\mathrm{Set}(x)$ erzeugt eine neue Menge, die nur das Element $x\in V$ enthält, und fügt $x$ in $V$ ein. Die Operation $\mathrm{Union}(x,y)$ vereint die Mengen, die $x$ und $y$ enthalten. Die Operation $\mathrm{Find}(x)$ gibt eine Referenz auf den Repräsentanten der Menge $M\ni x$ zurück.
+
+Diese Datenstruktur kann durch eine Menge an verketteten Listen dargestellt werden, bei der das erste Element einer Liste der Repräsentant ist. Jedes Listenelement enthält einen Zeiger auf den Repräsentanten, um die Gruppenzugehörigkeit darzustellen.
+
+Die Operationen $\mathrm{Make}$-$\mathrm{Set}(x)$ und $\mathrm{Find}(x)$ funktionieren in konstanter Laufzeit $(\mathcal O(1))$. Die Operation $\mathrm{Union}(x,y)$ kann realisiert werden, indem die Liste mit $y$ an die Liste mit $x$ angehängt wird. Dann muss jedes Element, dass zur Liste mit $y$ gehörte, die Referenz auf den Repräsentanten auf $x$ aktualisiert bekommen, dies benötigt eine Worst-Case-Laufzeit von $\mathcal O(m)$, wobei $m$ die Größe der kleineren Liste ist. Daraus folgt, dass immer die kleinere Liste an die größere Liste angehängt werden muss.
+
+Wenn wir verkettete Listen als Union-Find Datenstruktur benutzen und bei einer $\mathrm{Union}$-Operation immer die kürzere hinter die längere Liste hängen und entsprechend aktualisieren, dann benötigt eine Sequenz von $m$ Operationen
+aus $\mathrm{Make}$-$\mathrm{Set}$, $\mathrm{Union}$ und $\mathrm{Find}$, von denen $n$ Operationen $\mathrm{Make}$-$\mathrm{Set}$ sind, $\mathcal O(m+ n \log_2 n)$ Zeit.
+
 # 4. wichtige Algorithmen
 ## Rekursionsalgorithmen
 ### Insertion Sort
@@ -1001,15 +1013,25 @@ Die Struktur des Rot-Schwarz-Baumes $T$ wird nach dem Löschen eines Knotens $z$
 Die Rot-Schwarz-Eigenschaft kann verletzt worden sein, wenn $z$ schwarz ist, denn dann kann es sein, dass nach dem Löschen zwei rote Knoten aufeinanderfolgen.
 
 ##### Fallunterscheidung
-Wenn der Knoten $x$, der den Knoten $z$ ersetzt, rot ist, muss $x$ nur schwarz gefärbt werden um den Baum zu reparieren. Sei $x$ schwarz, dann gibt es folgende Fälle.
+Wenn der Knoten $x$, der den Knoten $z$ ersetzt, rot ist, muss $x$ nur schwarz gefärbt werden um den Baum zu reparieren. Seien $x$ schwarz und $w$ der Geschwisterknoten von $x$, dann gibt es folgende Fälle.
 
-1. Der Geschwisterknoten von $x$ ist rot, dann muss nur $x$ schwarz gefärbt werden.
-2. Der Geschwisterknoten $w$ von $x$ und beide Kinder von $w$ sind schwarz.
-    1. $\mathrm{parent}[x]$ ist rot.
-    2. $\mathrm{parent}[x]$ ist schwarz.
-3. Der Geschwisterknoten $w$ von $x$ ist schwarz und ein Kind von $w$ ist rot.
-    1. $\mathrm{left}[w]$ ist rot und $\mathrm{right}[w]$ ist schwarz.
-    2. $\mathrm{left}[w]$ ist schwarz und $\mathrm{right}[w]$ ist rot.
+1. $w$ ist rot.
+    1. Färbe $w$ schwarz.
+    2. Rotiere so um $\mathrm{parent}[x]$, dass $w$ und $\mathrm{parent}[x]$ die Plätze tauschen.
+    3. Fahre Prüfung mit $x$ an neuer Position fort.
+2. $w$ von $x$ und beide Kinder von $w$ sind schwarz.
+    1. Färbe $w$ rot.
+    2. Fahre Prüfung mit $\mathrm{parent}[x]$ fort.
+3. $w$ ist schwarz und mindestens ein Kind von $w$ ist rot.
+    1. Falls nur das Kind auf der selben Seite wie $x$ rot ist:
+        2. Färbe das rote Kind von $w$ schwarz.
+        3. Färbe $w$ rot.
+        4. Rotiere so um $w$, dass $w$ und das umgefärbte Kind die Plätze tauschen.
+        5. Fahre mit Prüfung für $x$ fort
+    2. Sonst:
+        1. Färbe $w$ wie $\mathrm{parent}[x]$.
+        2. Färbe $\mathrm{parent}[w]$ und das Kind auf der von $x$ abgewandten Seite schwarz.
+        3. Rotiere so um $\mathrm{parent}[x]$, dass $w$ und $\mathrm{parent}[x]$ die Plätze tauschen.
 
 ##### Pseudocode
 ```
@@ -1030,12 +1052,12 @@ RS-Löschen-Fix(T,x)
                 x = parent[x]
             else \\ mindestens ein Kind des Geschwisterknotens ist rot
                 if color[right[w]] = schwarz
-                then \\ nur das linke Kind des Geschwisterknotens ist schwarz
+                then \\ nur das linke Kind des Geschwisterknotens ist rot
                     color[left[w]] = schwarz
                     color[w] = rot
                     Rechtsrotation(T,w)
                     w = right[parent[x]]
-                else \\ nur das rechte Kind des Geschwisterknotens ist schwarz
+                else \\ das linke Kind ist nicht schwarz
                     color[w] = color[parent[x]]
                     color[parent[x]] = schwarz
                     color[right[w]] = schwarz
@@ -1099,7 +1121,7 @@ Gegeben seien ein Graph $G$. Dann soll der Algorithmus für alle Knotenpaare  $a
 Dies kann mit dem Floyd-Warshall-Algorithmus erfolgen.
 
 ### Breitensuche ($\mathrm{BFS}$)
-Sei ein Graph $G=(V,E)$ in der Adjazenzlistendarstellung dargestellt. Dann können alle von einem Startknoten $s$ ausgehenden Wege mit einer Breitensuche (_BFS_)[^32] in der Worst-Case-Laufzeit $\mathrm O(|V|+|E|)$ gesucht werden. Hierbei werden zunächst alle Nachbarn eines Knotens betrachtet, bevor diese Nachbarn bearbeitet werden.
+Sei ein Graph $G=(V,E)$ in der Adjazenzlistendarstellung dargestellt. Dann können alle von einem Startknoten $s$ ausgehenden Wege mit einer Breitensuche (_BFS_)[^32] in der Worst-Case-Laufzeit $\mathcal O(|V|+|E|)$ gesucht werden. Hierbei werden zunächst alle Nachbarn eines Knotens betrachtet, bevor diese Nachbarn bearbeitet werden.
 
 [^32]: breadth first search
 
@@ -1120,7 +1142,8 @@ BFS(G,s)
     while Q != {} do
         u = head[Q]
         for each v in Adj[u] do
-            if color[v] = weiß then
+            if color[v] = weiß
+            then
                 color[v] = grau
                 d[v] = d[u] + 1
                 pi[v] = u
@@ -1264,6 +1287,8 @@ In einem $DFS$-Wald eines gerichteten oder ungerichteten Graphen $G$ ist ein Kno
 #### Klassifikation von Kanten
 Kanten im $DFS$-Wald werden allgemein als _Baumkanten_ bezeichnet. _Rückwärtskanten_ sind Kanten $(u,v)$, die den Knoten $u$ mit dem Vorgängerknoten $v$ verbinden. _Vorwärtskanten_ sind Kanten $(u,v)$, die keine Baumkanten sind aber $v$ mit dem Nachfolger $u$ verbinden. Alle übrigen Kanten sind _Kreuzkanten_.
 
+Vorwärtskanten bilden eine Abkürzung von einem Knoten zu einem Nachfolger, Rückwärtskanten schließen einen Kreis. Kreuzkanten bilden Verbindungen zwischen verschiedenen Bereichen im $DFS$-Wald.
+
 #### Pseudocode
 ```
 DFS(G)
@@ -1294,9 +1319,13 @@ DFS-Visit(u)
 
 
 ## Minimale Spannbäume
-### Berechnung
+### Kreiseliminierung
+Minimale Spannbäume können berechnet werden, in denen alle Kreise aus einem Graph $G$ eliminieren. So lange es Kreise im Graphen gibt, werden Kreise gesucht, aus denen das Element mit dem größten Gewicht entfernt wird.
+
+Dieser Algorithmus ist recht langsam, weil die Suche nach Kreisen rechenintensiv ist. Zusätzlich muss für jeden Kreis diejenige mit dem größten Gewicht identifiziert werden, auch dies kostet Zeit.
+
 ```
-MST-1(G)
+MST(G)
     T=G
     while T ist kein Baum do
         Finde Kreis in T
@@ -1304,7 +1333,11 @@ MST-1(G)
     return T
 ```
 
-### Kruskal-Algorithmus
+### Algorithmus von Kruskal
+Der Algorithmus von Kruskal wählt Kanten aus einem Graphen aufsteigend nach Gewicht aus. Dadurch können Inseln von verbundenen Knoten entstehen, die am Ende des Algorithmus verbunden sind.
+
+Der Algorithmus von Kruskal berechnet in der Laufzeit $\mathcal O(|E| \log_2 |E|)$ einen minimalen Spannbaum eines gewichteten, zusammenhängenden, ungerichteten Graphen $G=(V,E)$.
+
 ```
 Kruskal(G)
     A = {} \\ leere Menge
@@ -1316,6 +1349,28 @@ Kruskal(G)
         then A = A + {(u,v)} \\ Vereinigungsmenge
     return A
 ```
+
+#### Pseudocode
+Die Zusammenhangskomponenten des durch die Kanten aus $A$ erzeugten Graphen können durch eine Union-Find-Datenstruktur dargestellt werden.
+
+```
+Kruskal(G)
+    A = {} \\ leere Menge
+
+    for each vertex v in V do
+        Make-Set(v)
+
+    Sortiere Kanten nach Gewicht
+
+    for each (u,v) in E (geordnet nach aufsteigendem Gewicht) do
+        if Find(u) != Find(v)
+        then
+            A = A + {(u,v)} \\ Vereinigungsmenge
+            Union(u,v)
+    return A
+```
+
+### Algorithmus von Prim
 
 # 5. Speicher und Datentypen
 ## Speichermodell

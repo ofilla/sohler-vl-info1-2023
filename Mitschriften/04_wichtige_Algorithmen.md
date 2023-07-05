@@ -619,15 +619,25 @@ Die Struktur des Rot-Schwarz-Baumes $T$ wird nach dem Löschen eines Knotens $z$
 Die Rot-Schwarz-Eigenschaft kann verletzt worden sein, wenn $z$ schwarz ist, denn dann kann es sein, dass nach dem Löschen zwei rote Knoten aufeinanderfolgen.
 
 ##### Fallunterscheidung
-Wenn der Knoten $x$, der den Knoten $z$ ersetzt, rot ist, muss $x$ nur schwarz gefärbt werden um den Baum zu reparieren. Sei $x$ schwarz, dann gibt es folgende Fälle.
+Wenn der Knoten $x$, der den Knoten $z$ ersetzt, rot ist, muss $x$ nur schwarz gefärbt werden um den Baum zu reparieren. Seien $x$ schwarz und $w$ der Geschwisterknoten von $x$, dann gibt es folgende Fälle.
 
-1. Der Geschwisterknoten von $x$ ist rot, dann muss nur $x$ schwarz gefärbt werden.
-2. Der Geschwisterknoten $w$ von $x$ und beide Kinder von $w$ sind schwarz.
-    1. $\mathrm{parent}[x]$ ist rot.
-    2. $\mathrm{parent}[x]$ ist schwarz.
-3. Der Geschwisterknoten $w$ von $x$ ist schwarz und ein Kind von $w$ ist rot.
-    1. $\mathrm{left}[w]$ ist rot und $\mathrm{right}[w]$ ist schwarz.
-    2. $\mathrm{left}[w]$ ist schwarz und $\mathrm{right}[w]$ ist rot.
+1. $w$ ist rot.
+    1. Färbe $w$ schwarz.
+    2. Rotiere so um $\mathrm{parent}[x]$, dass $w$ und $\mathrm{parent}[x]$ die Plätze tauschen.
+    3. Fahre Prüfung mit $x$ an neuer Position fort.
+2. $w$ von $x$ und beide Kinder von $w$ sind schwarz.
+    1. Färbe $w$ rot.
+    2. Fahre Prüfung mit $\mathrm{parent}[x]$ fort.
+3. $w$ ist schwarz und mindestens ein Kind von $w$ ist rot.
+    1. Falls nur das Kind auf der selben Seite wie $x$ rot ist:
+        2. Färbe das rote Kind von $w$ schwarz.
+        3. Färbe $w$ rot.
+        4. Rotiere so um $w$, dass $w$ und das umgefärbte Kind die Plätze tauschen.
+        5. Fahre mit Prüfung für $x$ fort
+    2. Sonst:
+        1. Färbe $w$ wie $\mathrm{parent}[x]$.
+        2. Färbe $\mathrm{parent}[w]$ und das Kind auf der von $x$ abgewandten Seite schwarz.
+        3. Rotiere so um $\mathrm{parent}[x]$, dass $w$ und $\mathrm{parent}[x]$ die Plätze tauschen.
 
 ##### Pseudocode
 ```
@@ -648,12 +658,12 @@ RS-Löschen-Fix(T,x)
                 x = parent[x]
             else \\ mindestens ein Kind des Geschwisterknotens ist rot
                 if color[right[w]] = schwarz
-                then \\ nur das linke Kind des Geschwisterknotens ist schwarz
+                then \\ nur das linke Kind des Geschwisterknotens ist rot
                     color[left[w]] = schwarz
                     color[w] = rot
                     Rechtsrotation(T,w)
                     w = right[parent[x]]
-                else \\ nur das rechte Kind des Geschwisterknotens ist schwarz
+                else \\ das linke Kind ist nicht schwarz
                     color[w] = color[parent[x]]
                     color[parent[x]] = schwarz
                     color[right[w]] = schwarz
@@ -717,7 +727,7 @@ Gegeben seien ein Graph $G$. Dann soll der Algorithmus für alle Knotenpaare  $a
 Dies kann mit dem Floyd-Warshall-Algorithmus erfolgen.
 
 ### Breitensuche ($\mathrm{BFS}$)
-Sei ein Graph $G=(V,E)$ in der Adjazenzlistendarstellung dargestellt. Dann können alle von einem Startknoten $s$ ausgehenden Wege mit einer Breitensuche (_BFS_)[^32] in der Worst-Case-Laufzeit $\mathrm O(|V|+|E|)$ gesucht werden. Hierbei werden zunächst alle Nachbarn eines Knotens betrachtet, bevor diese Nachbarn bearbeitet werden.
+Sei ein Graph $G=(V,E)$ in der Adjazenzlistendarstellung dargestellt. Dann können alle von einem Startknoten $s$ ausgehenden Wege mit einer Breitensuche (_BFS_)[^32] in der Worst-Case-Laufzeit $\mathcal O(|V|+|E|)$ gesucht werden. Hierbei werden zunächst alle Nachbarn eines Knotens betrachtet, bevor diese Nachbarn bearbeitet werden.
 
 [^32]: breadth first search
 
@@ -738,7 +748,8 @@ BFS(G,s)
     while Q != {} do
         u = head[Q]
         for each v in Adj[u] do
-            if color[v] = weiß then
+            if color[v] = weiß
+            then
                 color[v] = grau
                 d[v] = d[u] + 1
                 pi[v] = u

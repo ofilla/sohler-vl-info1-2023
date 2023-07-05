@@ -36,8 +36,8 @@ $1.\ -\ 30 $ & $2.\ -\ 42$ \\
 $3.\ -\ 41 $ & $4.\ -\ 50$ \\
 \begin{tikzpicture}
 \node[black]{41}
-    child {node[black]{30}}
-    child {node[black]{42}}
+    child {node[red]{30}}
+    child {node[red]{42}}
     ;
 \end{tikzpicture}
 &
@@ -57,9 +57,9 @@ $5.\ -\ 55$ & $6.\ -\ 1$ \\
 \node[black]{41}
     child {node[black]{30}}
     child {
-        node[red]{50}
-        child{node[black]{42}}
-        child{node[black]{55}}
+        node[black]{50}
+        child{node[red]{42}}
+        child{node[red]{55}}
     }
     ;
 \end{tikzpicture}
@@ -72,9 +72,9 @@ $5.\ -\ 55$ & $6.\ -\ 1$ \\
         child[transparent]{}
     }
     child {
-        node[red]{50}
-        child{node[black]{42}}
-        child{node[black]{55}}
+        node[black]{50}
+        child{node[red]{42}}
+        child{node[red]{55}}
     }
     ;
 \end{tikzpicture}
@@ -83,14 +83,14 @@ $7.\ -\ 3$ \\
 \begin{tikzpicture}
 \node[black]{41}
     child {
-        node[red]{3}
-        child{node[black]{1}}
-        child{node[black]{30}}
+        node[black]{3}
+        child{node[red]{1}}
+        child{node[red]{30}}
     }
     child {
-        node[red]{50}
-        child{node[black]{42}}
-        child{node[black]{55}}
+        node[black]{50}
+        child{node[red]{42}}
+        child{node[red]{55}}
     }
     ;
 \end{tikzpicture}

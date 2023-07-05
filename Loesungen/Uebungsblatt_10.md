@@ -61,7 +61,7 @@ RSEinfügenFix(T,z)
 ### b)
 > Fügen Sie die Schlüssel $30, 42, 41, 50, 55, 1, 3$ in dieser Reihenfolge in einen anfangs leeren Rot-Schwarz-Baum ein und notieren Sie dabei nach jeder Operation den resultierenden Baum.
 
-![Schrittweises Einfügen der Schlüssel 30, 42, 41, 50, 55, 1, 3 in einen anfangs leeren Baum](./img/10.1.b.png)[](../../..)
+![Schrittweises Einfügen der Schlüssel 30, 42, 41, 50, 55, 1, 3 in einen anfangs leeren Baum](./img/10.1.b.png)
 
 ### c)
 > Löschen Sie die Werte $5, 10, 47, 20$ und $18$ in der genannten Reihenfolge [aus dem folgenden Rot-Schwarz-Baum]. Zeichnen Sie den Rot-Schwarz-Baum nach jedem Löschen und geben Sie an, welche Fälle durchgeführt wurden.
@@ -73,8 +73,6 @@ RSEinfügenFix(T,z)
 ![10 wurde gelöscht](./img/10.1.c.2.png)
 
 ![Zwischenergebnis: 47 wurde gelöscht](./img/10.1.c.3.png)
-
-Nur ein Zwischenergebnis! Was nun?
 
 ## Suchbäume
 > Sei $T$ ein binärer Baum, der nicht zwingend die Suchbaumeigenschaft erfüllt. Es soll nun geprüft werden, ob $T$ ein Suchbaum ist. Für den binären Baum $T$ liefert $\mathrm{root}(T)$ den Wurzelknoten von $T$ . Für jeden Knoten $v \in V$ im binären Baum T stehen folgende Operationen mit Laufzeit $\mathcal O(1)$ zur Verfügung.
