@@ -117,6 +117,12 @@ Die _starken Zusammenhangskomponenten_ eines Graphen sind die Äquivalenzklassen
 ### Knotengrade
 Der _Ausgangsgrad_ eines Knotens in einem gerichteten Graph ist die Anzahl Kanten, die den Knoten verlassen. Der _Eingangsgrad_ eines Knotens in einem gerichteten Graph ist die Anzahl Kanten, die auf den Knoten zeigen.
 
+### Knotenüberdeckung
+Sei $G=(V,E)$ ein ungerichteter Graph. Eine Menge $U\subseteq V$ heißt Knotenüberdeckung, wenn für jede Kante $(u,v)\in E$ mindestens einer der Endknoten $u,v$ in $U$ enthalten ist.
+
+### Bipartitheit
+Ein Graph $G=(V,E)$ heißt bipartit oder 2-färbbar, wenn man $V$ in zwei Mengen $L$ und $R$ partitionieren kann, so dass es keine Kante gibt, deren Endknoten beide in $L$ oder beide in $R$ liegen. Oft wird dies als $G=(L\cup R, E)$ geschrieben. $L$ und $R$ sind gültige Knotenüberdeckungen.
+
 ### Darstellungen
 #### Adjazenzmatrix
 Für dicht besetzte Graphen mit $|E| \lesssim |V|^2$ eignen sich Adjazenzmatrizen zur Speicherung der Knoten.

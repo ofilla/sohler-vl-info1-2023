@@ -93,3 +93,24 @@ Hat die optimale Lösung für Objekte aus $M^\prime$ und Rucksackgröße $j$ den
 
 Mit Hilfe der Algorithmen $\mathrm{Rucksack}$ und $\mathrm{RucksackLösung}$ kann man in der Laufzeit $\mathcal O(nG)$ eine optimale Lösung für das Rucksackproblem berechnen, wobei $n$ die Anzahl der Objekte ist und $G$ die Größe des Rucksacks.
 
+## Travelling Salesman Problem
+Sei $G=(V,E)$ ein ungerichteter vollständiger Graph mit positiven Kantengewichten $w(u,v)$ für alle $(u,v)\in E$, o.b.d.A. sei $V={1, \dots, n}$. Gesucht ist eine Reihenfolge $\pi(1),\dots,\pi(n)$ der Knoten aus $V$, so dass die Länge der Rundreise $\pi(1),\dots,\pi(n), \pi(1)$ minimiert wird. Die Länge $L$ der Rundreise ist durch folgende Summe gegeben.
+
+$$
+    L = \sum_{i=1}^n w(\pi(i), \pi(i+1 \mod n))
+$$
+
+### Dreiecksungleichung
+Für je drei Knoten $u,v,x\in V$ gilt $w(u,x) \le w(u,v) + w(v,x)$.
+
+## Approximationsalgorithmus
+Ein Algorithmus $A$ für ein Optimierungsproblem heißt $\alpha(n)$-Approximationsalgorithmus, wenn für alle Eingaben der Größe $n$ folgendes gilt. Hierbei bezeichnet $C$ die Kosten der von $A$ berechneten Lösung, $C^*$ bezeichnet die Kosten der optimalen Lösung. $\alpha(n)$ wird Approximationsfaktor genannt.
+
+$$
+    \forall n: \max\left(\frac{C}{C^*}, \frac{C^*}{C}\right) \le \alpha(n)
+$$
+
+Beispiele
+* minimale Knotenüberdeckung
+* Travelling Salesman Problem
+

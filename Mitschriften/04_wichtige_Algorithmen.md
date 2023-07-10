@@ -975,6 +975,78 @@ Kruskal(G)
     return A
 ```
 
-### Algorithmus von Prim
-<!-- missing -->
+#### Algorithmus von Prim
+Der Algorithmus von Prim berechnet einen minimalen Spannbaum $T$ eines gewichteten, zusammenhängenden, ungerichteten Graphen in der Worst-Case-Laufzeit $\mathcal O(|E| \log_2 |V|)$. Dabei lässt er $T$ von einem Knoten $x\in V$ aus wachsen. Dazu wird in jedem Schritt eine Kante mit minimalem Gewicht, die einen Knoten $v\notin T$ mit einem Knoten $u\in T$ verbindet, zu $T$ hinzugefügt.
+
+Alle Knoten $v\notin T$ werden in einer Prioritätenschlange $Q$ gespeichert. Dabei ist $\mathrm{key}[v]$ das niedrigste Gewicht einer Kante, die $v$ mit einem Knoten des Baums verbindet. $\mathrm{parent}[v]$ ist der Vorgänger von $v$ im Baum $T$.  Die Kantenmenge des Baumes $A$ ist implizit durch $A = \{(v,\mathrm{parent}[v]) | v\in V \backslash \{r\} \backslash Q\}$ gegeben. Die Prioritätenschlange $Q$ wiederum kann als Rot-Schwarz-Baum implementiert werden. Dann ist die Laufzeit des Algorithmus $\mathcal O(|E| \log_2 |V|)$.
+
+Sei $G=(V,E)$ ein zusammenhängender, ungerichteter und gewichteter Graph. Sei $A\subseteq E$ eine Teilmenge eines minimalen Spannbaums von $G$. Sei $Q$ eine Knotenmenge, so dass keine Kante aus $A$ einen Knoten aus $Q$ mit einem Knoten aus $V\backslash Q$ verbindet. Sei $(u,v)$ eine Kante mit minimalem Gewicht, die einen Knoten aus $Q$ mit einem Knoten aus $V\backslash Q$ verbindet. Dann ist $A \cup \{(u,v)\}$ eine Teilmenge eines minimalen Spannbaums von $G$.
+
+```
+Prim(G,r)
+    Q = V
+    For each vertex u in Q do
+        key[u] = inf \\ unendlich
+
+    key[r] = 0
+    parent[r] = NIL
+
+    while Q != {} do
+        u = Extract-Min(Q)
+        for each v in Adj[u] do
+            if v in Q and w(u,v)<key[v]
+            then
+                key[v] = w(u,v)
+                parent[v]=u
+```
+
+## Approximationsalgorithmen
+### minimale Knotenüberdeckung
+Sei $G=(L\cup R, E)$ ein bipartiter Graph. Dann sind $L$ und $R$ gültige Knotenüberdeckungen. Dafür soll eine Knotenüberdeckung $U$ mit minimaler Größe $|U|$ ermittelt werden.
+
+```
+GreedyVertexCover2(G)
+    C = {}
+    E' = E(G)
+
+    while E' != {} do
+        Sei (u,v) beliebige Kante aus E'
+        C = C + {u,v} \\ Vereinigungsmenge
+        Entferne aus E' jede Kante, die an u oder v anliegt
+    return C
+```
+
+### Travelling Salesman Problem
+In einem Preorder-Tree-Walk werden rekursiv alle Knoten von $T$ besucht. Jeder Knoten $v$ wird sofort ausgegeben, wenn er besucht wird, danach wird die Rekursion für die Kinder von $v$ rekursiv besucht. Die Spannbaumberechnung verursacht eine Laufzeit von $\mathcal O(|E| \log_2 |E|)$.
+
+Dieser 2-Approximationsalgorithmus für das Travelling Salesman Problem mit einer Dreiecksungleichung.
+
+```
+ApproxTSP(G,w)
+    Berechne minimalen Spannbaum T von G
+    Sei p die Liste der Knoten von G
+        in der Reihenfolge eines Preorder-Tree-Walk
+        von einem beliebigen Knoten v
+    return L
+```
+
+### LoadBalancing
+Gegeben seien $m$ identische Maschinen $\{1,\dots,m\}$ und $n$ Aufgaben $\{1,\dots,n\}$. Die $j$-te Aufgabe benötige eine Länge $t(j)$. Diese Aufgaben sollen so auf die Maschinen verteilt werden, dass diese möglichst balanciert sind.
+
+Seien $A(i)$ die Menge der Aufgaben auf Maschine $i$ und $T(i) = \sum_{j\in A(i)} t(j)$ die Zeitspanne, die Maschine $i$ für alle Aufgaben benötigt. Dann wird $\max_i \{T(i)\}$ als Makespan bezeichnet. Dieser Makespan soll minimiert werden.
+
+Für jede Probleminstanz ist der optimale Makespan mindestens $T^* = \frac{1}{m} \sum_{j=1}^n t(j)$. Dadurch ist $\mathrm{LoadBalancing}$ ein 2-Approximationsalgorithmus für das Lastbalancierungsproblem.
+
+```
+LoadBalancing
+    for i=i to m do
+        T(i)=0
+        A(i)={}
+
+    for j=1 to n do
+        Sei i eine Maschine mit T(i) = min{T(k)}
+        Weise Aufgabe j Maschine i zu
+        A(i) = A(i) + {j} \\ Vereinigungsmenge
+        T(i) = T(i) + t(j)
+```
 
