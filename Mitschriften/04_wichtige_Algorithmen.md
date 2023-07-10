@@ -196,45 +196,38 @@ $$
 * Sei $W=\sum_{x\in M} x$, so kann man die zwei Teilmengen $L,R$ genau dann finden, wenn es eine Teilmenge $L$ mit $\sum_{x\in L} x=\frac{W}{2}$ gibt.
 
 ### SubsetSum
-$\mathrm{SubsetSum}$ löst eine verallgemeinerte Fragestellung aus der Partitionsfrage.
-Gibt es für ein gegebenes $U$ eine Teilmenge $L\subseteq M$, für die $U=\sum_{x\in L} x$ gilt?
+Der Algorithmus $\mathrm{SubsetSum}$ löst eine verallgemeinerte Fragestellung aus der Partitionsfrage, ob es eine Teilmenge $L\subseteq M$ gibt, deren Elemente die Summe $U=\sum_{x\in L} x$ bilden. Dies kann in einer Laufzeit $\mathcal O(|M|\cdot U)$ erfolgen.
 
-* Sei $M=\{x_1, \dots, x_n\}$ eine Menge, deren Elemente eine Reihenfolge haben.
-* Definiere Indikatorfunktion $\mathrm{Ind}(U,m)$.
-
-#### Entwicklung des Algorithmus
-1. Sei $x_n\in L$
-    * Es gilt $L=\{x_n\} \cup L\backslash \{x_n\}$.
-    * Sei $U^\prime=U-x_n$
-    * Gesucht wird eine Menge $L^\prime\subseteq L\backslash \{x_n\}: U^\prime=\sum_{x\in L} x$
-2. Sei $x_n\notin L$
-    * Gesucht wird eine Menge $L^\prime\subseteq L\backslash \{x_n\}: U=\sum_{x\in L} x$
+Zur Entwicklung wird ein rekursiver Ansatz gewählt. Sei $x_n\in L$, dann gilt $L=\{x_n\} \cup L\backslash \{x_n\}$. Sei $U^\prime=U-x_n$, dann wird wird eine Menge $L^\prime\subseteq L\backslash \{x_n\}$ gesucht, für die $U^\prime=\sum_{x\in L^\prime} x$ gilt. Ansonsten $(x\notin L)$ soll die Menge $L^\prime$ die Bedingung $U=\sum_{x\in L^\prime} x$ erfüllen.
 
 #### Indikatorfunktion
+Die Indikatorfunktion soll prüfen, ob es eine Menge $L\subseteq M$ gibt, deren Elemente die Summe $U$ bilden.
+
 $$
     \mathrm{Ind}(U,m) =
         \begin{cases}
-            \mathrm{true} & \exists L\subseteq M: U=\sum_{x\in L} x \\
-            \mathrm{false} & \nexists L\subseteq M: U=\sum_{x\in L} x
+            \mathrm{true} & \exists L\subseteq M_m: U=\sum_{x\in L} x \\
+            \mathrm{false} & \nexists L\subseteq M_m: U=\sum_{x\in L} x
         \end{cases}
 $$
 
-#### Rekursive Beschreibung
+O.B.d.A. sei $M=\{x_1, \dots, x_n\}$ eine Menge, deren Elemente eine Reihenfolge haben. Enthalte $M_m=\{x_1,\dots,x_m\}\subseteq M$ die ersten $m$ Elemente von $M$. Falls $U=0$ gilt, ist $L^\prime=\{\}$ eine gültige Lösung. Falls nur noch $x_1$ übrig ist, gibt es genau dann eine Lösung, wenn $x_1=U$.
+
+##### Rekursiver Pseudocode
 ```
 Ind(A, U, n)
-    if n=1
-    then
-        if U>0 \\ Ind(0, 1)
-        then return true
-        else \\ Ind(U, 1)
-        if A[1]=U
-        then return true
-        else return false
-    if U>=x and Ind(A, U-x, n-1) = true then return true
-    return Ind(A, U, n-1)
+    if U=0 then return true
+    if n=1 then return A[1] equals U
+
+    x = A[n]
+    // ist Teil der möglichen Lösung
+    if x<=U then return Ind(A, U-x, n-1) \\ sammle x
+
+    // x ist definitiv kein Teil der Lösung
+    return Ind(A, U, n-1) \\ ignoriere x
 ```
 
-#### Pseudocode
+##### Dynamischer Pseudocode
 ```
 SubsetSum(A, U, n)
     \\ initalisiere Indikator
@@ -255,9 +248,6 @@ SubsetSum(A, U, n)
     return Ind[U,n]
 ```
 
-$\mathrm{SubsetSum}(A, U, n)$ hat eine Laufzeit von $T(n)=\mathcal O(nU)$.
-
-#### Korrektheitsbeweis
 Der Korrektheitsbeweis nutzt die Schleifeninvariante $\mathrm{Ind}[u,i]=\mathrm{true}$ genau dann, wenn es eine Teilmenge der ersten $i$ Zahlen aus $A$ gibt, die sich zu $u$ aufsummieren.
 
 ## Optimierungsprobleme
