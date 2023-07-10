@@ -615,7 +615,7 @@ $$
 
 #### Rekursive Beschreibung
 ```
-Ind(A, U, m)
+Ind(A, U, n)
     if n=1
     then
         if U>0 \\ Ind(0, 1)
@@ -662,7 +662,7 @@ Dazu hat man eine Menge $M=\{1,\dots,n\}$ an Objekten, die jeweils eine Größe 
 
 Dies ist ein Optimierungsproblem.[^31]
 
-[^31]: siehe Kapitel _Optimierungsprobleme_
+[^31]: siehe Kapitel $10$: _Optimierungsprobleme_
 
 ### Wechselgeldrückgabe
 Ein eingegebener Centbetrag soll mit möglichst wenig Münzen zurückgegeben werden. Dies wird mit einem gierigen Algorithmus gelöst.
@@ -1318,8 +1318,8 @@ DFS-Visit(u)
 
 
 
-## Minimale Spannbäume
-### Kreiseliminierung
+### Minimale Spannbäume
+#### Kreiseliminierung
 Minimale Spannbäume können berechnet werden, in denen alle Kreise aus einem Graph $G$ eliminieren. So lange es Kreise im Graphen gibt, werden Kreise gesucht, aus denen das Element mit dem größten Gewicht entfernt wird.
 
 Dieser Algorithmus ist recht langsam, weil die Suche nach Kreisen rechenintensiv ist. Zusätzlich muss für jeden Kreis diejenige mit dem größten Gewicht identifiziert werden, auch dies kostet Zeit.
@@ -1333,7 +1333,7 @@ MST(G)
     return T
 ```
 
-### Algorithmus von Kruskal
+#### Algorithmus von Kruskal
 Der Algorithmus von Kruskal wählt Kanten aus einem Graphen aufsteigend nach Gewicht aus. Dadurch können Inseln von verbundenen Knoten entstehen, die am Ende des Algorithmus verbunden sind.
 
 Der Algorithmus von Kruskal berechnet in der Laufzeit $\mathcal O(|E| \log_2 |E|)$ einen minimalen Spannbaum eines gewichteten, zusammenhängenden, ungerichteten Graphen $G=(V,E)$.
@@ -1350,7 +1350,6 @@ Kruskal(G)
     return A
 ```
 
-#### Pseudocode
 Die Zusammenhangskomponenten des durch die Kanten aus $A$ erzeugten Graphen können durch eine Union-Find-Datenstruktur dargestellt werden.
 
 ```
@@ -1371,6 +1370,7 @@ Kruskal(G)
 ```
 
 ### Algorithmus von Prim
+<!-- missing -->
 
 # 5. Speicher und Datentypen
 ## Speichermodell
