@@ -103,6 +103,9 @@ $$
 ### Dreiecksungleichung
 Für je drei Knoten $u,v,x\in V$ gilt $w(u,x) \le w(u,v) + w(v,x)$.
 
+## Heuristik
+Heuristiken versuchen, eine optimale Lösung anzunähern und können daher sehr effizient sein. Im Allgemeinen kann man keine Qualität quantitativ garantieren. In diesem Punkt unterscheiden sich Heuristiken von Approximationsalgorithmen.
+
 ## Approximationsalgorithmus
 Ein Algorithmus $A$ für ein Optimierungsproblem heißt $\alpha(n)$-Approximationsalgorithmus, wenn für alle Eingaben der Größe $n$ folgendes gilt. Hierbei bezeichnet $C$ die Kosten der von $A$ berechneten Lösung, $C^*$ bezeichnet die Kosten der optimalen Lösung. $\alpha(n)$ wird Approximationsfaktor genannt.
 

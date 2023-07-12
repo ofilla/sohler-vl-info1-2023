@@ -1220,11 +1220,11 @@ Bellman-Ford(G,s)
 ```
 
 ### Floyd-Warshall-Algorithmus
-Sei $G=(V,E)$ ein Graph ohne negative Kreise. Dann berechnet der Algorithmus von Floyd-Warshall die Entfernung zwischen jedem Knotenpaar in einer Laufzeit $\mathcal O(|V|^3)$.
-
-Hierzu wird eine Adjazenzmatrix $W=(w_{ij})$ übergeben, die für jeden Knoten das Gewicht $w_{ij}$ beinhaltet. Hierbei gelten $\forall i=j: w_{ij}=0$ und $\nexists (i,j)\in E: w_{ij}=\infty$.
+Sei $G=(V,E)$ ein Graph ohne negative Kreise. Dann berechnet der Algorithmus von Floyd-Warshall die Entfernung zwischen jedem Knotenpaar in einer Laufzeit $\mathcal O(|V|^3)$. Dabei wird über die Anzahl der Knoten von Start- nach Zielknoten iteriert und der jeweils kürzeste Pfad zum Zielknoten gespeichert.
 
 Da kein Knoten doppelt in einem kürzsten Weg vorkommt, kann man nur die Wege betrachten, die jeden Knoten maximal einmal enthalten. Daher kann der kürzeste Weg von $i$ nach $j$ entweder der kürzste Weg ohne einen beliebigen Knoten $k$ sein, oder der kürzeste Weg von $i$ nach $k$ zuzüglich des kürzesten Weges von $k$ nach $j$.
+
+Hierzu wird eine Adjazenzmatrix $W=(w_{ij})$ übergeben, die für jeden Knoten das Gewicht $w_{ij}$ beinhaltet. Hierbei gelten $\forall i=j: w_{ij}=0$ und $\nexists (i,j)\in E: w_{ij}=\infty$.
 
 Sei $d_{ij}^{(k)}$ die Länge des kürzesten Weges von $i$ nach $j$, der nur die Knoten aus der Menge $\{1,\dots, k\}$ verwendet.
 
@@ -1985,6 +1985,9 @@ $$
 
 ### Dreiecksungleichung
 Für je drei Knoten $u,v,x\in V$ gilt $w(u,x) \le w(u,v) + w(v,x)$.
+
+## Heuristik
+Heuristiken versuchen, eine optimale Lösung anzunähern und können daher sehr effizient sein. Im Allgemeinen kann man keine Qualität quantitativ garantieren. In diesem Punkt unterscheiden sich Heuristiken von Approximationsalgorithmen.
 
 ## Approximationsalgorithmus
 Ein Algorithmus $A$ für ein Optimierungsproblem heißt $\alpha(n)$-Approximationsalgorithmus, wenn für alle Eingaben der Größe $n$ folgendes gilt. Hierbei bezeichnet $C$ die Kosten der von $A$ berechneten Lösung, $C^*$ bezeichnet die Kosten der optimalen Lösung. $\alpha(n)$ wird Approximationsfaktor genannt.
