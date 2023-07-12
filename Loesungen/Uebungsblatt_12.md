@@ -40,11 +40,11 @@ Bellman-Ford(G,s)
 ### a)
 > Beschreiben Sie einen gierigen Algorithmus für diesen Spezialfall (nicht notwendigerweise Pseudocode), der für einen gradbeschränkten Graphen $G$ mit maximalem Knotengrad $d$ eine unabhängige Menge berechnet, die mindestens die Größe $\lceil \frac{n}{d+1}\rceil$ hat. Für die volle Punktzahl wird ein Algorithmus erwartet, dessen Worst-Case-Laufzeit durch $\mathcal O(d |V|)$ beschränkt ist.
 
-Der Algorithmus soll nach aufsteigendem Grad Knoten auswählen und ihn, falls er unabhängig von der bisherigen Menge ist, der Menge hinzufügen. Diese Methode wurde gewählt, weil die Wahrscheinlichkeit für eine Kante in die bisher gewählte Menge proportional zu dem Grad des betrachteten Knotens ist.
+Der Algorithmus soll nach aufsteigendem Grad Knoten auswählen und ihn, falls er unabhängig von der bisherigen Menge ist, der Menge hinzufügen. Diese Methode wurde gewählt, weil die Wahrscheinlichkeit für eine Kante in die bisher gewählte Menge proportional zu dem Grad des betrachteten Knotens ist. Um dies zu realisieren, wird eine Prioritätenschlange $Q$ verwendet.
 
 ```
 IndependentSet(G)
-1.  Q = ... \\ O(|V|)
+1.  Initialisiere Prioritätenschlange Q \\ O(|V|)
 2.  M = {} \\ O(1)
 
 3.  while Q != {} do \\ O(|V|)
@@ -64,7 +64,7 @@ IndependentSet(G)
 Die Worst-Case-Laufzeit für Zeile $1$ ist am schwierigsten abzuschätzen. Da die Werte der Prioritäten bekannt sind, nämlich $p\in\{0, \dots, d\}$, kann man ein Array von Listen nutzen, um die Prioritätenschlange $Q$ zu implementieren. In diesem Fall kann das Einfügen in $Q$ in konstanter Laufzeit erfolgen. Da dies für jeden Knoten notwendig ist, erhält man eine Laufzeit von $\mathcal O(|V|)$. Die Schleife in den Zeilen $3-7$ kann maximal $|V|$ oft erfolgen, da in jedem Durchlauf mindestens ein Knoten gelöscht wird. Die Schleife in den Zeilen $5-6$ wird für jeden Knoten $v$ nach der Anzahl des Grades durchlaufen, also maximal $\mathcal O(d|V|)$. Dadurch ist die gesamte Worst-Case-Laufzeit durch $\mathcal O(d|V|)$ beschränkt.
 
 ### c)
-> Beweisen Sie die Korrektheit Ihres Algorithmus, d.h. dass ihr Algorithmus für jeden ungerichteten Graphen $G$ mit maximalem Knotengrad $d$ eine unabhängige Menge berechnet, die mindestens $\lceil \frac{n}{d+1}\rceil$ Knoten enthält.
+> Beweisen Sie die Korrektheit Ihres Algorithmus, d.h. dass ihr Algorithmus für jeden ungerichteten Graphen $G$ mit maximalem Knotengrad $d$ eine unabhängige Menge berechnet, die mindestens $\lceil \frac{|V|}{d+1}\rceil$ Knoten enthält.
 
 #### Invariante
 Bei $n$-ten Eintritt in die äußere Schleife enthält $M$ eine unabhängige Menge mit $n-1$ Elementen. Zu dem selben Zeitpunkt enthält $Q$ nur Knoten, die unabhängig von den Knoten in $M$ sind.
@@ -85,7 +85,7 @@ Nach Induktionsannahme sind bei Schleifeneintritt alle Knoten in $Q$ unabhängig
 Damit wurde die Invariante bewiesen. Dies beweist, dass eine unabhängige Menge berechnet wird.
 
 #### Größe von $M$
-Die Größe von $M$ kann durch $d$ abgeschätzt werden. Sei $|M|$ die Anzahl der Elemente in $M$, dann wird $|M|$ in jedem Schleifendurchlauf 'um eins erhöht. $|M|$ ist also genau dann minimal, wenn in jedem Schleifendurchlauf die maximale Menge an Knoten aus $Q$ entfernt wird. In Zeile $4$ wird immer ein Knoten entfernt, in Zeile $6$ wird jeder Nachbar entfernt. Die Anzahl der Nachbarn ist durch $d$ beschränkt, dadurch können je Durchlauf maximal $d+1$ Knoten entfernt werden.
+Die Größe von $M$ kann durch $d$ abgeschätzt werden. Sei $|M|$ die Anzahl der Elemente in $M$, dann wird $|M|$ in jedem Schleifendurchlauf um eins erhöht. $|M|$ ist also genau dann minimal, wenn in jedem Schleifendurchlauf die maximale Menge an Knoten aus $Q$ entfernt wird. In Zeile $4$ wird immer ein Knoten entfernt, in Zeile $6$ wird jeder Nachbar entfernt. Die Anzahl der Nachbarn ist durch $d$ beschränkt, dadurch können je Durchlauf maximal $d+1$ Knoten entfernt werden.
 
 Angenommen, es werden in jedem Durchlauf $d+1$ Knoten entfernt, so muss es $\frac{|V|}{d+1}$ Durchläufe geben. Falls dieser Quotient keine ganze Zahl ist, sind nach dem $\lfloor\frac{|V|}{d+1}\rfloor$-ten Durchlauf noch mindestens ein Knoten, aber maximal $d+1$ Knoten, in $Q$. Dann ist nach dem $\lceil\frac{|V|}{d+1}\rceil$-ten Durchlauf kein Knoten mehr in $Q$ und die Schleife wurde beendet. Da $|M|$ durch die Anzahl der Schleifendurchläufe bestimmt ist, gilt $|M|\ge \lceil\frac{|V|}{d+1}\rceil$, was zu beweisen war.
 
@@ -97,8 +97,43 @@ Angenommen, es werden in jedem Durchlauf $d+1$ Knoten entfernt, so muss es $\fra
 ### a)
 > Entwerfen Sie einen Algorithmus $\mathrm{Farben}(V, X, Y)$, der entscheidet, ob solche Knotenfärbung möglich ist und dementsprechend $\mathrm{true}$ bzw. $\mathrm{false}$ zurückgibt. Beschreiben Sie den Algorithmus zunächst mit eigenen Worten. Setzen Sie den Algorithmus dann in Pseudocode um. Für die volle Punktzahl wird ein Algorithmus erwartet, dessen Laufzeit durch $\mathcal O(|V | + |E|)$ beschränkt ist.
 
+Starte an einem beliebigen Knoten und färbe diesen in einer beliebigen Farbe. Färbe wie bei der Breitensuche alle Knoten, bis entweder alle Knoten gefärbt sind oder die Bedingung verletzt ist.
+
+```
+Farben(V, X, Y, s)
+1.     initialisiere Breitensuche
+2.     color[s] = schwarz
+
+3.     while Q != {} do
+4.         u = dequeue(Q)
+5.         for each v in Adj[u] do
+6.             \\ ermittle Farbe, die v haben soll
+7.             if (u,v) in X \\ rote Kante
+8.             then color_v = color[u]
+9.             else \\ blaue Kante
+10.                if color[u] = schwarz
+11.                then color_v = grün
+12.                else color_v = schwarz
+
+13.            if color[v] = weiß
+14.            then color[v] = color_v \\ färbe
+15.            else \\ prüfe andere Farbe
+16.                if color[v] != color_v
+17.                then return false
+
+18.    return true
+```
+
 ### b)
 > Analysieren Sie die Laufzeit Ihres Algorithmus.
 
+Dieser Algorithmus ist eine Variation der Breitensuche, die eine Laufzeit von $\mathcal O(|V|\cdot |E|)$ benötigt. Alle Veränderungen haben konstante Laufzeit und werden nur im Rahmen der Breitensuche aufgerufen, daher ist die Gesamtlaufzeit im Worst-Case-Szenario identisch mit der der Breitensuche.
+
 ### c)
 > Beweisen Sie die Korrektheit Ihres Algorithmus.
+
+Jede gültige Färbung impliziert eine zweite gültige Färbung mit invertierten Farben. Daher ist es egal, welche Farbe der Startknoten in Zeile $2$ erhält.
+
+Da die Breitensuche jeden Knoten besucht, werden alle Kanten einmal auf Färbung geprüft. In den Zeilen $6-12$ wird die Farbe ermittelt, die der Nachbarknoten $v$ haben soll. Falls $v$ noch $\mathrm{weiß}$ ist, wird er korrekt gefärbt (Z. $14$), ansonsten wird die Korrektheit der Kante geprüft (Z. $16$) und bei Widerspruch $\mathrm{false}$ zurückgegeben (Z. $17$).
+
+Falls die komplette Breitensuche keinen Widerspruch findet, ist die gewünschte Färbung möglich. Dann ist die Rückgabe $\mathrm{true}$ korrekt. Daher arbeitet der Algorithmus korrekt.
