@@ -1175,7 +1175,7 @@ DijkstrasAlgorithmus(G, w, s)
 ```
 
 ### Bellman-Ford-Algorithmus
-Der Bellman-Ford-Algorithmus ist dazu gedacht, die Länge eines kürzesten Weges eines gewichteten Graphen $G=(V,E)$ vom Startknoten $s\in V$ aus zu berechnen, wobei Kanten $(u,v)\in E$ negative Gewichte $w(u,v)$ haben dürfen. In der hier angegebenen Beschreibung darf der Graph allerdings keine negativen Kreise haben.
+Der Bellman-Ford-Algorithmus ist dazu gedacht, die Länge eines kürzesten Weges eines gewichteten Graphen $G=(V,E)$ vom Startknoten $s\in V$ aus in der Worst-Case-Laufzeit $\mathcal O(|V|^2+|V|\cdot |E|)$ zu berechnen, wobei Kanten $(u,v)\in E$ negative Gewichte $w(u,v)$ haben dürfen. In der hier angegebenen Beschreibung darf der Graph allerdings keine negativen Kreise haben.
 
 #### rekursive Beschreibung
 Sei $P$ ein optimaler $s$-$v$-Weg mit maximal $i$ Kanten mit $u$ als dem letzten Knoten vor $v$, dann sei $\mathrm{Opt}(i, v)$ die Länge von $P$.
@@ -1311,8 +1311,6 @@ DFS-Visit(u)
     time = time + 1
     f[u] = time
 ```
-
-
 
 ### Minimale Spannbäume
 #### Kreiseliminierung
