@@ -338,7 +338,7 @@ Der Verbundtyp eines Knotens $k$ enthält die Elemente Farbe $\mathrm{color}[k]$
 In Darstellungen wird üblicherweise auf die $\mathrm{NIL}$-Einträge verzichtet.
 
 #### Die Rot-Schwarz-Eigenschaft
-Jeder Knoten ist entweder rot oder schwarz, die Wurzel und alle Blätter sind schwarz, ebenso alle Kinder eines roten Knotens. Zudem haben alle Pfade von einem beliebigen Knoten zu den Blätter dieselbe Anzahl an schwarzen Knoten.
+Jeder Knoten ist entweder rot oder schwarz, die Wurzel und alle Blätter sind schwarz, ebenso alle Kinder eines roten Knotens. Zudem haben alle Pfade von einem beliebigen Knoten zu den Blätter dieselbe Anzahl an schwarzen Knoten und keine zwei roten Knoten dürfen aufeinander folgen.
 
 Da keine zwei aufeinanderfolgende Knoten in einem Suchpfad rot sein dürfen und alle Pfade zu einem Blatt gleich viele schwarze Knoten haben, hat der Baum eine logarithmische Höhe.
 
@@ -771,7 +771,7 @@ MinSearch(x)
 ```
 
 #### FollowerSearch
-$\mathrm{FollowerSearch}(x)$ sucht den Nachfolgerknoten in einem binären Suchbaum der Höhe $h$ in der Worst-Case-Laufzeit $\mathcal O(h)$. Nachfolger bedeutet, dass $x$ den nächstgrößten Schlüssel besitzt. Analog kann der Vorg
+$\mathrm{FollowerSearch}(x)$ sucht den Nachfolgerknoten in einem binären Suchbaum der Höhe $h$ in der Worst-Case-Laufzeit $\mathcal O(h)$. Nachfolger bedeutet, dass $x$ den nächstgrößten Schlüssel besitzt. Analog kann der Vorgänger ermittelt werden.
 
 1. Falls es einen rechten Unterbaum gibt, ist der am weitesten links liegende Knoten der Nachfolger.
 2. Ansonsten ist der Nachfolger der erste Elternknoten, dessen Schlüssel größer als der von $x$ ist. Gibt es keinen solchen Knoten, dann hat $x$ den größten Schlüssel.
@@ -927,16 +927,16 @@ Beim Reparieren soll man folgende Schleifeninvariante gelten.
     1. Der Vater und der Onkel von $z$ werden schwarz gefärbt.
     2. Der Großvater von $z$ wird rot gefärbt.
     3. Die Rot-Schwarz-Bedingung muss ausgehend vom Großvater geprüft werden.
-4. Der Onkel von $z$ ist schwarz, außerdem sind $z$ und der Vater $\mathrm{parent}(z)$ beide linke bzw. rechte Kinder.
-    1. Der Onkel von $z$ wird rot gefärbt.
-    2. Rotation um den Großvater von $z$:
-        1. $z$ und Vater sind linke Kinder: Rechtsrotaton
-        2. $z$ und Vater sind rechte Kinder: Linksrotation
-5. Der Onkel von $z$ ist schwarz.
-    1. Rotation um den Vaterknoten.
+3. Sonst ist der Onkel von $z$ ist schwarz
+    1. $z$ und der $\mathrm{parent}(z)$ beide linke bzw. rechte Kinder.
+        1. Der Onkel von $z$ wird rot gefärbt.
+        2. Rotation um den Großvater von $z$:
+            1. $z$ und Vater sind linke Kinder: Rechtsrotaton
+            2. $z$ und Vater sind rechte Kinder: Linksrotation
+    2. Rotation um den $\mathrm{parent}(z)$.
         1. $z$ ist ein rechtes Kind und der Vater ist ein linkes Kind: Linksrotation
         2. $z$ ist ein linkes Kind und der Vater ist ein rechtes Kind: Rechtsrotation
-    2. Die Rot-Schwarz-Bedingung muss ausgehend vom Vater geprüft werden.
+        3. Die Rot-Schwarz-Bedingung muss ausgehend vom Vater geprüft werden.
 
 ##### Pseudocode
 ```
@@ -1015,7 +1015,7 @@ Wenn der Knoten $x$, der den Knoten $z$ ersetzt, rot ist, muss $x$ nur schwarz g
     1. Färbe $w$ schwarz.
     2. Rotiere so um $\mathrm{parent}[x]$, dass $w$ und $\mathrm{parent}[x]$ die Plätze tauschen.
     3. Fahre Prüfung mit $x$ an neuer Position fort.
-2. $w$ von $x$ und beide Kinder von $w$ sind schwarz.
+2. $w$ und beide Kinder von $w$ sind schwarz.
     1. Färbe $w$ rot.
     2. Fahre Prüfung mit $\mathrm{parent}[x]$ fort.
 3. $w$ ist schwarz und mindestens ein Kind von $w$ ist rot.
@@ -1026,7 +1026,7 @@ Wenn der Knoten $x$, der den Knoten $z$ ersetzt, rot ist, muss $x$ nur schwarz g
         5. Fahre mit Prüfung für $x$ fort
     2. Sonst:
         1. Färbe $w$ wie $\mathrm{parent}[x]$.
-        2. Färbe $\mathrm{parent}[w]$ und das Kind auf der von $x$ abgewandten Seite schwarz.
+        2. Färbe $\mathrm{parent}[x]$ und das Kind auf der von $x$ abgewandten Seite schwarz.
         3. Rotiere so um $\mathrm{parent}[x]$, dass $w$ und $\mathrm{parent}[x]$ die Plätze tauschen.
 
 ##### Pseudocode
@@ -1390,10 +1390,10 @@ Prim(G,r)
 
 ## Approximationsalgorithmen
 ### minimale Knotenüberdeckung
-Sei $G=(L\cup R, E)$ ein bipartiter Graph. Dann sind $L$ und $R$ gültige Knotenüberdeckungen. Dafür soll eine Knotenüberdeckung $U$ mit minimaler Größe $|U|$ ermittelt werden.
+Sei $G=(L\cup R, E)$ ein bipartiter Graph. Dann sind $L$ und $R$ gültige Knotenüberdeckungen. Es soll eine Knotenüberdeckung $U$ mit minimaler Größe $|U|$ ermittelt werden. In diesem gierigen Algorithmus wird in jeder Iteration eine beliebige Kante gewählt, die noch nicht mit der bisherigen Auswahl verbunden ist.
 
 ```
-GreedyVertexCover2(G)
+GreedyVertexCover(G)
     C = {}
     E' = E(G)
 
@@ -1412,7 +1412,7 @@ Dieser 2-Approximationsalgorithmus für das Travelling Salesman Problem mit eine
 ```
 ApproxTSP(G,w)
     Berechne minimalen Spannbaum T von G
-    Sei p die Liste der Knoten von G
+    Sei L die Liste der Knoten von G
         in der Reihenfolge eines Preorder-Tree-Walk
         von einem beliebigen Knoten v
     return L

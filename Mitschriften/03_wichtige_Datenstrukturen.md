@@ -203,7 +203,7 @@ Der Verbundtyp eines Knotens $k$ enthält die Elemente Farbe $\mathrm{color}[k]$
 In Darstellungen wird üblicherweise auf die $\mathrm{NIL}$-Einträge verzichtet.
 
 #### Die Rot-Schwarz-Eigenschaft
-Jeder Knoten ist entweder rot oder schwarz, die Wurzel und alle Blätter sind schwarz, ebenso alle Kinder eines roten Knotens. Zudem haben alle Pfade von einem beliebigen Knoten zu den Blätter dieselbe Anzahl an schwarzen Knoten.
+Jeder Knoten ist entweder rot oder schwarz, die Wurzel und alle Blätter sind schwarz, ebenso alle Kinder eines roten Knotens. Zudem haben alle Pfade von einem beliebigen Knoten zu den Blätter dieselbe Anzahl an schwarzen Knoten und keine zwei roten Knoten dürfen aufeinander folgen.
 
 Da keine zwei aufeinanderfolgende Knoten in einem Suchpfad rot sein dürfen und alle Pfade zu einem Blatt gleich viele schwarze Knoten haben, hat der Baum eine logarithmische Höhe.
 
