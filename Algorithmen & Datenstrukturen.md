@@ -671,7 +671,7 @@ Angenommen, die Menge der Münzen sei $\{50, 10, 5, 1\}$, dann funktioniert der 
 Falls die Menge der Münzen aber $\{50, 10, 7, 5, 1\}$ ist, löst der Algorithmus das Problem nicht: Sei $B=14$, so liefert der Algorithmus $(1\times 10, 4\times 1)$ als Ergebnis. Die optimale Lösung wäre aber $(2\times 7)$.
 
 ### Interval-Scheduling
-Ziel ist es, eine Ressource möglichst effektiv zu nutzen. Dies bedeutet, dass die Ressource möglichst wenig genutzt wird oder immer möglichst schnell wieder freigegeben wird.
+Ziel ist es, eine Ressource möglichst effektiv zu nutzen. Dies bedeutet, dass die Ressource möglichst wenig genutzt wird oder immer möglichst schnell wieder freigegeben wird, somit kann "effektiv" als "sparsam" interpretiert werden.
 
 #### Notation
 Sei die Eingabe eine Menge von Intervallen. In Pseudocode kann dies durch die Anzahl $n$, sowie Felder mit den Anfangswerten $A$ und den Endwerten $E$ dargestellt werden.
