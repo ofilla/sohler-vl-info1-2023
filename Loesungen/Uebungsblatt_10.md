@@ -72,7 +72,11 @@ RSEinfügenFix(T,z)
 
 ![10 wurde gelöscht](./img/10.1.c.2.png)
 
-![Zwischenergebnis: 47 wurde gelöscht](./img/10.1.c.3.png)
+![47 wurde gelöscht](./img/10.1.c.3.png)
+
+![20 wurde gelöscht](./img/10.1.c.4.png)
+
+![18 wurde gelöscht](./img/10.1.c.5.png)
 
 ## Suchbäume
 > Sei $T$ ein binärer Baum, der nicht zwingend die Suchbaumeigenschaft erfüllt. Es soll nun geprüft werden, ob $T$ ein Suchbaum ist. Für den binären Baum $T$ liefert $\mathrm{root}(T)$ den Wurzelknoten von $T$ . Für jeden Knoten $v \in V$ im binären Baum T stehen folgende Operationen mit Laufzeit $\mathcal O(1)$ zur Verfügung.
